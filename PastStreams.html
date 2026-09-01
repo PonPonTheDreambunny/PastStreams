@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Schedule Table</title>
+	<title>Pon Pon's streams, database</title>
 	<style>
 		/* CSS Variables */
 		:root {
@@ -37,6 +37,7 @@
 			color: var(--color);
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 		}
+
 		/* HEADER */
 		.header {
 			position: sticky;
@@ -103,14 +104,40 @@
 			border-bottom: 1px solid var(--border);
 			font-size: 14px;
 		}
-		#tableBody tr th
-		{
+		#tableBody tr th {
 			padding: 0 8px;
+		}
+		.column-index {
+			width: 40px;
+		}
+		.column-datetime {
+			width: 180px;
+		}
+		.column-duration {
+			width: 80px;
+		}
+		.column-resolution {
+			width: 80px;
 		}
 		
 		@media screen and (max-width: 1152px){
 			td {
 				letter-spacing: -0.5px;
+			}
+			th {
+				letter-spacing: -0.5px;
+			}
+			.column-index {
+				width: 35px;
+			}
+			.column-datetime {
+				width: 160px;
+			}
+			.column-duration {
+				width: 65px;
+			}
+			.column-resolution {
+				width: 40px;
 			}
 		}
 		@media screen and (max-width: 840px){
@@ -124,6 +151,21 @@
 			td {
 				font-size: 11px;
 				letter-spacing: -0.75px;
+			}
+			th {
+				font-size: 11px;
+			}
+			.column-index {
+				width: 25px;
+			}
+			.column-datetime {
+				width: 115px;
+			}
+			.column-duration {
+				width: 50px;
+			}
+			.column-resolution {
+				width: 30px;
 			}
 		}
 		@media screen and (max-width: 768px){
@@ -162,6 +204,12 @@
 				font-size: 10px;
 				letter-spacing: -1px;
 			}
+			th {
+				font-size: 10px;
+			}
+			.column-datetime {
+				width: 100px;
+			}
 		}
 		@media screen and (max-width: 560px){
 			.header-settings {
@@ -188,6 +236,15 @@
 			td {
 				font-size: 9px;
 				letter-spacing: -1px;
+			}
+			th {
+				font-size: 9px;
+			}
+			.column-index {
+				width: 20px;
+			}
+			.column-datetime {
+				width: 90px;
 			}
 		}
 	</style>
@@ -216,12 +273,12 @@
 		<table>
 			<thead>
 				<tr>
-					<th style="width: 60px;">#</th>
-					<th style="width: 180px;">START</th>
-					<th style="width: 180px;">END</th>
-					<th style="width: 80px;">DURATION</th>
+					<th class="column-index">#</th>
+					<th class="column-datetime">START</th>
+					<th class="column-datetime">END</th>
+					<th class="column-duration">DURATION</th>
 					<th>CATEGORY</th>
-					<th style="width: 120px;">RESOLUTION</th>
+					<th class="column-resolution">VIDEO</th>
 				</tr>
 			</thead>
 		</table>
@@ -229,12 +286,12 @@
 	<table>
 		<tbody id="tableBody">
 			<tr>
-				<th style="width: 60px;"></th>
-				<th style="width: 180px;"></th>
-				<th style="width: 180px;"></th>
-				<th style="width: 80px;"></th>
+				<th class="column-index"></th>
+				<th class="column-datetime"></th>
+				<th class="column-datetime"></th>
+				<th class="column-duration"></th>
 				<th></th>
-				<th style="width: 120px;"></th>
+				<th class="column-resolution"></th>
 			</tr>
 		</tbody>
 	</table>
@@ -1059,12 +1116,12 @@
 			if (!tableBody) return;
 			tableBody.innerHTML = `
 			<tr>
-				<th style="width: 60px;"></th>
-				<th style="width: 180px;"></th>
-				<th style="width: 180px;"></th>
-				<th style="width: 80px;"></th>
+				<th class="column-index"></th>
+				<th class="column-datetime"></th>
+				<th class="column-datetime"></th>
+				<th class="column-duration"></th>
 				<th></th>
-				<th style="width: 120px;"></th>
+				<th class="column-resolution"></th>
 			</tr>`;
 			
 			index = 0;
@@ -1075,7 +1132,7 @@
 				const categoriesFormatted = item.category.map(cat => {
 					const catStart = formatCategoryTime(cat.start, currentFormat[1], item.start, currentFormat[2]);
 					const catEnd = formatCategoryTime(cat.end, currentFormat[1], item.end, currentFormat[2]);
-					const catTime = currentFormat[1] === 0 ? `${catStart}–${catEnd}` : `${catStart} – ${catEnd}`.replace(/am( – [0-9:]+ am)/, "$1").replace(/pm( – [0-9:]+ pm)/, "$1");
+					const catTime = currentFormat[1] === 0 ? `${catStart}–${catEnd}` : `${catStart} – ${catEnd}`.replace(/am (– [0-9:]+ am)/, "$1").replace(/pm (– [0-9:]+ pm)/, "$1").replace(/am – 0:([0-9]+ )pm/, "– 12:$1am");
 					return `[${catTime}] ${cat.id}`;
 				}).join(`<br>`);
 
@@ -1193,7 +1250,7 @@
 				3: ['en-GB',{ day: 'numeric', month: 'short', year: 'numeric' }]
 			}[dateIdx];
 
-			const timeStr = new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(date);
+			const timeStr = new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(date).toLowerCase();
 			const dateStr = new Intl.DateTimeFormat(dateLocale, { ...dateOptions, timeZone }).format(date);
 			const tzAbbr = getTimezoneAbbreviation(tzIdx, date);
 
@@ -1211,7 +1268,7 @@
 				2: ['en-JP',{ hour: 'numeric', minute: '2-digit', hourCycle: 'h11', hour12: true }],
 			}[timeIdx];
 
-			return new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(dateObj);
+			return new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(dateObj).toLowerCase();
 		}
 		
 		function formatDuration(minutes) {
@@ -1267,8 +1324,15 @@
 				{ prefix: /^Chatham Daylight Time$/, abbr: "CHADT" },
 				{ prefix: /^Chamorro Standard Time$/, abbr: "ChST" },
 				{ prefix: /^Venezuela Time$/, abbr: "VET" },
+				{ prefix: /^Bolivia Time$/, abbr: "BOT" },
+				{ prefix: /^Peru Standard Time$/, abbr: "PET" },
+				{ prefix: /^Peru Summer Time$/, abbr: "PEST" },
+				{ prefix: /^Colombia Standard Time$/, abbr: "COT" },
+				{ prefix: /^Colombia Summer Time$/, abbr: "COST" },
 				{ prefix: /^Brasilia Standard Time$/, abbr: "BRT" },
 				{ prefix: /^Paraguay Standard Time$/, abbr: "PYT" },
+				{ prefix: /^Chile Standard Time$/, abbr: "CLT" },
+				{ prefix: /^Chile Summer Time$/, abbr: "CLST" },
 				{ prefix: /^Argentina Standard Time$/, abbr: "ART" },
 				{ prefix: /^French Guiana Time$/, abbr: "GFT" },
 				{ prefix: /^Uruguay Standard Time$/, abbr: "UYT" },
