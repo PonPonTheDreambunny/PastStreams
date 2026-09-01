@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Schedule Table</title>
+	<style>
+		/* CSS Variables */
+		:root {
+			--background: #FFFFFF;
+			--header: #ECECE8;
+			--button-hover: #DCDCD8;
+			--color: #1A1A1A;
+			--border: #D1D1CD;
+			--selected: #E4CFF8;
+			--selected-hover: #CCAAF9;
+			--selected-border: #CCAAF9;
+		}
+		@media (prefers-color-scheme: dark) {
+			:root {
+				--background: #0C0D0F;
+				--header: #141518;
+				--button-hover: #242528;
+				--color: #ECECE8;
+				--border: #2A2B30;
+				--selected: #CCAAF9;
+				--selected-hover: #E4CFF8;
+				--selected-border: #E4CFF8;
+			}
+		}
+		
+
+		/* BODY */
+		body {
+			margin: 0;
+			background-color: var(--background);
+			color: var(--color);
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+		}
+		/* HEADER */
+		.header {
+			position: sticky;
+			top: 0;
+			z-index: 1000;
+			background-color: var(--header);
+		}
+		.header-settings {
+			display: flex;
+			justify-content: flex-end;
+			gap: 32px;
+			padding: 8px 16px 0 16px;
+		}
+		.header-settings-group {
+			display: flex;
+			justify-content: flex-end;
+			gap: 8px;
+		}
+		.settings-button {
+			background-color: var(--header);
+			color: var(--text-color);
+			border: 1px solid var(--border);
+			border-radius: 4px;
+			padding: 4px 0px;
+			width: 64px;
+			line-height: 0.75;
+			text-align: center;
+			cursor: pointer;
+			transition: background-color 0.15s ease;
+		}
+		.settings-button:hover {
+			background-color: var(--button-hover);
+		}
+		.settings-button.selected {
+			background-color: var(--selected);
+			border: 1px solid var(--selected-border);
+		}
+		.settings-button.selected:hover {
+			background-color: var(--selected-hover);
+		}
+		.settings-button .title {
+			font-size: 12.5px;
+			font-weight: bold;
+		}
+		.settings-button .details {
+			font-size: 10px;
+		}
+
+		/* TABLE */
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			text-align: left;
+		}
+		th {
+			background-color: var(--header);
+			padding: 8px 8px;
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: 0.5px;
+		}
+		td {
+			padding: 8px 8px;
+			border-bottom: 1px solid var(--border);
+			font-size: 14px;
+		}
+		#tableBody tr th
+		{
+			padding: 0 8px;
+		}
+		
+		@media screen and (max-width: 1152px){
+			td {
+				letter-spacing: -0.5px;
+			}
+		}
+		@media screen and (max-width: 840px){
+			.header-settings {
+				gap: 16px;
+				padding: 8px 8px 0 8px;
+			}
+			.header-settings-group {
+				gap: 4px;
+			}
+			td {
+				font-size: 11px;
+				letter-spacing: -0.75px;
+			}
+		}
+		@media screen and (max-width: 768px){
+			.settings-button {
+				width: 56px;
+				letter-spacing: -0.5px;
+			}
+			.settings-button .title {
+				font-size: 12px;
+				font-weight: bold;
+			}
+			.settings-button .details {
+				font-size: 9px;
+			}
+		}
+		@media screen and (max-width: 680px){
+			.header-settings {
+				gap: 8px;
+				padding: 8px 4px 0 4px;
+			}
+			.header-settings-group {
+				gap: 2px;
+			}
+			.settings-button {
+				width: 48px;
+				letter-spacing: -0.5px;
+			}
+			.settings-button .title {
+				font-size: 11px;
+				font-weight: bold;
+			}
+			.settings-button .details {
+				font-size: 8px;
+			}
+			td {
+				font-size: 10px;
+				letter-spacing: -1px;
+			}
+		}
+		@media screen and (max-width: 560px){
+			.header-settings {
+				display: grid;
+				justify-content: flex-end;
+				gap: 4px;
+				padding: 4px 4px 0 4px;
+			}
+			.header-settings-group {
+				gap: 8px;
+			}
+			.settings-button {
+				width: 64px;
+				letter-spacing: 0;
+				padding: 2px 0px;
+			}
+			.settings-button .title {
+				font-size: 11px;
+				font-weight: bold;
+			}
+			.settings-button .details {
+				font-size: 9px;
+			}
+			td {
+				font-size: 9px;
+				letter-spacing: -1px;
+			}
+		}
+	</style>
+</head>
+<body>
+	<div class="header">
+		<div class="header-settings">
+			<div class="header-settings-group">
+				<button class="settings-button" id="date0" onclick="setDateFormat(0)"><span class="title">ISO</span><br><span class="details">2026-01-01<br>2026-12-31</span></button>
+				<button class="settings-button selected" id="date1" onclick="setDateFormat(1)"><span class="title">EU</span><br><span class="details">01/01/2026<br>31/12/2026</span></button>
+				<button class="settings-button" id="date2" onclick="setDateFormat(2)"><span class="title">US</span><br><span class="details">1/1/2026<br>12/31/2026</span></button>
+				<button class="settings-button" id="date3" onclick="setDateFormat(3)"><span class="title">Abbr.</span><br><span class="details">1 Jan 2026<br>31 Dec 2026</span></button>
+			</div>
+			<div class="header-settings-group">
+				<button class="settings-button selected" id="time0" onclick="setTimeFormat(0)"><span class="title">24</span><br><span class="details">00:00<br>14:00</span></button>
+				<button class="settings-button" id="time1" onclick="setTimeFormat(1)"><span class="title">12</span><br><span class="details">12:00 am<br>2:00 pm</span></button>
+				<button class="settings-button" id="time2" onclick="setTimeFormat(2)"><span class="title">JP</span><br><span class="details">0:00 am<br> 2:00 pm</span></button>
+			</div>
+			<div class="header-settings-group">
+				<button class="settings-button" id="zone0" onclick="setZoneFormat(0)"><span class="title">Global</span><br><span class="details">UTC<br>GMT</span></button>
+				<button class="settings-button" id="zone1" onclick="setZoneFormat(1)"><span class="title">Pon Pon</span><br><span class="details">CET<br>CEST</span></button>
+				<button class="settings-button selected" id="zone2" onclick="setZoneFormat(2)"><span class="title">Yours</span><br><span class="details" id="userTimezoneAbbreviations">XXX<br>XXX</span></button>
+			</div>
+		</div>
+		
+		<table>
+			<thead>
+				<tr>
+					<th style="width: 60px;">#</th>
+					<th style="width: 180px;">START</th>
+					<th style="width: 180px;">END</th>
+					<th style="width: 80px;">DURATION</th>
+					<th>CATEGORY</th>
+					<th style="width: 120px;">RESOLUTION</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<table>
+		<tbody id="tableBody">
+			<tr>
+				<th style="width: 60px;"></th>
+				<th style="width: 180px;"></th>
+				<th style="width: 180px;"></th>
+				<th style="width: 80px;"></th>
+				<th></th>
+				<th style="width: 120px;"></th>
+			</tr>
+		</tbody>
+	</table>
+
+	<script>
+		const scheduleDatabase = [
+			{id: 1, start: "2023-04-02T11:50Z", end: "2023-04-02T14:15Z", duration: 144, category: [{id: "Spyro 2: Ripto's Rage! - Reignited", start: "11:51", end: "13:27"},{id: "Spyro: Year of the Dragon - Reignited", start: "13:28", end: "14:15"}], lines: 810},
+			{id: 2, start: "2023-04-09T11:30Z", end: "2023-04-09T15:05Z", duration: 216, category: [{id: "Spyro: Year of the Dragon - Reignited", start: "11:30", end: "15:06"}], lines: 810},
+			{id: 3, start: "2023-04-13T17:39Z", end: "2023-04-13T21:38Z", duration: 238, category: [{id: "Kuri Kuri Mix", start: "17:40", end: "18:03"},{id: "Spyro the Dragon - Reignited", start: "18:04", end: "21:38"}], lines: 720},
+			{id: 4, start: "2023-04-16T11:34Z", end: "2023-04-16T15:07Z", duration: 213, category: [{id: "Spyro 2: Ripto's Rage! - Reignited", start: "11:35", end: "15:08"}], lines: 720},
+			{id: 5, start: "2023-04-18T13:54Z", end: "2023-04-18T17:21Z", duration: 207, category: [{id: "Kuri Kuri Mix", start: "13:55", end: "17:22"}], lines: 720},
+			{id: 6, start: "2023-04-20T17:40Z", end: "2023-04-20T20:38Z", duration: 178, category: [{id: "Spyro 2: Ripto's Rage! - Reignited", start: "17:41", end: "20:39"}], lines: 720},
+			{id: 7, start: "2023-04-23T11:54Z", end: "2023-04-23T15:03Z", duration: 188, category: [{id: "Spyro: Year of the Dragon - Reignited", start: "11:55", end: "15:03"}], lines: 720},
+			{id: 8, start: "2023-04-24T07:50Z", end: "2023-04-24T11:04Z", duration: 195, category: [{id: "C3 Racing", start: "07:50", end: "11:05"}], lines: 720},
+			{id: 9, start: "2023-04-25T13:51Z", end: "2023-04-25T16:47Z", duration: 177, category: [{id: "Kuri Kuri Mix", start: "13:51", end: "16:48"}], lines: 720},
+			{id: 11, start: "2023-04-26T06:52Z", end: "2023-04-26T09:59Z", duration: 187, category: [{id: "Kula World", start: "06:52", end: "10:00"}], lines: 720},
+			{id: 12, start: "2023-04-27T17:50Z", end: "2023-04-27T21:32Z", duration: 222, category: [{id: "Spyro: Year of the Dragon - Reignited", start: "17:50", end: "21:32"}], lines: 720},
+			{id: 13, start: "2023-04-29T09:49Z", end: "2023-04-29T12:00Z", duration: 131, category: [{id: "Spyro: Year of the Dragon - Reignited", start: "09:50", end: "12:01"}], lines: 720},
+			{id: 14, start: "2023-04-30T11:49Z", end: "2023-04-30T14:07Z", duration: 138, category: [{id: "Kula World", start: "11:50", end: "14:08"}], lines: 720},
+			{id: 15, start: "2023-05-01T08:49Z", end: "2023-05-01T12:04Z", duration: 195, category: [{id: "C3 Racing", start: "08:50", end: "12:05"}], lines: 720},
+			{id: 16, start: "2023-05-02T08:50Z", end: "2023-05-02T11:53Z", duration: 183, category: [{id: "C3 Racing", start: "08:51", end: "11:54"}], lines: 720},
+			{id: 17, start: "2023-05-04T17:55Z", end: "2023-05-04T22:20Z", duration: 265, category: [{id: "Spyro: Enter the Dragonfly", start: "17:56", end: "18:53"},{id: "just chatting", start: "18:54", end: "18:59"},{id: "Spyro the Dragon", start: "19:00", end: "22:21"}], lines: 720},
+			{id: 18, start: "2023-05-05T17:50Z", end: "2023-05-05T20:31Z", duration: 161, category: [{id: "Spyro the Dragon", start: "17:50", end: "20:31"}], lines: 720},
+			{id: 19, start: "2023-05-06T09:50Z", end: "2023-05-06T20:58Z", duration: 668, category: [{id: "special events", start: "09:50", end: "20:58"}], lines: 720},
+			{id: 20, start: "2023-05-08T13:51Z", end: "2023-05-08T17:04Z", duration: 193, category: [{id: "Need for Speed: Road Challenge", start: "13:51", end: "17:04"}], lines: 720},
+			{id: 21, start: "2023-05-09T13:50Z", end: "2023-05-09T17:06Z", duration: 196, category: [{id: "Need for Speed: Road Challenge", start: "13:50", end: "17:06"}], lines: 720},
+			{id: 22, start: "2023-05-11T17:51Z", end: "2023-05-11T21:05Z", duration: 194, category: [{id: "The Legend of Spyro: A New Beginning", start: "17:51", end: "21:05"}], lines: 720},
+			{id: 23, start: "2023-05-12T17:49Z", end: "2023-05-12T20:53Z", duration: 183, category: [{id: "The Legend of Spyro: A New Beginning", start: "17:50", end: "20:53"}], lines: 720},
+			{id: 24, start: "2023-05-13T12:23Z", end: "2023-05-13T15:50Z", duration: 207, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:24", end: "15:51"}], lines: 720},
+			{id: 25, start: "2023-05-14T12:30Z", end: "2023-05-14T16:50Z", duration: 260, category: [{id: "Dog's Life", start: "11:56", end: "16:50"}], lines: 720},
+			{id: 26, start: "2023-05-15T13:49Z", end: "2023-05-15T17:13Z", duration: 203, category: [{id: "Need for Speed: Road Challenge", start: "13:50", end: "17:13"}], lines: 720},
+			{id: 27, start: "2023-05-16T13:49Z", end: "2023-05-16T17:19Z", duration: 209, category: [{id: "Need for Speed: Road Challenge", start: "13:50", end: "17:19"}], lines: 720},
+			{id: 28, start: "2023-05-18T17:48Z", end: "2023-05-18T19:59Z", duration: 132, category: [{id: "The Legend of Spyro: A New Beginning", start: "16:02", end: "20:00"}], lines: 720},
+			{id: 29, start: "2023-05-19T15:50Z", end: "2023-05-19T16:58Z", duration: 69, category: [{id: "The Legend of Spyro: A New Beginning", start: "15:50", end: "16:59"}], lines: 720},
+			{id: 30, start: "2023-05-19T17:28Z", end: "2023-05-19T18:30Z", duration: 62, category: [{id: "The Legend of Spyro: A New Beginning", start: "17:29", end: "18:31"}], lines: 720},
+			{id: 31, start: "2023-05-20T11:56Z", end: "2023-05-20T15:04Z", duration: 188, category: [{id: "Dog's Life", start: "11:56", end: "15:05"}], lines: 720},
+			{id: 32, start: "2023-05-21T11:49Z", end: "2023-05-21T13:37Z", duration: 108, category: [{id: "Dog's Life", start: "11:50", end: "11:57"},{id: "special events", start: "11:58", end: "13:38"}], lines: 720},
+			{id: 33, start: "2023-05-21T14:05Z", end: "2023-05-21T14:54Z", duration: 49, category: [{id: "I Am Fish", start: "14:06", end: "14:55"}], lines: 720},
+			{id: 34, start: "2023-05-21T15:16Z", end: "2023-05-21T16:51Z", duration: 95, category: [{id: "I Am Fish", start: "15:02", end: "15:15"},{id: "", start: "15:18", end: "15:25"},{id: "I Am Fish", start: "15:26", end: "16:52"}], lines: 720},
+			{id: 35, start: "2023-05-22T13:51Z", end: "2023-05-22T14:57Z", duration: 66, category: [{id: "Need for Speed: Road Challenge", start: "13:52", end: "14:58"}], lines: 720},
+			{id: 36, start: "2023-05-22T15:02Z", end: "2023-05-22T17:34Z", duration: 152, category: [{id: "Need for Speed: Road Challenge", start: "15:02", end: "17:35"}], lines: 720},
+			{id: 37, start: "2023-05-23T13:50Z", end: "2023-05-23T17:22Z", duration: 212, category: [{id: "Need for Speed: Road Challenge", start: "13:50", end: "17:22"}], lines: 720},
+			{id: 38, start: "2023-05-25T15:50Z", end: "2023-05-25T20:07Z", duration: 257, category: [{id: "The Legend of Spyro: The Eternal Night", start: "15:51", end: "20:07"}], lines: 720},
+			{id: 39, start: "2023-05-26T15:53Z", end: "2023-05-26T19:21Z", duration: 207, category: [{id: "The Legend of Spyro: The Eternal Night", start: "15:54", end: "19:21"}], lines: 720},
+			{id: 40, start: "2023-05-27T12:02Z", end: "2023-05-27T14:58Z", duration: 176, category: [{id: "I Am Fish", start: "12:03", end: "14:59"}], lines: 720},
+			{id: 41, start: "2023-05-28T16:39Z", end: "2023-05-28T21:10Z", duration: 270, category: [{id: "art", start: "16:39", end: "21:10"}], lines: 720},
+			{id: 42, start: "2023-05-29T13:54Z", end: "2023-05-29T17:08Z", duration: 195, category: [{id: "Need for Speed: Road Challenge", start: "13:54", end: "17:09"}], lines: 720},
+			{id: 43, start: "2023-05-30T13:52Z", end: "2023-05-30T16:11Z", duration: 139, category: [{id: "Need for Speed: Road Challenge", start: "13:53", end: "16:12"}], lines: 720},
+			{id: 44, start: "2023-05-31T11:50Z", end: "2023-05-31T18:30Z", duration: 400, category: [{id: "art", start: "11:50", end: "18:30"}], lines: 720},
+			{id: 45, start: "2023-06-01T15:56Z", end: "2023-06-01T18:12Z", duration: 136, category: [{id: "The Legend of Spyro: The Eternal Night", start: "15:56", end: "18:12"}], lines: 720},
+			{id: 46, start: "2023-06-02T16:43Z", end: "2023-06-02T19:35Z", duration: 172, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "15:56", end: "19:35"}], lines: 720},
+			{id: 47, start: "2023-06-03T12:43Z", end: "2023-06-03T16:07Z", duration: 205, category: [{id: "Crash Bandicoot", start: "11:59", end: "16:08"}], lines: 720},
+			{id: 48, start: "2023-06-04T11:57Z", end: "2023-06-04T15:15Z", duration: 198, category: [{id: "Crash Bandicoot", start: "11:58", end: "15:16"}], lines: 720},
+			{id: 49, start: "2023-06-05T11:50Z", end: "2023-06-05T18:07Z", duration: 378, category: [{id: "art", start: "11:50", end: "18:08"}], lines: 720},
+			{id: 50, start: "2023-06-06T11:50Z", end: "2023-06-06T17:26Z", duration: 336, category: [{id: "art", start: "11:50", end: "17:26"}], lines: 720},
+			{id: 51, start: "2023-06-08T15:53Z", end: "2023-06-08T19:07Z", duration: 194, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "15:53", end: "19:07"}], lines: 720},
+			{id: 52, start: "2023-06-09T16:18Z", end: "2023-06-09T19:16Z", duration: 178, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "15:51", end: "19:16"}], lines: 720},
+			{id: 53, start: "2023-06-10T11:49Z", end: "2023-06-10T15:02Z", duration: 192, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "15:02"}], lines: 720},
+			{id: 54, start: "2023-06-11T11:54Z", end: "2023-06-11T15:22Z", duration: 207, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:55", end: "15:22"}], lines: 720},
+			{id: 55, start: "2023-06-12T11:50Z", end: "2023-06-12T19:51Z", duration: 481, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "15:00"},{id: "art", start: "15:01", end: "19:51"}], lines: 720},
+			{id: 56, start: "2023-06-13T11:50Z", end: "2023-06-13T12:57Z", duration: 67, category: [{id: "art", start: "11:51", end: "12:58"}], lines: 720},
+			{id: 57, start: "2023-06-13T13:02Z", end: "2023-06-13T17:04Z", duration: 242, category: [{id: "art", start: "13:02", end: "17:04"}], lines: 720},
+			{id: 58, start: "2023-06-14T11:49Z", end: "2023-06-14T14:02Z", duration: 133, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "14:03"}], lines: 720},
+			{id: 59, start: "2023-06-15T15:53Z", end: "2023-06-15T17:54Z", duration: 120, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "15:54", end: "17:54"}], lines: 720},
+			{id: 60, start: "2023-06-16T13:54Z", end: "2023-06-16T17:32Z", duration: 218, category: [{id: "Spyro: Enter the Dragonfly", start: "13:51", end: "14:16"},{id: "Spyro: A Hero's Tail", start: "14:17", end: "14:25"},{id: "Spyro: Enter the Dragonfly", start: "14:26", end: "17:32"}], lines: 720},
+			{id: 61, start: "2023-06-17T11:53Z", end: "2023-06-17T17:12Z", duration: 319, category: [{id: "art", start: "11:54", end: "17:13"}], lines: 720},
+			{id: 62, start: "2023-06-18T11:52Z", end: "2023-06-18T17:33Z", duration: 341, category: [{id: "art", start: "11:52", end: "17:33"}], lines: 720},
+			{id: 63, start: "2023-06-19T11:56Z", end: "2023-06-19T16:06Z", duration: 251, category: [{id: "Crash Bandicoot: Warped", start: "11:56", end: "16:07"}], lines: 720},
+			{id: 64, start: "2023-06-20T11:51Z", end: "2023-06-20T15:56Z", duration: 245, category: [{id: "Crash Bandicoot: Warped", start: "11:52", end: "15:57"}], lines: 720},
+			{id: 65, start: "2023-06-21T11:49Z", end: "2023-06-21T14:03Z", duration: 133, category: [{id: "Crash Bandicoot: Warped", start: "11:50", end: "14:03"}], lines: 720},
+			{id: 66, start: "2023-06-21T17:45Z", end: "2023-06-21T17:50Z", duration: 4, category: [{id: "", start: "17:46", end: "17:50"}], lines: 720},
+			{id: 67, start: "2023-06-22T13:53Z", end: "2023-06-22T17:06Z", duration: 193, category: [{id: "Spyro: A Hero's Tail", start: "13:53", end: "17:06"}], lines: 720},
+			{id: 68, start: "2023-06-23T13:56Z", end: "2023-06-23T17:07Z", duration: 191, category: [{id: "Spyro: A Hero's Tail", start: "13:56", end: "17:07"}], lines: 720},
+			{id: 69, start: "2023-06-24T11:52Z", end: "2023-06-24T15:57Z", duration: 245, category: [{id: "art", start: "11:53", end: "15:58"}], lines: 720},
+			{id: 70, start: "2023-06-25T11:56Z", end: "2023-06-25T14:12Z", duration: 136, category: [{id: "art", start: "11:54", end: "14:13"}], lines: 720},
+			{id: 71, start: "2023-06-26T11:50Z", end: "2023-06-26T15:07Z", duration: 198, category: [{id: "Crash Bandicoot: The Wrath of Cortex", start: "11:50", end: "15:08"}], lines: 720},
+			{id: 72, start: "2023-06-27T11:50Z", end: "2023-06-27T15:15Z", duration: 205, category: [{id: "Crash Bandicoot: The Wrath of Cortex", start: "11:51", end: "15:16"}], lines: 720},
+			{id: 73, start: "2023-06-29T13:53Z", end: "2023-06-29T16:27Z", duration: 154, category: [{id: "Spyro: A Hero's Tail", start: "13:54", end: "17:05"}], lines: 720},
+			{id: 74, start: "2023-06-30T13:55Z", end: "2023-06-30T17:18Z", duration: 203, category: [{id: "Spyro: A Hero's Tail", start: "13:55", end: "17:18"}], lines: 720},
+			{id: 75, start: "2023-07-01T11:51Z", end: "2023-07-01T12:13Z", duration: 22, category: [{id: "art", start: "11:51", end: "12:14"}], lines: 720},
+			{id: 76, start: "2023-07-01T12:20Z", end: "2023-07-01T16:09Z", duration: 229, category: [{id: "art", start: "12:21", end: "16:10"}], lines: 720},
+			{id: 77, start: "2023-07-02T11:54Z", end: "2023-07-02T14:49Z", duration: 175, category: [{id: "art", start: "11:55", end: "14:50"}], lines: 720},
+			{id: 78, start: "2023-07-03T12:07Z", end: "2023-07-03T16:36Z", duration: 270, category: [{id: "art", start: "12:07", end: "12:59"},{id: "Crash Bandicoot: The Wrath of Cortex", start: "13:00", end: "16:37"}], lines: 720},
+			{id: 79, start: "2023-07-04T10:14Z", end: "2023-07-04T10:35Z", duration: 21, category: [{id: "", start: "10:15", end: "10:36"}], lines: 720},
+			{id: 80, start: "2023-07-04T11:49Z", end: "2023-07-04T15:34Z", duration: 225, category: [{id: "Crash Bandicoot: The Wrath of Cortex", start: "11:50", end: "15:35"}], lines: 720},
+			{id: 81, start: "2023-07-05T11:53Z", end: "2023-07-05T13:39Z", duration: 106, category: [{id: "Crash Bandicoot: The Wrath of Cortex", start: "11:54", end: "13:40"}], lines: 720},
+			{id: 82, start: "2023-07-05T13:44Z", end: "2023-07-05T16:05Z", duration: 142, category: [{id: "Spyro: A Hero's Tail", start: "13:44", end: "16:06"}], lines: 720},
+			{id: 83, start: "2023-07-06T13:53Z", end: "2023-07-06T17:03Z", duration: 190, category: [{id: "Spyro: Season of Ice", start: "13:54", end: "17:04"}], lines: 720},
+			{id: 84, start: "2023-07-07T13:52Z", end: "2023-07-07T17:28Z", duration: 216, category: [{id: "Spyro: Season of Ice", start: "13:53", end: "17:29"}], lines: 720},
+			{id: 85, start: "2023-07-08T16:00Z", end: "2023-07-08T20:07Z", duration: 247, category: [{id: "Escape Simulator", start: "16:00", end: "20:07"}], lines: 720},
+			{id: 86, start: "2023-07-10T12:23Z", end: "2023-07-10T15:51Z", duration: 208, category: [{id: "Crash Team Racing", start: "12:24", end: "15:52"}], lines: 720},
+			{id: 87, start: "2023-07-11T11:49Z", end: "2023-07-11T15:33Z", duration: 224, category: [{id: "Crash Team Racing", start: "11:50", end: "15:34"}], lines: 720},
+			{id: 88, start: "2023-07-13T13:52Z", end: "2023-07-13T17:02Z", duration: 190, category: [{id: "Spyro: Season of Ice", start: "13:52", end: "17:02"}], lines: 720},
+			{id: 89, start: "2023-07-14T13:54Z", end: "2023-07-14T17:25Z", duration: 211, category: [{id: "Spyro: Season of Ice", start: "13:54", end: "15:32"},{id: "Spyro 2: Season of Flame", start: "15:33", end: "17:25"}], lines: 720},
+			{id: 90, start: "2023-07-16T12:05Z", end: "2023-07-16T13:31Z", duration: 87, category: [{id: "art", start: "12:05", end: "13:32"}], lines: 720},
+			{id: 91, start: "2023-07-17T11:51Z", end: "2023-07-17T15:06Z", duration: 196, category: [{id: "Crash Team Racing", start: "11:51", end: "15:07"}], lines: 720},
+			{id: 92, start: "2023-07-18T11:52Z", end: "2023-07-18T15:03Z", duration: 191, category: [{id: "Crash Team Racing", start: "11:53", end: "15:04"}], lines: 720},
+			{id: 93, start: "2023-07-20T13:57Z", end: "2023-07-20T17:07Z", duration: 190, category: [{id: "Crash Team Racing", start: "13:57", end: "14:50"},{id: "Spyro 2: Season of Flame", start: "14:51", end: "17:07"}], lines: 720},
+			{id: 94, start: "2023-07-21T13:52Z", end: "2023-07-21T15:12Z", duration: 81, category: [{id: "Spyro 2: Season of Flame", start: "13:52", end: "15:13"}], lines: 720},
+			{id: 95, start: "2023-07-22T11:50Z", end: "2023-07-22T16:03Z", duration: 253, category: [{id: "art", start: "11:50", end: "16:03"}], lines: 720},
+			{id: 96, start: "2023-07-23T11:52Z", end: "2023-07-23T15:32Z", duration: 220, category: [{id: "art", start: "11:52", end: "15:32"}], lines: 720},
+			{id: 97, start: "2023-07-24T11:50Z", end: "2023-07-24T14:09Z", duration: 140, category: [{id: "Crash Team Racing", start: "11:50", end: "14:10"}], lines: 720},
+			{id: 98, start: "2023-07-25T11:49Z", end: "2023-07-25T15:04Z", duration: 195, category: [{id: "Crash Bash", start: "11:50", end: "15:05"}], lines: 720},
+			{id: 99, start: "2023-07-27T14:50Z", end: "2023-07-27T15:56Z", duration: 67, category: [{id: "music", start: "14:50", end: "15:57"}], lines: 720},
+			{id: 100, start: "2023-07-28T13:50Z", end: "2023-07-28T17:35Z", duration: 225, category: [{id: "Spyro 2: Season of Flame", start: "13:50", end: "17:35"}], lines: 720},
+			{id: 101, start: "2023-07-29T11:55Z", end: "2023-07-29T17:59Z", duration: 364, category: [{id: "art", start: "11:52", end: "17:59"}], lines: 720},
+			{id: 102, start: "2023-07-30T11:52Z", end: "2023-07-30T18:13Z", duration: 381, category: [{id: "art", start: "11:52", end: "18:13"}], lines: 720},
+			{id: 103, start: "2023-07-31T11:50Z", end: "2023-07-31T15:07Z", duration: 198, category: [{id: "Crash Bash", start: "11:50", end: "15:08"}], lines: 720},
+			{id: 104, start: "2023-08-01T11:51Z", end: "2023-08-01T15:29Z", duration: 219, category: [{id: "Crash Bash", start: "11:51", end: "13:53"},{id: "Crash Bandicoot Fusion", start: "13:54", end: "15:30"}], lines: 720},
+			{id: 105, start: "2023-08-03T13:49Z", end: "2023-08-03T17:05Z", duration: 195, category: [{id: "Spyro Fusion", start: "13:50", end: "17:05"}], lines: 720},
+			{id: 106, start: "2023-08-04T13:49Z", end: "2023-08-04T17:07Z", duration: 197, category: [{id: "Spyro Fusion", start: "13:50", end: "17:07"}], lines: 720},
+			{id: 107, start: "2023-08-05T11:50Z", end: "2023-08-05T18:19Z", duration: 389, category: [{id: "art", start: "11:50", end: "18:19"}], lines: 720},
+			{id: 108, start: "2023-08-06T14:31Z", end: "2023-08-06T18:32Z", duration: 240, category: [{id: "art", start: "11:52", end: "18:32"}], lines: 720},
+			{id: 109, start: "2023-08-07T14:50Z", end: "2023-08-07T17:29Z", duration: 159, category: [{id: "Crash Bandicoot Fusion", start: "14:50", end: "17:29"}], lines: 720},
+			{id: 110, start: "2023-08-08T11:50Z", end: "2023-08-08T15:06Z", duration: 196, category: [{id: "Spyro Fusion", start: "11:51", end: "14:44"},{id: "Crash Bandicoot Fusion", start: "14:45", end: "14:55"},{id: "Spyro Fusion", start: "14:56", end: "15:07"}], lines: 720},
+			{id: 111, start: "2023-08-10T13:57Z", end: "2023-08-10T17:18Z", duration: 200, category: [{id: "Spyro Adventure", start: "13:51", end: "17:18"}], lines: 720},
+			{id: 112, start: "2023-08-11T13:50Z", end: "2023-08-11T17:05Z", duration: 194, category: [{id: "Spyro Adventure", start: "13:51", end: "17:05"}], lines: 720},
+			{id: 113, start: "2023-08-12T14:31Z", end: "2023-08-12T18:10Z", duration: 219, category: [{id: "art", start: "11:51", end: "14:32"},{id: "", start: "14:33", end: "14:39"},{id: "art", start: "14:40", end: "18:10"}], lines: 720},
+			{id: 114, start: "2023-08-13T11:49Z", end: "2023-08-13T18:11Z", duration: 381, category: [{id: "art", start: "11:50", end: "18:11"}], lines: 720},
+			{id: 115, start: "2023-08-14T11:52Z", end: "2023-08-14T15:12Z", duration: 201, category: [{id: "Crash Bandicoot: XS", start: "11:52", end: "15:13"}], lines: 720},
+			{id: 116, start: "2023-08-15T11:49Z", end: "2023-08-15T15:32Z", duration: 223, category: [{id: "Crash Bandicoot: XS", start: "11:50", end: "15:33"}], lines: 720},
+			{id: 117, start: "2023-08-17T13:52Z", end: "2023-08-17T17:10Z", duration: 197, category: [{id: "Spyro Adventure", start: "13:53", end: "17:10"}], lines: 720},
+			{id: 118, start: "2023-08-18T13:50Z", end: "2023-08-18T16:50Z", duration: 181, category: [{id: "Spyro Adventure", start: "13:50", end: "16:51"}], lines: 720},
+			{id: 119, start: "2023-08-19T11:50Z", end: "2023-08-19T18:54Z", duration: 424, category: [{id: "art", start: "11:50", end: "18:54"}], lines: 720},
+			{id: 120, start: "2023-08-20T11:53Z", end: "2023-08-20T18:28Z", duration: 395, category: [{id: "art", start: "11:53", end: "18:28"}], lines: 720},
+			{id: 121, start: "2023-08-21T13:07Z", end: "2023-08-21T16:24Z", duration: 197, category: [{id: "Crash Bandicoot: XS", start: "13:07", end: "16:25"}], lines: 720},
+			{id: 122, start: "2023-08-22T11:50Z", end: "2023-08-22T16:09Z", duration: 260, category: [{id: "Crash Bandicoot 2: N. Tranced", start: "11:50", end: "16:10"}], lines: 720},
+			{id: 123, start: "2023-08-24T13:49Z", end: "2023-08-24T18:18Z", duration: 268, category: [{id: "Spyro: Shadow Legacy", start: "13:50", end: "14:26"},{id: "I Am Fish", start: "14:27", end: "15:58"},{id: "Spyro 2: Gateway to Glimmer", start: "15:59", end: "18:18"}], lines: 720},
+			{id: 124, start: "2023-08-25T13:50Z", end: "2023-08-25T17:25Z", duration: 215, category: [{id: "Spyro 2: Gateway to Glimmer", start: "13:50", end: "17:25"}], lines: 720},
+			{id: 125, start: "2023-08-26T14:57Z", end: "2023-08-26T19:07Z", duration: 250, category: [{id: "art", start: "11:52", end: "14:55"},{id: "", start: "14:56", end: "15:08"},{id: "art", start: "15:09", end: "19:07"}], lines: 720},
+			{id: 126, start: "2023-08-27T11:52Z", end: "2023-08-27T13:31Z", duration: 98, category: [{id: "art", start: "11:53", end: "13:31"}], lines: 720},
+			{id: 127, start: "2023-08-27T14:05Z", end: "2023-08-27T19:50Z", duration: 344, category: [{id: "art", start: "14:06", end: "19:50"}], lines: 720},
+			{id: 128, start: "2023-08-28T11:49Z", end: "2023-08-28T15:04Z", duration: 194, category: [{id: "Crash Bandicoot 2: N. Tranced", start: "11:50", end: "12:59"},{id: "Crash Bandicoot", start: "13:00", end: "15:04"}], lines: 720},
+			{id: 129, start: "2023-08-29T11:49Z", end: "2023-08-29T15:21Z", duration: 211, category: [{id: "Crash Bandicoot", start: "11:50", end: "15:21"}], lines: 720},
+			{id: 130, start: "2023-08-31T13:49Z", end: "2023-08-31T17:16Z", duration: 206, category: [{id: "Spyro 2: Gateway to Glimmer", start: "13:50", end: "16:13"},{id: "Spyro: Year of the Dragon", start: "16:14", end: "17:16"}], lines: 720},
+			{id: 131, start: "2023-09-01T13:49Z", end: "2023-09-01T17:09Z", duration: 199, category: [{id: "Spyro: Year of the Dragon", start: "13:50", end: "17:09"}], lines: 720},
+			{id: 132, start: "2023-09-02T11:49Z", end: "2023-09-02T20:32Z", duration: 522, category: [{id: "art", start: "11:50", end: "20:32"}], lines: 720},
+			{id: 133, start: "2023-09-04T11:49Z", end: "2023-09-04T16:54Z", duration: 304, category: [{id: "Klonoa - Door to Phantomile", start: "11:50", end: "16:54"}], lines: 720},
+			{id: 134, start: "2023-09-05T11:50Z", end: "2023-09-05T15:11Z", duration: 201, category: [{id: "Klonoa - Door to Phantomile", start: "11:50", end: "15:11"}], lines: 720},
+			{id: 135, start: "2023-09-07T15:35Z", end: "2023-09-07T17:19Z", duration: 104, category: [{id: "Spyro: Year of the Dragon", start: "13:50", end: "17:43"}], lines: 720},
+			{id: 136, start: "2023-09-08T13:49Z", end: "2023-09-08T17:24Z", duration: 214, category: [{id: "Spyro: Year of the Dragon", start: "13:50", end: "18:05"}], lines: 720},
+			{id: 137, start: "2023-09-09T11:52Z", end: "2023-09-09T20:07Z", duration: 495, category: [{id: "art", start: "11:52", end: "20:07"}], lines: 720},
+			{id: 138, start: "2023-09-10T11:50Z", end: "2023-09-10T18:20Z", duration: 390, category: [{id: "art", start: "11:50", end: "18:20"}], lines: 720},
+			{id: 139, start: "2023-09-11T11:50Z", end: "2023-09-11T15:19Z", duration: 208, category: [{id: "Klonoa - Door to Phantomile", start: "11:51", end: "13:53"},{id: "Tombi!", start: "13:54", end: "15:19"}], lines: 720},
+			{id: 140, start: "2023-09-12T11:49Z", end: "2023-09-12T15:18Z", duration: 208, category: [{id: "Tombi!", start: "11:50", end: "15:18"}], lines: 720},
+			{id: 141, start: "2023-09-14T13:49Z", end: "2023-09-14T17:27Z", duration: 217, category: [{id: "Spyro: Year of the Dragon", start: "13:50", end: "15:06"},{id: "Spyro 2: Gateway to Glimmer", start: "15:07", end: "17:27"}], lines: 720},
+			{id: 142, start: "2023-09-15T13:50Z", end: "2023-09-15T17:10Z", duration: 200, category: [{id: "special events", start: "13:51", end: "14:02"},{id: "Return Fire", start: "14:03", end: "17:10"}], lines: 720},
+			{id: 143, start: "2023-09-17T11:50Z", end: "2023-09-17T19:14Z", duration: 444, category: [{id: "art", start: "11:51", end: "19:14"}], lines: 720},
+			{id: 144, start: "2023-09-18T11:49Z", end: "2023-09-18T15:31Z", duration: 221, category: [{id: "Tombi!", start: "11:50", end: "15:31"}], lines: 720},
+			{id: 145, start: "2023-09-19T12:19Z", end: "2023-09-19T15:42Z", duration: 202, category: [{id: "Tombi!", start: "12:20", end: "15:42"}], lines: 720},
+			{id: 146, start: "2023-09-21T13:53Z", end: "2023-09-21T17:20Z", duration: 207, category: [{id: "Return Fire", start: "13:53", end: "17:20"}], lines: 720},
+			{id: 147, start: "2023-09-22T13:50Z", end: "2023-09-22T18:59Z", duration: 309, category: [{id: "Return Fire", start: "13:50", end: "18:59"}], lines: 720},
+			{id: 148, start: "2023-09-23T11:49Z", end: "2023-09-23T17:56Z", duration: 366, category: [{id: "art", start: "11:50", end: "17:56"}], lines: 720},
+			{id: 149, start: "2023-09-24T11:49Z", end: "2023-09-24T18:11Z", duration: 381, category: [{id: "art", start: "11:50", end: "18:11"}], lines: 720},
+			{id: 150, start: "2023-09-25T11:50Z", end: "2023-09-25T14:40Z", duration: 170, category: [{id: "Tombi!", start: "11:50", end: "14:40"}], lines: 720},
+			{id: 151, start: "2023-09-26T17:46Z", end: "2023-09-26T22:23Z", duration: 278, category: [{id: "Tombi!", start: "16:56", end: "17:04"},{id: "Spyro the Dragon", start: "17:05", end: "17:47"},{id: "", start: "17:48", end: "17:55"},{id: "Crash Bandicoot: Warped", start: "17:56", end: "22:24"}], lines: 720},
+			{id: 152, start: "2023-09-28T13:51Z", end: "2023-09-28T17:28Z", duration: 216, category: [{id: "Return Fire", start: "13:52", end: "17:28"}], lines: 720},
+			{id: 153, start: "2023-09-29T13:49Z", end: "2023-09-29T17:46Z", duration: 236, category: [{id: "Return Fire", start: "13:50", end: "17:46"}], lines: 720},
+			{id: 154, start: "2023-10-01T11:49Z", end: "2023-10-01T20:37Z", duration: 527, category: [{id: "art", start: "11:50", end: "20:37"}], lines: 720},
+			{id: 155, start: "2023-10-03T11:49Z", end: "2023-10-03T18:09Z", duration: 379, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "18:09"}], lines: 720},
+			{id: 156, start: "2023-10-05T13:50Z", end: "2023-10-05T18:30Z", duration: 280, category: [{id: "Return Fire", start: "13:50", end: "18:30"}], lines: 720},
+			{id: 157, start: "2023-10-06T13:49Z", end: "2023-10-06T16:55Z", duration: 185, category: [{id: "Return Fire", start: "13:50", end: "16:55"}], lines: 720},
+			{id: 158, start: "2023-10-07T11:54Z", end: "2023-10-07T21:50Z", duration: 597, category: [{id: "art", start: "11:54", end: "21:51"}], lines: 720},
+			{id: 159, start: "2023-10-08T11:49Z", end: "2023-10-08T16:37Z", duration: 288, category: [{id: "art", start: "11:50", end: "16:37"}], lines: 720},
+			{id: 160, start: "2023-10-09T12:36Z", end: "2023-10-09T15:16Z", duration: 159, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "12:34"},{id: "", start: "12:35", end: "12:41"},{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "12:42", end: "15:16"}], lines: 720},
+			{id: 161, start: "2023-10-10T11:49Z", end: "2023-10-10T14:40Z", duration: 170, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:50", end: "14:40"}], lines: 720},
+			{id: 162, start: "2023-10-12T13:49Z", end: "2023-10-12T17:06Z", duration: 196, category: [{id: "Return Fire", start: "13:50", end: "17:06"}], lines: 720},
+			{id: 163, start: "2023-10-13T13:49Z", end: "2023-10-13T17:02Z", duration: 192, category: [{id: "Return Fire", start: "13:50", end: "17:02"}], lines: 720},
+			{id: 164, start: "2023-10-15T11:50Z", end: "2023-10-15T17:55Z", duration: 365, category: [{id: "art", start: "11:50", end: "17:55"}], lines: 720},
+			{id: 165, start: "2023-10-16T11:49Z", end: "2023-10-16T15:20Z", duration: 210, category: [{id: "Crash Bandicoot: Warped", start: "11:50", end: "15:20"}], lines: 720},
+			{id: 166, start: "2023-10-17T11:49Z", end: "2023-10-17T15:51Z", duration: 242, category: [{id: "Crash Bandicoot: Warped", start: "11:50", end: "15:52"}], lines: 720},
+			{id: 167, start: "2023-10-19T13:49Z", end: "2023-10-19T17:13Z", duration: 203, category: [{id: "Return Fire", start: "13:50", end: "17:13"}], lines: 720},
+			{id: 168, start: "2023-10-20T13:49Z", end: "2023-10-20T17:27Z", duration: 217, category: [{id: "Return Fire", start: "13:50", end: "17:27"}], lines: 720},
+			{id: 169, start: "2023-10-23T11:49Z", end: "2023-10-23T15:05Z", duration: 196, category: [{id: "Crash Bandicoot: Warped", start: "11:50", end: "15:06"}], lines: 720},
+			{id: 170, start: "2023-10-24T11:49Z", end: "2023-10-24T16:27Z", duration: 278, category: [{id: "Vib-Ribbon", start: "11:50", end: "12:33"},{id: "Kurushi Final: Mental Blocks", start: "12:34", end: "13:45"},{id: "Moto Racer", start: "13:46", end: "13:53"},{id: "Return Fire", start: "13:54", end: "16:28"}], lines: 720},
+			{id: 171, start: "2023-10-26T13:49Z", end: "2023-10-26T17:14Z", duration: 204, category: [{id: "Return Fire", start: "13:50", end: "17:14"}], lines: 720},
+			{id: 172, start: "2023-10-27T14:19Z", end: "2023-10-27T17:31Z", duration: 191, category: [{id: "Return Fire", start: "14:20", end: "17:31"}], lines: 720},
+			{id: 173, start: "2023-10-30T12:49Z", end: "2023-10-30T15:55Z", duration: 185, category: [{id: "Moto Racer", start: "12:50", end: "15:55"}], lines: 720},
+			{id: 174, start: "2023-10-31T12:50Z", end: "2023-10-31T17:41Z", duration: 292, category: [{id: "Moto Racer 2", start: "12:50", end: "17:42"}], lines: 720},
+			{id: 175, start: "2023-11-02T14:49Z", end: "2023-11-02T17:52Z", duration: 182, category: [{id: "Return Fire", start: "14:50", end: "17:52"}], lines: 720},
+			{id: 176, start: "2023-11-03T14:49Z", end: "2023-11-03T19:16Z", duration: 266, category: [{id: "Return Fire", start: "14:50", end: "19:16"}], lines: 720},
+			{id: 177, start: "2023-11-06T12:50Z", end: "2023-11-06T16:38Z", duration: 228, category: [{id: "Moto Racer World Tour", start: "12:50", end: "15:17"},{id: "Moto Racer 3", start: "15:18", end: "16:38"}], lines: 720},
+			{id: 178, start: "2023-11-07T12:50Z", end: "2023-11-07T16:15Z", duration: 205, category: [{id: "jet_moto", start: "12:50", end: "13:57"},{id: "Klonoa Beach Volleyball", start: "13:58", end: "16:15"}], lines: 720},
+			{id: 179, start: "2023-11-09T14:49Z", end: "2023-11-09T19:44Z", duration: 294, category: [{id: "Return Fire", start: "14:50", end: "19:44"}], lines: 720},
+			{id: 180, start: "2023-11-10T14:49Z", end: "2023-11-10T17:51Z", duration: 181, category: [{id: "Return Fire", start: "14:50", end: "17:51"}], lines: 720},
+			{id: 181, start: "2023-11-15T18:49Z", end: "2023-11-15T20:03Z", duration: 74, category: [{id: "SeppuKuties", start: "18:50", end: "20:04"}], lines: 720},
+			{id: 182, start: "2023-11-18T17:50Z", end: "2023-11-18T20:02Z", duration: 132, category: [{id: "SeppuKuties", start: "17:51", end: "18:47"},{id: "", start: "18:48", end: "18:53"},{id: "Return Fire", start: "18:54", end: "20:03"}], lines: 720},
+			{id: 183, start: "2023-11-22T16:50Z", end: "2023-11-22T20:10Z", duration: 200, category: [{id: "Crash Bandicoot", start: "16:50", end: "19:00"},{id: "Crash Bandicoot: Warped", start: "19:01", end: "20:10"}], lines: 720},
+			{id: 184, start: "2023-12-01T19:49Z", end: "2023-12-01T23:56Z", duration: 247, category: [{id: "Spyro the Dragon", start: "19:50", end: "21:04"},{id: "Crash Bandicoot: Warped", start: "21:05", end: "23:57"}], lines: 720},
+			{id: 185, start: "2023-12-04T16:49Z", end: "2023-12-04T22:26Z", duration: 337, category: [{id: "Spyro the Dragon", start: "16:50", end: "22:27"}], lines: 720},
+			{id: 186, start: "2023-12-05T19:49Z", end: "2023-12-05T23:10Z", duration: 201, category: [{id: "Crash Bandicoot", start: "19:50", end: "22:02"},{id: "Crash Bandicoot: Warped", start: "22:03", end: "22:28"},{id: "Crash Bandicoot", start: "22:29", end: "23:11"}], lines: 720},
+			{id: 187, start: "2023-12-06T19:49Z", end: "2023-12-07T00:07Z", duration: 257, category: [{id: "Spyro: Season of Ice", start: "19:50", end: "00:07"}], lines: 720},
+			{id: 188, start: "2023-12-07T15:20Z", end: "2023-12-07T20:12Z", duration: 292, category: [{id: "", start: "15:20", end: "20:12"}], lines: 720},
+			{id: 189, start: "2023-12-15T11:50Z", end: "2023-12-15T19:56Z", duration: 486, category: [{id: "Crash Bash", start: "11:50", end: "19:56"}], lines: 720},
+			{id: 190, start: "2023-12-17T13:52Z", end: "2023-12-17T18:38Z", duration: 287, category: [{id: "Crash Bash", start: "13:52", end: "18:39"}], lines: 720},
+			{id: 191, start: "2023-12-19T15:20Z", end: "2023-12-19T20:23Z", duration: 303, category: [{id: "Digimon Rumble Arena", start: "15:20", end: "20:23"}], lines: 720},
+			{id: 192, start: "2023-12-23T11:49Z", end: "2023-12-23T16:13Z", duration: 264, category: [{id: "Digimon Rumble Arena", start: "11:50", end: "16:14"}], lines: 720},
+			{id: 193, start: "2024-01-02T11:50Z", end: "2024-01-02T15:13Z", duration: 203, category: [{id: "Digimon Rumble Arena", start: "11:50", end: "15:13"}], lines: 1080},
+			{id: 194, start: "2024-01-04T12:50Z", end: "2024-01-04T14:38Z", duration: 108, category: [{id: "Digimon Rumble Arena", start: "12:50", end: "14:38"}], lines: 1080},
+			{id: 195, start: "2024-01-07T12:51Z", end: "2024-01-07T16:02Z", duration: 191, category: [{id: "Spyro: Enter the Dragonfly", start: "12:51", end: "16:02"}], lines: 1080},
+			{id: 196, start: "2024-01-08T12:49Z", end: "2024-01-08T16:05Z", duration: 195, category: [{id: "Spyro: Enter the Dragonfly", start: "12:50", end: "16:05"}], lines: 1080},
+			{id: 197, start: "2024-01-10T13:20Z", end: "2024-01-10T16:41Z", duration: 201, category: [{id: "Crash Twinsanity", start: "13:20", end: "16:41"}], lines: 1080},
+			{id: 198, start: "2024-01-11T12:49Z", end: "2024-01-11T16:00Z", duration: 191, category: [{id: "Crash Twinsanity", start: "12:50", end: "16:00"}], lines: 1080},
+			{id: 199, start: "2024-01-12T13:04Z", end: "2024-01-12T16:26Z", duration: 202, category: [{id: "Digimon Rumble Arena 2", start: "12:53", end: "16:26"}], lines: 1080},
+			{id: 200, start: "2024-01-13T12:51Z", end: "2024-01-13T12:55Z", duration: 3, category: [{id: "Digimon Rumble Arena 2", start: "12:50", end: "12:58"}], lines: 1080},
+			{id: 201, start: "2024-01-13T13:04Z", end: "2024-01-13T14:42Z", duration: 97, category: [{id: "Digimon Rumble Arena 2", start: "13:05", end: "13:08"},{id: "", start: "13:09", end: "13:15"},{id: "Digimon Rumble Arena 2", start: "13:16", end: "14:42"}], lines: 1080},
+			{id: 202, start: "2024-01-14T12:51Z", end: "2024-01-14T16:17Z", duration: 205, category: [{id: "Spyro: Enter the Dragonfly", start: "12:52", end: "16:17"}], lines: 1080},
+			{id: 203, start: "2024-01-15T12:49Z", end: "2024-01-15T15:20Z", duration: 150, category: [{id: "Spyro: Enter the Dragonfly", start: "12:50", end: "15:20"}], lines: 1080},
+			{id: 204, start: "2024-01-17T12:50Z", end: "2024-01-17T16:05Z", duration: 195, category: [{id: "Crash Twinsanity", start: "12:50", end: "16:05"}], lines: 1080},
+			{id: 205, start: "2024-01-18T12:54Z", end: "2024-01-18T16:13Z", duration: 198, category: [{id: "Crash Twinsanity", start: "12:55", end: "14:45"},{id: "art", start: "14:46", end: "16:13"}], lines: 1080},
+			{id: 206, start: "2024-01-19T12:50Z", end: "2024-01-19T16:28Z", duration: 218, category: [{id: "art", start: "12:51", end: "16:28"}], lines: 1080},
+			{id: 207, start: "2024-01-20T13:07Z", end: "2024-01-20T15:59Z", duration: 171, category: [{id: "art", start: "12:51", end: "13:08"},{id: "", start: "13:09", end: "13:16"},{id: "art", start: "13:17", end: "15:59"}], lines: 1080},
+			{id: 208, start: "2024-01-21T12:54Z", end: "2024-01-21T16:13Z", duration: 199, category: [{id: "Spyro: Shadow Legacy", start: "12:54", end: "16:13"}], lines: 1080},
+			{id: 209, start: "2024-01-22T13:20Z", end: "2024-01-22T16:33Z", duration: 193, category: [{id: "Spyro: Shadow Legacy", start: "12:50", end: "16:33"}], lines: 1080},
+			{id: 210, start: "2024-01-24T12:54Z", end: "2024-01-24T16:02Z", duration: 187, category: [{id: "Crash of the Titans", start: "12:55", end: "16:02"}], lines: 1080},
+			{id: 211, start: "2024-01-25T14:21Z", end: "2024-01-25T15:41Z", duration: 80, category: [{id: "Crash of the Titans", start: "12:51", end: "16:09"}], lines: 1080},
+			{id: 212, start: "2024-01-26T13:10Z", end: "2024-01-26T16:32Z", duration: 202, category: [{id: "Digimon All-Star Rumble", start: "12:56", end: "13:22"},{id: "art", start: "13:23", end: "16:32"}], lines: 1080},
+			{id: 213, start: "2024-01-27T12:50Z", end: "2024-01-27T16:30Z", duration: 220, category: [{id: "art", start: "12:50", end: "16:30"}], lines: 1080},
+			{id: 214, start: "2024-01-28T12:54Z", end: "2024-01-28T16:20Z", duration: 206, category: [{id: "Spyro: Shadow Legacy", start: "12:54", end: "16:20"}], lines: 1080},
+			{id: 215, start: "2024-01-29T13:35Z", end: "2024-01-29T16:12Z", duration: 156, category: [{id: "Spyro: Shadow Legacy", start: "12:50", end: "16:12"}], lines: 1080},
+			{id: 216, start: "2024-01-31T12:50Z", end: "2024-01-31T16:09Z", duration: 199, category: [{id: "Crash of the Titans", start: "12:50", end: "16:09"}], lines: 1080},
+			{id: 217, start: "2024-02-01T12:50Z", end: "2024-02-01T16:26Z", duration: 216, category: [{id: "Crash of the Titans", start: "12:50", end: "16:26"}], lines: 1080},
+			{id: 218, start: "2024-02-02T12:50Z", end: "2024-02-02T16:39Z", duration: 229, category: [{id: "art", start: "12:51", end: "16:39"}], lines: 1080},
+			{id: 219, start: "2024-02-03T12:50Z", end: "2024-02-03T16:23Z", duration: 212, category: [{id: "art", start: "12:51", end: "16:23"}], lines: 1080},
+			{id: 220, start: "2024-02-04T12:50Z", end: "2024-02-04T16:14Z", duration: 204, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:50", end: "16:14"}], lines: 1080},
+			{id: 221, start: "2024-02-05T12:49Z", end: "2024-02-05T16:01Z", duration: 191, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:50", end: "16:01"}], lines: 1080},
+			{id: 222, start: "2024-02-07T12:50Z", end: "2024-02-07T16:03Z", duration: 193, category: [{id: "Crash of the Titans", start: "12:50", end: "16:03"}], lines: 1080},
+			{id: 223, start: "2024-02-08T12:52Z", end: "2024-02-08T16:05Z", duration: 193, category: [{id: "Crash of the Titans", start: "12:52", end: "16:05"}], lines: 1080},
+			{id: 224, start: "2024-02-09T12:49Z", end: "2024-02-09T16:30Z", duration: 220, category: [{id: "art", start: "12:50", end: "16:30"}], lines: 1080},
+			{id: 225, start: "2024-02-10T12:49Z", end: "2024-02-10T17:28Z", duration: 278, category: [{id: "art", start: "12:50", end: "17:28"}], lines: 1080},
+			{id: 226, start: "2024-02-11T12:49Z", end: "2024-02-11T16:07Z", duration: 197, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:50", end: "15:06"},{id: "The Legend of Spyro: The Eternal Night", start: "15:07", end: "16:07"}], lines: 1080},
+			{id: 227, start: "2024-02-12T12:49Z", end: "2024-02-12T16:07Z", duration: 197, category: [{id: "The Legend of Spyro: The Eternal Night", start: "12:50", end: "16:07"}], lines: 1080},
+			{id: 228, start: "2024-02-14T12:51Z", end: "2024-02-14T16:28Z", duration: 217, category: [{id: "Crash of the Titans", start: "12:51", end: "16:28"}], lines: 1080},
+			{id: 229, start: "2024-02-15T12:55Z", end: "2024-02-15T16:02Z", duration: 187, category: [{id: "Crash: Mind over Mutant", start: "12:55", end: "16:02"}], lines: 1080},
+			{id: 230, start: "2024-02-16T12:59Z", end: "2024-02-16T15:10Z", duration: 130, category: [{id: "art", start: "13:00", end: "15:11"},{id: "", start: "15:12", end: "15:19"},{id: "art", start: "15:20", end: "16:09"}], lines: 1080},
+			{id: 231, start: "2024-02-17T12:52Z", end: "2024-02-17T16:34Z", duration: 221, category: [{id: "art", start: "12:51", end: "16:34"}], lines: 1080},
+			{id: 232, start: "2024-02-18T12:49Z", end: "2024-02-18T16:06Z", duration: 197, category: [{id: "The Legend of Spyro: The Eternal Night", start: "12:50", end: "14:44"},{id: "The Legend of Spyro: Dawn of the Dragon", start: "14:45", end: "16:06"}], lines: 1080},
+			{id: 233, start: "2024-02-19T12:52Z", end: "2024-02-19T15:34Z", duration: 162, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "12:51", end: "15:34"}], lines: 1080},
+			{id: 234, start: "2024-02-21T13:50Z", end: "2024-02-21T16:04Z", duration: 134, category: [{id: "Crash: Mind over Mutant", start: "12:51", end: "16:04"}], lines: 1080},
+			{id: 235, start: "2024-02-22T12:49Z", end: "2024-02-22T16:15Z", duration: 205, category: [{id: "Crash: Mind over Mutant", start: "12:50", end: "16:15"}], lines: 1080},
+			{id: 236, start: "2024-02-23T12:51Z", end: "2024-02-23T16:00Z", duration: 189, category: [{id: "I Am Fish", start: "12:52", end: "16:00"}], lines: 1080},
+			{id: 237, start: "2024-02-24T12:49Z", end: "2024-02-24T16:23Z", duration: 213, category: [{id: "I Am Fish", start: "12:50", end: "16:23"}], lines: 1080},
+			{id: 238, start: "2024-02-25T12:49Z", end: "2024-02-25T15:34Z", duration: 164, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:50", end: "15:34"}], lines: 1080},
+			{id: 239, start: "2024-02-26T13:34Z", end: "2024-02-26T16:51Z", duration: 196, category: [{id: "The Legend of Spyro: The Eternal Night", start: "13:35", end: "16:51"}], lines: 1080},
+			{id: 240, start: "2024-02-28T12:50Z", end: "2024-02-28T16:19Z", duration: 209, category: [{id: "Crash Nitro Kart", start: "12:50", end: "16:19"}], lines: 1080},
+			{id: 241, start: "2024-02-29T13:41Z", end: "2024-02-29T16:04Z", duration: 142, category: [{id: "Crash Nitro Kart", start: "12:50", end: "16:04"}], lines: 1080},
+			{id: 242, start: "2024-03-01T13:00Z", end: "2024-03-01T16:07Z", duration: 187, category: [{id: "I Am Fish", start: "12:52", end: "16:07"}], lines: 1080},
+			{id: 243, start: "2024-03-02T12:49Z", end: "2024-03-02T16:14Z", duration: 204, category: [{id: "I Am Fish", start: "12:50", end: "16:14"}], lines: 1080},
+			{id: 244, start: "2024-03-03T13:00Z", end: "2024-03-03T16:09Z", duration: 188, category: [{id: "I Am Fish", start: "12:52", end: "13:01"},{id: "", start: "13:02", end: "13:10"},{id: "I Am Fish", start: "13:11", end: "16:09"}], lines: 1080},
+			{id: 245, start: "2024-03-08T12:49Z", end: "2024-03-08T16:02Z", duration: 192, category: [{id: "I Am Fish", start: "12:50", end: "16:02"}], lines: 1080},
+			{id: 246, start: "2024-03-09T12:49Z", end: "2024-03-09T16:23Z", duration: 213, category: [{id: "I Am Fish", start: "12:50", end: "16:23"}], lines: 1080},
+			{id: 247, start: "2024-03-10T12:48Z", end: "2024-03-10T16:00Z", duration: 192, category: [{id: "Zapper: One Wicked Cricket!", start: "12:48", end: "16:00"}], lines: 1080},
+			{id: 248, start: "2024-03-11T12:49Z", end: "2024-03-11T16:04Z", duration: 194, category: [{id: "The Legend of Spyro: The Eternal Night", start: "12:50", end: "16:04"}], lines: 1080},
+			{id: 249, start: "2024-03-13T12:49Z", end: "2024-03-13T16:10Z", duration: 201, category: [{id: "Crash Nitro Kart", start: "12:50", end: "16:10"}], lines: 1080},
+			{id: 250, start: "2024-03-14T12:49Z", end: "2024-03-14T16:33Z", duration: 223, category: [{id: "Crash Nitro Kart", start: "12:50", end: "16:33"}], lines: 1080},
+			{id: 251, start: "2024-03-15T12:50Z", end: "2024-03-15T17:04Z", duration: 254, category: [{id: "I Am Fish", start: "12:50", end: "17:04"}], lines: 1080},
+			{id: 252, start: "2024-03-16T12:49Z", end: "2024-03-16T17:30Z", duration: 281, category: [{id: "I Am Fish", start: "12:50", end: "17:30"}], lines: 1080},
+			{id: 253, start: "2024-03-17T12:48Z", end: "2024-03-17T16:04Z", duration: 196, category: [{id: "Spyro: Ripto Quest", start: "12:48", end: "14:09"},{id: "Spyro the Dragon", start: "14:10", end: "15:15"},{id: "The Legend of Spyro: A New Beginning", start: "15:16", end: "16:04"}], lines: 1080},
+			{id: 254, start: "2024-03-18T12:49Z", end: "2024-03-18T16:09Z", duration: 200, category: [{id: "The Legend of Spyro: A New Beginning", start: "12:50", end: "16:09"}], lines: 1080},
+			{id: 255, start: "2024-03-20T12:51Z", end: "2024-03-20T16:14Z", duration: 202, category: [{id: "Crash Nitro Kart", start: "12:51", end: "16:14"}], lines: 1080},
+			{id: 256, start: "2024-03-21T12:51Z", end: "2024-03-21T16:22Z", duration: 211, category: [{id: "Crash Nitro Kart", start: "12:51", end: "16:22"}], lines: 1080},
+			{id: 257, start: "2024-03-22T12:49Z", end: "2024-03-22T15:59Z", duration: 189, category: [{id: "Zapper: One Wicked Cricket!", start: "12:50", end: "15:59"}], lines: 1080},
+			{id: 258, start: "2024-03-23T12:49Z", end: "2024-03-23T16:05Z", duration: 195, category: [{id: "Zapper: One Wicked Cricket!", start: "12:50", end: "14:57"},{id: "", start: "14:58", end: "14:58"},{id: "art", start: "14:59", end: "16:05"}], lines: 1080},
+			{id: 259, start: "2024-03-24T12:50Z", end: "2024-03-24T16:12Z", duration: 202, category: [{id: "The Legend of Spyro: Dawn of the Dragon", start: "12:51", end: "14:59"},{id: "art", start: "15:00", end: "16:12"}], lines: 1080},
+			{id: 260, start: "2024-03-25T12:52Z", end: "2024-03-25T16:06Z", duration: 193, category: [{id: "art", start: "12:53", end: "16:06"}], lines: 1080},
+			{id: 261, start: "2024-03-27T12:49Z", end: "2024-03-27T16:03Z", duration: 193, category: [{id: "Crash Boom Bang!", start: "12:50", end: "16:03"}], lines: 1080},
+			{id: 262, start: "2024-03-28T13:51Z", end: "2024-03-28T16:28Z", duration: 157, category: [{id: "Crash Tag Team Racing", start: "12:53", end: "13:09"},{id: "", start: "13:10", end: "13:12"},{id: "art", start: "13:13", end: "16:28"}], lines: 1080},
+			{id: 263, start: "2024-03-29T12:50Z", end: "2024-03-29T16:29Z", duration: 219, category: [{id: "Neopets: The Darkest Faerie", start: "12:50", end: "16:29"}], lines: 1080},
+			{id: 264, start: "2024-03-30T12:50Z", end: "2024-03-30T16:06Z", duration: 196, category: [{id: "Neopets: The Darkest Faerie", start: "12:50", end: "16:06"}], lines: 1080},
+			{id: 265, start: "2024-03-31T11:49Z", end: "2024-03-31T15:04Z", duration: 194, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:50", end: "15:04"}], lines: 1080},
+			{id: 266, start: "2024-04-01T13:04Z", end: "2024-04-01T15:22Z", duration: 137, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:53", end: "15:22"}], lines: 1080},
+			{id: 267, start: "2024-04-03T11:49Z", end: "2024-04-03T13:44Z", duration: 114, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "13:46"},{id: "", start: "13:47", end: "13:55"},{id: "Crash Tag Team Racing", start: "13:56", end: "15:13"}], lines: 1080},
+			{id: 268, start: "2024-04-04T11:49Z", end: "2024-04-04T15:35Z", duration: 225, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "15:35"}], lines: 1080},
+			{id: 269, start: "2024-04-05T12:53Z", end: "2024-04-05T15:48Z", duration: 174, category: [{id: "Neopets: The Darkest Faerie", start: "11:55", end: "15:48"}], lines: 1080},
+			{id: 270, start: "2024-04-06T11:51Z", end: "2024-04-06T16:40Z", duration: 288, category: [{id: "Neopets: The Darkest Faerie", start: "11:52", end: "16:40"}], lines: 1080},
+			{id: 271, start: "2024-04-07T11:50Z", end: "2024-04-07T15:36Z", duration: 226, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:51", end: "15:36"}], lines: 1080},
+			{id: 272, start: "2024-04-08T11:49Z", end: "2024-04-08T15:30Z", duration: 220, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:50", end: "15:30"}], lines: 1080},
+			{id: 273, start: "2024-04-10T11:50Z", end: "2024-04-10T14:56Z", duration: 186, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "14:56"}], lines: 1080},
+			{id: 274, start: "2024-04-11T11:49Z", end: "2024-04-11T15:46Z", duration: 237, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "15:47"}], lines: 1080},
+			{id: 275, start: "2024-04-12T11:50Z", end: "2024-04-12T15:39Z", duration: 229, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "11:54"},{id: "Neopets: The Darkest Faerie", start: "11:55", end: "15:39"}], lines: 1080},
+			{id: 276, start: "2024-04-13T11:51Z", end: "2024-04-13T15:48Z", duration: 237, category: [{id: "Neopets: The Darkest Faerie", start: "11:51", end: "15:48"}], lines: 1080},
+			{id: 277, start: "2024-04-17T11:48Z", end: "2024-04-17T13:51Z", duration: 123, category: [{id: "Crash Tag Team Racing", start: "11:48", end: "15:54"}], lines: 1080},
+			{id: 278, start: "2024-04-18T11:50Z", end: "2024-04-18T16:06Z", duration: 257, category: [{id: "Crash Tag Team Racing", start: "11:50", end: "16:07"}], lines: 1080},
+			{id: 279, start: "2024-04-20T11:50Z", end: "2024-04-20T16:04Z", duration: 254, category: [{id: "Neopets: The Darkest Faerie", start: "11:51", end: "16:05"}], lines: 1080},
+			{id: 280, start: "2024-04-21T11:49Z", end: "2024-04-21T15:28Z", duration: 218, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:50", end: "15:28"}], lines: 1080},
+			{id: 281, start: "2024-04-22T11:50Z", end: "2024-04-22T15:45Z", duration: 236, category: [{id: "Klonoa 2: Lunatea's Veil", start: "11:50", end: "14:37"},{id: "art", start: "14:38", end: "15:46"}], lines: 1080},
+			{id: 282, start: "2024-04-24T11:52Z", end: "2024-04-24T15:53Z", duration: 241, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:52", end: "15:53"}], lines: 1080},
+			{id: 283, start: "2024-04-25T11:48Z", end: "2024-04-25T15:56Z", duration: 248, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:49", end: "15:56"}], lines: 1080},
+			{id: 284, start: "2024-04-26T11:50Z", end: "2024-04-26T16:02Z", duration: 252, category: [{id: "Neopets: The Darkest Faerie", start: "11:50", end: "16:02"}], lines: 1080},
+			{id: 285, start: "2024-04-27T11:49Z", end: "2024-04-27T15:51Z", duration: 241, category: [{id: "Neopets: The Darkest Faerie", start: "11:50", end: "15:51"}], lines: 1080},
+			{id: 286, start: "2024-04-28T11:52Z", end: "2024-04-28T15:21Z", duration: 209, category: [{id: "Klonoa: Moonlight Museum", start: "11:52", end: "15:21"}], lines: 1080},
+			{id: 287, start: "2024-04-29T11:53Z", end: "2024-04-29T16:00Z", duration: 247, category: [{id: "Klonoa: Moonlight Museum", start: "11:53", end: "16:00"}], lines: 1080},
+			{id: 288, start: "2024-05-01T11:49Z", end: "2024-05-01T15:37Z", duration: 228, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:50", end: "15:37"}], lines: 1080},
+			{id: 289, start: "2024-05-02T11:49Z", end: "2024-05-02T14:52Z", duration: 182, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:50", end: "14:52"}], lines: 1080},
+			{id: 290, start: "2024-05-03T11:50Z", end: "2024-05-03T15:12Z", duration: 202, category: [{id: "Lunistice", start: "11:50", end: "15:12"}], lines: 1080},
+			{id: 291, start: "2024-05-04T11:50Z", end: "2024-05-04T14:10Z", duration: 140, category: [{id: "Lunistice", start: "11:50", end: "15:09"}], lines: 1080},
+			{id: 292, start: "2024-05-05T11:51Z", end: "2024-05-05T15:44Z", duration: 233, category: [{id: "Klonoa: Empire of Dreams", start: "11:51", end: "15:44"}], lines: 1080},
+			{id: 293, start: "2024-05-06T11:48Z", end: "2024-05-06T16:51Z", duration: 303, category: [{id: "Klonoa: Empire of Dreams", start: "11:48", end: "16:51"}], lines: 1080},
+			{id: 294, start: "2024-05-08T11:51Z", end: "2024-05-08T14:46Z", duration: 174, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:52", end: "14:46"}], lines: 1080},
+			{id: 295, start: "2024-05-09T11:49Z", end: "2024-05-09T14:38Z", duration: 168, category: [{id: "Tombi! 2: The Evil Swine Return", start: "11:50", end: "14:38"}], lines: 1080},
+			{id: 296, start: "2024-05-10T11:53Z", end: "2024-05-10T16:39Z", duration: 286, category: [{id: "music", start: "11:44", end: "13:28"},{id: "Lunistice", start: "13:29", end: "16:39"}], lines: 1080},
+			{id: 297, start: "2024-05-11T11:50Z", end: "2024-05-11T15:48Z", duration: 238, category: [{id: "Lunistice", start: "11:50", end: "15:48"}], lines: 1080},
+			{id: 298, start: "2024-05-12T11:49Z", end: "2024-05-12T15:57Z", duration: 247, category: [{id: "Lunistice", start: "11:50", end: "15:57"}], lines: 1080},
+			{id: 299, start: "2024-05-15T11:54Z", end: "2024-05-15T16:19Z", duration: 265, category: [{id: "art", start: "11:54", end: "16:19"}], lines: 1080},
+			{id: 300, start: "2024-05-16T13:57Z", end: "2024-05-16T16:26Z", duration: 149, category: [{id: "art", start: "11:50", end: "13:58"},{id: "", start: "13:59", end: "14:05"},{id: "art", start: "14:06", end: "16:26"}], lines: 1080},
+			{id: 301, start: "2024-05-17T11:53Z", end: "2024-05-17T13:59Z", duration: 125, category: [{id: "Lunistice", start: "11:54", end: "14:25"}], lines: 1080},
+			{id: 302, start: "2024-05-18T11:55Z", end: "2024-05-18T14:46Z", duration: 171, category: [{id: "Klonoa 2: Dream Champ Tournament", start: "11:52", end: "14:46"}], lines: 1080},
+			{id: 303, start: "2024-05-20T11:50Z", end: "2024-05-20T15:50Z", duration: 240, category: [{id: "Klonoa 2: Dream Champ Tournament", start: "11:50", end: "15:50"}], lines: 1080},
+			{id: 304, start: "2024-05-22T11:52Z", end: "2024-05-22T16:05Z", duration: 253, category: [{id: "GeneRally", start: "11:53", end: "13:56"},{id: "art", start: "13:57", end: "16:05"}], lines: 1080},
+			{id: 305, start: "2024-05-23T11:50Z", end: "2024-05-23T16:20Z", duration: 270, category: [{id: "art", start: "11:50", end: "16:20"}], lines: 1080},
+			{id: 306, start: "2024-05-24T12:06Z", end: "2024-05-24T16:06Z", duration: 240, category: [{id: "Total Immersion Racing", start: "12:06", end: "13:30"},{id: "art", start: "13:31", end: "16:06"}], lines: 1080},
+			{id: 307, start: "2024-05-25T13:40Z", end: "2024-05-25T16:48Z", duration: 188, category: [{id: "art", start: "11:51", end: "16:48"}], lines: 1080},
+			{id: 308, start: "2024-05-26T11:51Z", end: "2024-05-26T15:28Z", duration: 217, category: [{id: "Klonoa 2: Dream Champ Tournament", start: "11:51", end: "15:28"}], lines: 1080},
+			{id: 309, start: "2024-05-27T11:50Z", end: "2024-05-27T16:14Z", duration: 264, category: [{id: "Klonoa 2: Dream Champ Tournament", start: "11:51", end: "14:12"},{id: "art", start: "14:13", end: "16:14"}], lines: 1080},
+			{id: 310, start: "2024-05-29T11:51Z", end: "2024-05-29T14:44Z", duration: 172, category: [{id: "Kingsley's Adventure", start: "11:52", end: "14:44"}], lines: 1080},
+			{id: 311, start: "2024-05-31T11:49Z", end: "2024-05-31T16:14Z", duration: 265, category: [{id: "Portal", start: "11:49", end: "16:14"}], lines: 1080},
+			{id: 312, start: "2024-06-01T11:50Z", end: "2024-06-01T15:41Z", duration: 231, category: [{id: "Portal 2", start: "11:50", end: "15:41"}], lines: 1080},
+			{id: 313, start: "2024-06-02T13:17Z", end: "2024-06-02T14:39Z", duration: 81, category: [{id: "Klonoa Heroes: Legendary Star Medal", start: "11:50", end: "14:49"}], lines: 1080},
+			{id: 314, start: "2024-06-03T12:32Z", end: "2024-06-03T17:26Z", duration: 294, category: [{id: "Klonoa Heroes: Legendary Star Medal", start: "12:26", end: "12:42"},{id: "", start: "12:43", end: "12:44"},{id: "art", start: "12:45", end: "17:26"}], lines: 1080},
+			{id: 315, start: "2024-06-05T11:50Z", end: "2024-06-05T15:26Z", duration: 216, category: [{id: "Kingsley's Adventure", start: "11:50", end: "15:26"}], lines: 1080},
+			{id: 316, start: "2024-06-06T14:02Z", end: "2024-06-06T19:09Z", duration: 307, category: [{id: "art", start: "08:28", end: "12:19"},{id: "Kingsley's Adventure", start: "12:20", end: "13:10"},{id: "art", start: "13:11", end: "23:13"}], lines: 1080},
+			{id: 317, start: "2024-06-07T09:42Z", end: "2024-06-07T22:02Z", duration: 739, category: [{id: "art", start: "09:01", end: "11:59"},{id: "Portal 2", start: "12:00", end: "16:04"},{id: "art", start: "16:05", end: "22:02"}], lines: 1080},
+			{id: 318, start: "2024-06-08T15:55Z", end: "2024-06-08T22:31Z", duration: 395, category: [{id: "Portal 2", start: "11:53", end: "15:54"},{id: "", start: "15:56", end: "16:02"},{id: "Portal 2", start: "16:03", end: "16:52"},{id: "", start: "16:53", end: "17:04"},{id: "art", start: "17:05", end: "22:31"}], lines: 1080},
+			{id: 319, start: "2024-06-09T11:25Z", end: "2024-06-09T21:29Z", duration: 603, category: [{id: "art", start: "09:51", end: "11:26"},{id: "", start: "11:27", end: "11:35"},{id: "art", start: "11:36", end: "12:56"},{id: "Rayman", start: "12:57", end: "15:15"},{id: "art", start: "15:16", end: "21:29"}], lines: 1080},
+			{id: 320, start: "2024-06-10T11:26Z", end: "2024-06-10T23:34Z", duration: 727, category: [{id: "art", start: "11:00", end: "12:34"},{id: "Rayman", start: "12:35", end: "15:29"},{id: "art", start: "15:30", end: "23:34"}], lines: 1080},
+			{id: 321, start: "2024-06-12T12:16Z", end: "2024-06-12T12:26Z", duration: 11, category: [{id: "Croc: Legend of the Gobbos", start: "12:16", end: "12:27"}], lines: 1080},
+			{id: 322, start: "2024-06-12T12:30Z", end: "2024-06-12T16:13Z", duration: 223, category: [{id: "Croc: Legend of the Gobbos", start: "12:31", end: "16:13"}], lines: 1080},
+			{id: 323, start: "2024-06-13T11:53Z", end: "2024-06-13T13:30Z", duration: 98, category: [{id: "Croc: Legend of the Gobbos", start: "11:53", end: "13:31"}], lines: 1080},
+			{id: 324, start: "2024-06-13T13:35Z", end: "2024-06-13T16:38Z", duration: 182, category: [{id: "Croc: Legend of the Gobbos", start: "13:36", end: "16:38"}], lines: 1080},
+			{id: 325, start: "2024-06-14T11:55Z", end: "2024-06-14T15:40Z", duration: 224, category: [{id: "Quantum Conundrum", start: "11:56", end: "12:06"},{id: "Croc: Legend of the Gobbos", start: "12:07", end: "15:40"}], lines: 1080},
+			{id: 326, start: "2024-06-15T11:50Z", end: "2024-06-15T11:55Z", duration: 6, category: [{id: "", start: "11:50", end: "11:56"}], lines: 1080},
+			{id: 327, start: "2024-06-15T11:59Z", end: "2024-06-15T16:05Z", duration: 246, category: [{id: "Quantum Conundrum", start: "11:59", end: "16:05"}], lines: 1080},
+			{id: 328, start: "2024-06-16T11:53Z", end: "2024-06-16T15:49Z", duration: 236, category: [{id: "Rayman", start: "11:54", end: "15:49"}], lines: 1080},
+			{id: 329, start: "2024-06-17T11:49Z", end: "2024-06-17T15:00Z", duration: 191, category: [{id: "Rayman", start: "11:50", end: "15:00"},{id: "", start: "15:02", end: "15:11"},{id: "Rayman", start: "15:12", end: "16:44"}], lines: 1080},
+			{id: 330, start: "2024-06-19T12:02Z", end: "2024-06-19T13:35Z", duration: 92, category: [{id: "Croc: Legend of the Gobbos", start: "11:50", end: "13:35"},{id: "", start: "13:39", end: "13:45"},{id: "Croc: Legend of the Gobbos", start: "13:46", end: "14:22"}], lines: 1080},
+			{id: 331, start: "2024-06-20T11:49Z", end: "2024-06-20T14:14Z", duration: 145, category: [{id: "Croc: Legend of the Gobbos", start: "11:50", end: "14:14"},{id: "", start: "14:18", end: "14:25"},{id: "Croc: Legend of the Gobbos", start: "14:26", end: "15:49"}], lines: 1080},
+			{id: 332, start: "2024-06-21T11:58Z", end: "2024-06-21T12:28Z", duration: 30, category: [{id: "Quantum Conundrum", start: "11:49", end: "12:28"}], lines: 1080},
+			{id: 333, start: "2024-06-21T12:33Z", end: "2024-06-21T16:14Z", duration: 221, category: [{id: "Quantum Conundrum", start: "12:34", end: "16:14"}], lines: 1080},
+			{id: 334, start: "2024-06-22T13:10Z", end: "2024-06-22T16:17Z", duration: 187, category: [{id: "Quantum Conundrum", start: "11:53", end: "16:17"}], lines: 1080},
+			{id: 335, start: "2024-06-23T11:50Z", end: "2024-06-23T16:01Z", duration: 251, category: [{id: "Rayman", start: "11:50", end: "16:01"}], lines: 1080},
+			{id: 336, start: "2024-06-24T11:52Z", end: "2024-06-24T15:37Z", duration: 225, category: [{id: "Rayman", start: "11:53", end: "15:37"}], lines: 1080},
+			{id: 337, start: "2024-06-26T12:05Z", end: "2024-06-26T15:51Z", duration: 226, category: [{id: "Croc 2", start: "12:05", end: "15:51"}], lines: 1080},
+			{id: 338, start: "2024-06-27T11:49Z", end: "2024-06-27T15:13Z", duration: 203, category: [{id: "Croc 2", start: "11:50", end: "15:13"}], lines: 1080},
+			{id: 339, start: "2024-06-28T11:54Z", end: "2024-06-28T13:25Z", duration: 91, category: [{id: "Quantum Conundrum", start: "11:54", end: "13:25"}], lines: 1080},
+			{id: 340, start: "2024-06-28T14:03Z", end: "2024-06-28T15:25Z", duration: 81, category: [{id: "Quantum Conundrum", start: "13:30", end: "15:26"}], lines: 1080},
+			{id: 341, start: "2024-06-29T11:50Z", end: "2024-06-29T18:11Z", duration: 381, category: [{id: "Quantum Conundrum", start: "11:50", end: "12:48"},{id: "just chatting", start: "12:49", end: "12:51"},{id: "Rayman", start: "12:52", end: "13:51"},{id: "Wordle", start: "13:52", end: "18:11"}], lines: 1080},
+			{id: 342, start: "2024-06-30T11:52Z", end: "2024-06-30T16:09Z", duration: 257, category: [{id: "Rayman 2: Revolution", start: "11:53", end: "16:14"}], lines: 1080},
+			{id: 343, start: "2024-07-01T12:43Z", end: "2024-07-01T16:27Z", duration: 224, category: [{id: "Rayman 2: Revolution", start: "11:50", end: "12:42"},{id: "", start: "12:44", end: "12:50"},{id: "Rayman 2: Revolution", start: "12:51", end: "16:27"}], lines: 1080},
+			{id: 344, start: "2024-07-03T12:13Z", end: "2024-07-03T15:44Z", duration: 211, category: [{id: "Croc 2", start: "11:52", end: "12:10"},{id: "", start: "12:13", end: "12:22"},{id: "Croc 2", start: "12:23", end: "15:44"}], lines: 1080},
+			{id: 345, start: "2024-07-04T13:04Z", end: "2024-07-04T16:17Z", duration: 193, category: [{id: "Croc 2", start: "11:51", end: "16:17"}], lines: 1080},
+			{id: 346, start: "2024-07-05T13:23Z", end: "2024-07-05T15:38Z", duration: 135, category: [{id: "Celeste", start: "11:52", end: "13:06"},{id: "", start: "13:09", end: "13:22"},{id: "Celeste", start: "13:23", end: "13:25"},{id: "", start: "13:26", end: "13:32"},{id: "Celeste", start: "13:33", end: "15:38"}], lines: 1080},
+			{id: 347, start: "2024-07-06T13:45Z", end: "2024-07-06T16:06Z", duration: 141, category: [{id: "Celeste", start: "11:51", end: "16:06"}], lines: 1080},
+			{id: 348, start: "2024-07-07T12:13Z", end: "2024-07-07T16:39Z", duration: 266, category: [{id: "Rayman 2: Revolution", start: "11:53", end: "12:12"},{id: "", start: "12:14", end: "12:22"},{id: "Rayman 2: Revolution", start: "12:23", end: "16:39"}], lines: 1080},
+			{id: 349, start: "2024-07-08T13:23Z", end: "2024-07-08T15:59Z", duration: 156, category: [{id: "Rayman 2: Revolution", start: "11:50", end: "13:24"},{id: "", start: "13:25", end: "13:30"},{id: "Mini Metro", start: "13:31", end: "15:59"}], lines: 1080},
+			{id: 350, start: "2024-07-10T13:36Z", end: "2024-07-10T16:38Z", duration: 181, category: [{id: "Mini Metro", start: "11:51", end: "11:56"},{id: "", start: "11:57", end: "11:57"},{id: "Croc: Legend of the Gobbos", start: "11:58", end: "13:39"},{id: "", start: "13:40", end: "13:41"},{id: "just chatting", start: "13:42", end: "13:50"},{id: "Mini Metro", start: "13:51", end: "16:38"}], lines: 1080},
+			{id: 351, start: "2024-07-11T11:48Z", end: "2024-07-11T15:51Z", duration: 243, category: [{id: "Mini Metro", start: "11:48", end: "15:51"}], lines: 1080},
+			{id: 352, start: "2024-07-12T11:53Z", end: "2024-07-12T15:54Z", duration: 241, category: [{id: "Celeste", start: "11:53", end: "15:54"}], lines: 1080},
+			{id: 353, start: "2024-07-13T11:53Z", end: "2024-07-13T15:25Z", duration: 212, category: [{id: "Celeste", start: "11:53", end: "15:25"}], lines: 1080},
+			{id: 354, start: "2024-07-14T12:21Z", end: "2024-07-14T15:17Z", duration: 176, category: [{id: "Rayman 3: Hoodlum Havoc", start: "12:21", end: "15:17"}], lines: 1080},
+			{id: 355, start: "2024-07-15T11:52Z", end: "2024-07-15T14:48Z", duration: 175, category: [{id: "Rayman 3: Hoodlum Havoc", start: "11:53", end: "14:55"}], lines: 1080},
+			{id: 356, start: "2024-07-17T12:36Z", end: "2024-07-17T15:11Z", duration: 155, category: [{id: "Mini Metro", start: "11:52", end: "15:11"}], lines: 1080},
+			{id: 357, start: "2024-07-18T11:51Z", end: "2024-07-18T14:41Z", duration: 169, category: [{id: "Mini Metro", start: "11:52", end: "15:11"}], lines: 1080},
+			{id: 358, start: "2024-07-19T11:59Z", end: "2024-07-19T15:22Z", duration: 203, category: [{id: "Celeste", start: "11:56", end: "15:22"}], lines: 1080},
+			{id: 359, start: "2024-07-20T12:59Z", end: "2024-07-20T15:05Z", duration: 126, category: [{id: "Celeste", start: "11:51", end: "12:56"},{id: "", start: "12:57", end: "13:05"},{id: "Celeste", start: "13:06", end: "15:05"}], lines: 1080},
+			{id: 360, start: "2024-07-21T11:51Z", end: "2024-07-21T15:41Z", duration: 230, category: [{id: "Celeste", start: "11:51", end: "15:41"}], lines: 1080},
+			{id: 361, start: "2024-07-22T11:51Z", end: "2024-07-22T15:30Z", duration: 218, category: [{id: "Celeste", start: "11:52", end: "15:30"}], lines: 1080},
+			{id: 362, start: "2024-07-24T12:22Z", end: "2024-07-24T14:59Z", duration: 156, category: [{id: "Mini Metro", start: "11:51", end: "12:21"},{id: "", start: "12:23", end: "12:29"},{id: "Mini Metro", start: "12:30", end: "14:59"}], lines: 1080},
+			{id: 363, start: "2024-07-25T11:50Z", end: "2024-07-25T13:57Z", duration: 126, category: [{id: "Celeste", start: "11:51", end: "13:57"}], lines: 1080},
+			{id: 364, start: "2024-07-25T14:02Z", end: "2024-07-25T18:02Z", duration: 240, category: [{id: "Celeste", start: "14:02", end: "18:02"}], lines: 1080},
+			{id: 365, start: "2024-07-26T11:49Z", end: "2024-07-26T15:53Z", duration: 244, category: [{id: "Rayman 3: Hoodlum Havoc", start: "11:49", end: "15:53"}], lines: 1080},
+			{id: 366, start: "2024-07-27T12:55Z", end: "2024-07-27T20:13Z", duration: 437, category: [{id: "Rayman 3: Hoodlum Havoc", start: "11:49", end: "11:56"},{id: "special events", start: "11:57", end: "12:28"},{id: "Crash Bandicoot: Warped", start: "12:29", end: "20:13"}], lines: 1080},
+			{id: 367, start: "2024-07-28T14:01Z", end: "2024-07-28T19:59Z", duration: 358, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:49", end: "12:56"},{id: "music", start: "12:57", end: "13:18"},{id: "art", start: "13:19", end: "13:30"},{id: "Crash Bandicoot 4: It's About Time", start: "13:31", end: "19:59"}], lines: 1080},
+			{id: 368, start: "2024-07-29T14:27Z", end: "2024-07-29T19:56Z", duration: 329, category: [{id: "Crash Bandicoot: Warped", start: "11:52", end: "19:56"}], lines: 1080},
+			{id: 369, start: "2024-07-30T11:50Z", end: "2024-07-30T15:43Z", duration: 233, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:50", end: "18:06"}], lines: 1080},
+			{id: 370, start: "2024-07-31T13:00Z", end: "2024-07-31T19:03Z", duration: 362, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:53", end: "19:03"}], lines: 1080},
+			{id: 371, start: "2024-08-02T12:04Z", end: "2024-08-02T14:21Z", duration: 136, category: [{id: "art", start: "11:52", end: "14:21"},{id: "", start: "14:23", end: "14:30"},{id: "art", start: "14:31", end: "16:08"}], lines: 1080},
+			{id: 372, start: "2024-08-03T07:45Z", end: "2024-08-03T09:58Z", duration: 134, category: [{id: "art", start: "07:45", end: "09:59"}], lines: 1080},
+			{id: 373, start: "2024-08-03T13:08Z", end: "2024-08-03T17:36Z", duration: 268, category: [{id: "art", start: "11:51", end: "13:07"},{id: "", start: "13:09", end: "13:16"},{id: "art", start: "13:17", end: "17:36"}], lines: 1080},
+			{id: 374, start: "2024-08-04T13:53Z", end: "2024-08-04T16:07Z", duration: 134, category: [{id: "art", start: "11:54", end: "16:07"}], lines: 1080},
+			{id: 375, start: "2024-08-05T11:54Z", end: "2024-08-05T18:44Z", duration: 410, category: [{id: "art", start: "11:54", end: "19:42"}], lines: 1080},
+			{id: 376, start: "2024-08-07T11:50Z", end: "2024-08-07T14:34Z", duration: 164, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:50", end: "14:34"}], lines: 1080},
+			{id: 377, start: "2024-08-08T11:50Z", end: "2024-08-08T15:44Z", duration: 233, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:51", end: "15:44"}], lines: 1080},
+			{id: 378, start: "2024-08-09T11:51Z", end: "2024-08-09T15:21Z", duration: 210, category: [{id: "Rayman M - Multiplayer", start: "11:51", end: "15:21"}], lines: 1080},
+			{id: 379, start: "2024-08-10T11:51Z", end: "2024-08-10T15:25Z", duration: 214, category: [{id: "Rayman M - Multiplayer", start: "11:51", end: "15:25"}], lines: 1080},
+			{id: 380, start: "2024-08-12T08:02Z", end: "2024-08-12T08:42Z", duration: 41, category: [{id: "art", start: "07:51", end: "08:43"}], lines: 1080},
+			{id: 381, start: "2024-08-12T08:48Z", end: "2024-08-12T17:07Z", duration: 499, category: [{id: "art", start: "08:48", end: "17:07"}], lines: 1080},
+			{id: 382, start: "2024-08-14T11:50Z", end: "2024-08-14T14:03Z", duration: 133, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:50", end: "16:06"}], lines: 1080},
+			{id: 383, start: "2024-08-15T10:42Z", end: "2024-08-15T15:44Z", duration: 302, category: [{id: "art", start: "10:42", end: "11:51"},{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "15:37"},{id: "art", start: "15:38", end: "15:46"},{id: "", start: "15:47", end: "15:53"},{id: "art", start: "15:54", end: "18:05"}], lines: 1080},
+			{id: 384, start: "2024-08-16T11:51Z", end: "2024-08-16T15:18Z", duration: 207, category: [{id: "Rayman M - Multiplayer", start: "11:51", end: "14:55"},{id: "art", start: "14:56", end: "15:18"}], lines: 1080},
+			{id: 385, start: "2024-08-18T11:52Z", end: "2024-08-18T15:37Z", duration: 225, category: [{id: "art", start: "11:52", end: "15:37"}], lines: 1080},
+			{id: 386, start: "2024-08-19T11:51Z", end: "2024-08-19T16:57Z", duration: 306, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:49", end: "16:57"}], lines: 1080},
+			{id: 387, start: "2024-08-20T13:21Z", end: "2024-08-20T18:23Z", duration: 302, category: [{id: "art", start: "12:51", end: "18:23"}], lines: 1080},
+			{id: 388, start: "2024-08-21T11:52Z", end: "2024-08-21T13:56Z", duration: 123, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:53", end: "15:19"}], lines: 1080},
+			{id: 389, start: "2024-08-22T12:12Z", end: "2024-08-22T16:45Z", duration: 273, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:49", end: "16:45"}], lines: 1080},
+			{id: 390, start: "2024-08-23T12:08Z", end: "2024-08-23T15:29Z", duration: 201, category: [{id: "Rayman Origins", start: "11:52", end: "15:29"}], lines: 1080},
+			{id: 391, start: "2024-08-24T12:15Z", end: "2024-08-24T15:32Z", duration: 197, category: [{id: "Rayman Origins", start: "11:50", end: "15:32"}], lines: 1080},
+			{id: 392, start: "2024-08-25T12:19Z", end: "2024-08-25T16:34Z", duration: 255, category: [{id: "art", start: "11:50", end: "16:34"}], lines: 1080},
+			{id: 393, start: "2024-08-26T11:52Z", end: "2024-08-26T15:34Z", duration: 222, category: [{id: "Mini Metro", start: "11:53", end: "15:34"}], lines: 1080},
+			{id: 394, start: "2024-08-28T12:29Z", end: "2024-08-28T15:49Z", duration: 199, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "15:49"}], lines: 1080},
+			{id: 395, start: "2024-08-29T12:45Z", end: "2024-08-29T16:02Z", duration: 197, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:53", end: "16:02"}], lines: 1080},
+			{id: 396, start: "2024-08-30T11:53Z", end: "2024-08-30T15:40Z", duration: 227, category: [{id: "Rayman Origins", start: "11:53", end: "15:40"}], lines: 1080},
+			{id: 397, start: "2024-08-31T11:51Z", end: "2024-08-31T14:14Z", duration: 143, category: [{id: "Rayman Origins", start: "11:51", end: "14:14"}], lines: 1080},
+			{id: 398, start: "2024-08-31T14:17Z", end: "2024-08-31T15:38Z", duration: 81, category: [{id: "Rayman Origins", start: "14:18", end: "15:38"}], lines: 1080},
+			{id: 399, start: "2024-09-01T11:50Z", end: "2024-09-01T15:42Z", duration: 231, category: [{id: "art", start: "11:51", end: "15:42"}], lines: 1080},
+			{id: 400, start: "2024-09-02T14:44Z", end: "2024-09-02T18:40Z", duration: 236, category: [{id: "Mini Metro", start: "11:57", end: "14:48"},{id: "", start: "14:49", end: "14:49"},{id: "art", start: "14:50", end: "14:51"},{id: "", start: "14:52", end: "14:52"},{id: "game-development", start: "14:53", end: "18:40"}], lines: 1080},
+			{id: 401, start: "2024-09-04T11:51Z", end: "2024-09-04T12:17Z", duration: 26, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "12:18"}], lines: 1080},
+			{id: 402, start: "2024-09-04T12:23Z", end: "2024-09-04T16:29Z", duration: 246, category: [{id: "Crash Bandicoot 4: It's About Time", start: "12:23", end: "16:29"}], lines: 1080},
+			{id: 404, start: "2024-09-05T12:11Z", end: "2024-09-05T16:13Z", duration: 242, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:54", end: "16:13"}], lines: 1080},
+			{id: 405, start: "2024-09-06T11:50Z", end: "2024-09-06T15:51Z", duration: 241, category: [{id: "Rayman Origins", start: "11:51", end: "15:51"}], lines: 1080},
+			{id: 406, start: "2024-09-07T13:38Z", end: "2024-09-07T23:25Z", duration: 586, category: [{id: "Spyro the Dragon", start: "12:54", end: "18:14"},{id: "Spyro 2: Gateway to Glimmer", start: "18:15", end: "23:25"}], lines: 1080},
+			{id: 407, start: "2024-09-08T12:32Z", end: "2024-09-08T22:42Z", duration: 609, category: [{id: "Spyro 2: Gateway to Glimmer", start: "11:49", end: "12:30"},{id: "", start: "12:33", end: "12:39"},{id: "Spyro 2: Gateway to Glimmer", start: "12:40", end: "13:39"},{id: "Spyro: Year of the Dragon", start: "13:40", end: "21:39"},{id: "Spyro the Dragon", start: "21:40", end: "21:55"},{id: "Spyro 2: Gateway to Glimmer", start: "21:56", end: "22:06"},{id: "Spyro: Year of the Dragon", start: "22:07", end: "22:42"}], lines: 1080},
+			{id: 408, start: "2024-09-09T11:50Z", end: "2024-09-09T19:22Z", duration: 452, category: [{id: "art", start: "11:50", end: "19:22"},{id: "", start: "19:25", end: "19:31"},{id: "art", start: "19:32", end: "23:03"}], lines: 1080},
+			{id: 409, start: "2024-09-10T14:35Z", end: "2024-09-10T20:10Z", duration: 335, category: [{id: "art", start: "13:52", end: "20:10"}], lines: 1080},
+			{id: 410, start: "2024-09-11T12:59Z", end: "2024-09-11T15:34Z", duration: 155, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:51", end: "12:57"},{id: "", start: "13:00", end: "13:06"},{id: "Crash Bandicoot 4: It's About Time", start: "13:07", end: "15:34"}], lines: 1080},
+			{id: 411, start: "2024-09-12T11:52Z", end: "2024-09-12T14:16Z", duration: 144, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "16:23"}], lines: 1080},
+			{id: 412, start: "2024-09-13T11:51Z", end: "2024-09-13T13:55Z", duration: 123, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "13:55"}], lines: 1080},
+			{id: 413, start: "2024-09-14T11:51Z", end: "2024-09-14T16:53Z", duration: 301, category: [{id: "Crash Bandicoot 4: It's About Time", start: "11:52", end: "11:59"},{id: "Rayman Origins", start: "12:00", end: "15:40"},{id: "art", start: "15:41", end: "16:53"}], lines: 1080},
+			{id: 414, start: "2024-09-15T11:48Z", end: "2024-09-15T15:22Z", duration: 214, category: [{id: "Rayman Origins", start: "11:48", end: "15:22"},{id: "", start: "15:24", end: "15:29"},{id: "art", start: "15:30", end: "16:14"}], lines: 1080},
+			{id: 415, start: "2024-09-16T11:53Z", end: "2024-09-16T16:13Z", duration: 260, category: [{id: "art", start: "11:53", end: "16:13"}], lines: 1080},
+			{id: 416, start: "2024-09-18T11:51Z", end: "2024-09-18T15:56Z", duration: 244, category: [{id: "Celeste", start: "11:52", end: "15:56"}], lines: 1080},
+			{id: 417, start: "2024-09-19T11:54Z", end: "2024-09-19T15:49Z", duration: 235, category: [{id: "Celeste", start: "11:54", end: "15:57"}], lines: 1080},
+			{id: 418, start: "2024-09-20T12:01Z", end: "2024-09-20T16:04Z", duration: 242, category: [{id: "New Super Lucky's Tale", start: "11:50", end: "16:04"}], lines: 1080},
+			{id: 419, start: "2024-09-21T11:50Z", end: "2024-09-21T16:31Z", duration: 281, category: [{id: "New Super Lucky's Tale", start: "11:50", end: "16:31"}], lines: 1080},
+			{id: 420, start: "2024-09-22T11:50Z", end: "2024-09-22T12:56Z", duration: 66, category: [{id: "Pokémon Blue", start: "11:50", end: "12:56"}], lines: 1080},
+			{id: 421, start: "2024-09-22T13:00Z", end: "2024-09-22T16:01Z", duration: 181, category: [{id: "Pokémon Blue", start: "13:01", end: "16:01"}], lines: 1080},
+			{id: 422, start: "2024-09-23T13:52Z", end: "2024-09-23T16:33Z", duration: 160, category: [{id: "Pokémon Blue", start: "11:55", end: "16:33"}], lines: 1080},
+			{id: 423, start: "2024-09-25T11:53Z", end: "2024-09-25T19:12Z", duration: 439, category: [{id: "Celeste", start: "11:54", end: "12:17"},{id: "Mini Metro", start: "12:18", end: "12:24"},{id: "art", start: "12:25", end: "20:28"}], lines: 1080},
+			{id: 424, start: "2024-09-26T13:47Z", end: "2024-09-26T18:13Z", duration: 265, category: [{id: "art", start: "11:56", end: "13:03"},{id: "game-development", start: "13:04", end: "18:13"}], lines: 1080},
+			{id: 425, start: "2024-09-27T11:47Z", end: "2024-09-27T13:41Z", duration: 114, category: [{id: "New Super Lucky's Tale", start: "11:47", end: "14:04"}], lines: 1080},
+			{id: 426, start: "2024-09-28T12:12Z", end: "2024-09-28T12:44Z", duration: 31, category: [{id: "New Super Lucky's Tale", start: "11:53", end: "12:54"}], lines: 1080},
+			{id: 427, start: "2024-09-29T12:08Z", end: "2024-09-29T23:16Z", duration: 667, category: [{id: "art", start: "11:55", end: "23:16"}], lines: 1080},
+			{id: 428, start: "2024-09-30T11:56Z", end: "2024-09-30T21:04Z", duration: 548, category: [{id: "art", start: "11:57", end: "21:04"}], lines: 1080},
+			{id: 429, start: "2024-10-02T11:52Z", end: "2024-10-02T12:53Z", duration: 60, category: [{id: "art", start: "11:53", end: "12:53"}], lines: 1080},
+			{id: 430, start: "2024-10-02T17:10Z", end: "2024-10-02T20:26Z", duration: 196, category: [{id: "art", start: "16:59", end: "20:26"}], lines: 1080},
+			{id: 431, start: "2024-10-03T13:35Z", end: "2024-10-03T17:27Z", duration: 232, category: [{id: "art", start: "12:23", end: "17:27"}], lines: 1080},
+			{id: 432, start: "2024-10-04T13:13Z", end: "2024-10-04T18:38Z", duration: 325, category: [{id: "New Super Lucky's Tale", start: "11:51", end: "15:02"},{id: "art", start: "15:03", end: "18:38"}], lines: 1080},
+			{id: 433, start: "2024-10-05T12:03Z", end: "2024-10-05T17:19Z", duration: 315, category: [{id: "art", start: "11:53", end: "17:19"}], lines: 1080},
+			{id: 434, start: "2024-10-06T11:49Z", end: "2024-10-06T16:01Z", duration: 252, category: [{id: "Spyro the Dragon", start: "11:50", end: "15:37"},{id: "Kula World", start: "15:38", end: "15:41"},{id: "Demo 1 (version 5)", start: "15:42", end: "15:50"},{id: "Spyro the Dragon", start: "15:51", end: "16:01"}], lines: 1080},
+			{id: 435, start: "2024-10-07T11:54Z", end: "2024-10-07T14:07Z", duration: 133, category: [{id: "Spyro the Dragon", start: "11:54", end: "14:07"},{id: "", start: "14:10", end: "14:17"},{id: "Spyro the Dragon", start: "14:18", end: "15:33"}], lines: 1080},
+			{id: 436, start: "2024-10-09T12:25Z", end: "2024-10-09T12:26Z", duration: 1, category: [{id: "", start: "12:25", end: "12:26"}], lines: 1080},
+			{id: 437, start: "2024-10-09T12:31Z", end: "2024-10-09T14:20Z", duration: 109, category: [{id: "Spyro the Dragon", start: "12:31", end: "14:20"}], lines: 1080},
+			{id: 438, start: "2024-10-10T14:45Z", end: "2024-10-10T20:45Z", duration: 360, category: [{id: "art", start: "12:17", end: "20:45"}], lines: 1080},
+			{id: 439, start: "2024-10-11T12:12Z", end: "2024-10-11T16:19Z", duration: 247, category: [{id: "art", start: "11:57", end: "16:19"}], lines: 1080},
+			{id: 440, start: "2024-10-12T13:30Z", end: "2024-10-12T16:43Z", duration: 193, category: [{id: "art", start: "11:55", end: "13:31"},{id: "", start: "13:32", end: "13:37"},{id: "Pokémon Blue", start: "13:38", end: "16:43"}], lines: 1080},
+			{id: 441, start: "2024-10-13T11:48Z", end: "2024-10-13T16:44Z", duration: 296, category: [{id: "art", start: "11:49", end: "16:44"}], lines: 1080},
+			{id: 442, start: "2024-10-14T11:52Z", end: "2024-10-14T16:46Z", duration: 294, category: [{id: "Pokémon Blue", start: "11:53", end: "16:46"}], lines: 1080},
+			{id: 443, start: "2024-10-16T14:20Z", end: "2024-10-16T18:35Z", duration: 255, category: [{id: "art", start: "10:56", end: "12:27"},{id: "Jak and Daxter: The Precursor Legacy", start: "12:28", end: "14:18"},{id: "", start: "14:21", end: "14:28"},{id: "Jak and Daxter: The Precursor Legacy", start: "14:29", end: "18:35"}], lines: 1080},
+			{id: 444, start: "2024-10-17T11:49Z", end: "2024-10-17T16:41Z", duration: 291, category: [{id: "Jak and Daxter: The Precursor Legacy", start: "11:50", end: "16:41"}], lines: 1080},
+			{id: 445, start: "2024-10-18T14:06Z", end: "2024-10-18T16:38Z", duration: 152, category: [{id: "art", start: "11:56", end: "16:38"}], lines: 1080},
+			{id: 446, start: "2024-10-19T11:55Z", end: "2024-10-19T15:29Z", duration: 213, category: [{id: "art", start: "11:56", end: "17:14"}], lines: 1080},
+			{id: 447, start: "2024-10-20T13:35Z", end: "2024-10-20T16:38Z", duration: 182, category: [{id: "Pokémon Blue", start: "11:49", end: "16:38"}], lines: 1080},
+			{id: 448, start: "2024-10-21T12:20Z", end: "2024-10-21T15:18Z", duration: 178, category: [{id: "Pokémon Blue", start: "11:56", end: "15:18"}], lines: 1080},
+			{id: 449, start: "2024-10-23T12:21Z", end: "2024-10-23T14:57Z", duration: 156, category: [{id: "Jak and Daxter: The Precursor Legacy", start: "11:53", end: "14:57"}], lines: 1080},
+			{id: 450, start: "2024-10-24T11:51Z", end: "2024-10-24T16:29Z", duration: 278, category: [{id: "Jak II", start: "11:51", end: "16:29"}], lines: 1080},
+			{id: 451, start: "2024-10-25T11:56Z", end: "2024-10-25T16:45Z", duration: 289, category: [{id: "Rabbit & Steel", start: "11:56", end: "16:45"}], lines: 1080},
+			{id: 452, start: "2024-10-26T11:51Z", end: "2024-10-26T12:11Z", duration: 19, category: [{id: "Rabbit & Steel", start: "11:52", end: "12:11"}], lines: 1080},
+			{id: 453, start: "2024-10-26T11:51Z", end: "2024-10-26T16:54Z", duration: 302, category: [{id: "Rabbit & Steel", start: "11:52", end: "16:54"}], lines: 1080},
+			{id: 454, start: "2024-10-27T12:54Z", end: "2024-10-27T20:34Z", duration: 460, category: [{id: "Pokémon Blue", start: "12:54", end: "14:18"},{id: "art", start: "14:19", end: "20:34"}], lines: 1080},
+			{id: 455, start: "2024-10-28T12:52Z", end: "2024-10-28T15:44Z", duration: 172, category: [{id: "Pokémon Blue", start: "12:52", end: "15:44"}], lines: 1080},
+			{id: 456, start: "2024-10-30T12:49Z", end: "2024-10-30T17:31Z", duration: 282, category: [{id: "return_fire_2", start: "12:49", end: "14:07"},{id: "card game", start: "14:08", end: "14:09"},{id: "Microsoft Solitaire", start: "14:10", end: "14:18"},{id: "Microsoft Hearts", start: "14:19", end: "14:28"},{id: "Microsoft Minesweeper", start: "14:29", end: "14:42"},{id: "Microsoft Freecell", start: "14:43", end: "15:22"},{id: "Rabbit & Steel", start: "15:23", end: "17:31"}], lines: 1080},
+			{id: 457, start: "2024-10-31T12:51Z", end: "2024-10-31T14:44Z", duration: 113, category: [{id: "The Mystery at Greveholm", start: "12:51", end: "14:44"},{id: "", start: "14:48", end: "14:55"},{id: "The Mystery at Greveholm", start: "14:56", end: "16:21"}], lines: 1080},
+			{id: 458, start: "2024-11-01T12:48Z", end: "2024-11-01T17:12Z", duration: 264, category: [{id: "Rabbit & Steel", start: "12:48", end: "17:12"}], lines: 1080},
+			{id: 459, start: "2024-11-02T13:31Z", end: "2024-11-02T16:31Z", duration: 180, category: [{id: "Rabbit & Steel", start: "12:45", end: "16:31"}], lines: 1080},
+			{id: 460, start: "2024-11-03T12:50Z", end: "2024-11-03T16:48Z", duration: 238, category: [{id: "Pokémon Blue", start: "12:51", end: "16:48"}], lines: 1080},
+			{id: 461, start: "2024-11-04T13:06Z", end: "2024-11-04T17:06Z", duration: 240, category: [{id: "Pokémon Blue", start: "12:54", end: "17:06"}], lines: 1080},
+			{id: 462, start: "2024-11-06T13:56Z", end: "2024-11-06T21:45Z", duration: 469, category: [{id: "Euro Truck Simulator 2", start: "12:48", end: "13:54"},{id: "", start: "13:57", end: "14:05"},{id: "Euro Truck Simulator 2", start: "14:06", end: "21:45"}], lines: 1080},
+			{id: 463, start: "2024-11-07T12:54Z", end: "2024-11-07T17:46Z", duration: 292, category: [{id: "Euro Truck Simulator 2", start: "12:54", end: "17:46"},{id: "", start: "17:49", end: "17:55"},{id: "Euro Truck Simulator 2", start: "17:56", end: "19:16"}], lines: 1080},
+			{id: 464, start: "2024-11-08T12:51Z", end: "2024-11-08T14:17Z", duration: 86, category: [{id: "Rabbit & Steel", start: "12:51", end: "14:17"}], lines: 1080},
+			{id: 465, start: "2024-11-08T14:32Z", end: "2024-11-08T16:53Z", duration: 141, category: [{id: "Rabbit & Steel", start: "14:26", end: "16:53"}], lines: 1080},
+			{id: 466, start: "2024-11-09T12:51Z", end: "2024-11-09T17:04Z", duration: 253, category: [{id: "Rabbit & Steel", start: "12:51", end: "17:04"}], lines: 1080},
+			{id: 467, start: "2024-11-10T12:52Z", end: "2024-11-10T18:07Z", duration: 315, category: [{id: "Pokémon Blue", start: "12:52", end: "18:07"}], lines: 1080},
+			{id: 468, start: "2024-11-11T12:51Z", end: "2024-11-11T17:55Z", duration: 304, category: [{id: "Pokémon Emerald", start: "12:51", end: "12:57"},{id: "Pokémon Crystal", start: "12:58", end: "17:55"}], lines: 1080},
+			{id: 469, start: "2024-11-13T12:50Z", end: "2024-11-13T13:32Z", duration: 41, category: [{id: "Euro Truck Simulator 2", start: "12:51", end: "13:32"}], lines: 1080},
+			{id: 470, start: "2024-11-13T13:36Z", end: "2024-11-13T19:08Z", duration: 332, category: [{id: "Euro Truck Simulator 2", start: "13:36", end: "19:08"}], lines: 1080},
+			{id: 471, start: "2024-11-14T16:53Z", end: "2024-11-14T21:05Z", duration: 252, category: [{id: "Euro Truck Simulator 2", start: "13:01", end: "21:05"}], lines: 1080},
+			{id: 472, start: "2024-11-15T12:49Z", end: "2024-11-15T17:39Z", duration: 290, category: [{id: "art", start: "12:50", end: "16:18"},{id: "Rabbit & Steel", start: "16:19", end: "17:39"}], lines: 1080},
+			{id: 473, start: "2024-11-16T13:01Z", end: "2024-11-16T17:48Z", duration: 287, category: [{id: "Rabbit & Steel", start: "13:01", end: "14:40"},{id: "art", start: "14:41", end: "17:48"}], lines: 1080},
+			{id: 474, start: "2024-11-17T12:51Z", end: "2024-11-17T13:31Z", duration: 40, category: [{id: "Pokémon Crystal", start: "12:51", end: "13:31"}], lines: 1080},
+			{id: 475, start: "2024-11-17T13:35Z", end: "2024-11-17T17:34Z", duration: 239, category: [{id: "Pokémon Crystal", start: "13:35", end: "17:34"}], lines: 1080},
+			{id: 476, start: "2024-11-18T12:57Z", end: "2024-11-18T16:20Z", duration: 203, category: [{id: "Pokémon Crystal", start: "12:52", end: "16:20"}], lines: 1080},
+			{id: 477, start: "2024-11-18T16:25Z", end: "2024-11-18T16:58Z", duration: 34, category: [{id: "Pokémon Crystal", start: "16:25", end: "16:59"}], lines: 1080},
+			{id: 478, start: "2024-11-20T12:49Z", end: "2024-11-20T17:19Z", duration: 270, category: [{id: "Euro Truck Simulator 2", start: "12:49", end: "17:19"}], lines: 1080},
+			{id: 479, start: "2024-11-21T12:56Z", end: "2024-11-21T16:10Z", duration: 194, category: [{id: "Euro Truck Simulator 2", start: "12:56", end: "16:10"},{id: "", start: "16:12", end: "16:19"},{id: "Euro Truck Simulator 2", start: "16:20", end: "19:11"}], lines: 1080},
+			{id: 480, start: "2024-11-22T13:04Z", end: "2024-11-22T15:50Z", duration: 166, category: [{id: "art", start: "13:04", end: "14:52"},{id: "Rabbit & Steel", start: "14:53", end: "15:30"},{id: "art", start: "15:31", end: "15:35"},{id: "Rabbit & Steel", start: "15:36", end: "15:50"}], lines: 1080},
+			{id: 481, start: "2024-11-23T12:53Z", end: "2024-11-23T17:16Z", duration: 263, category: [{id: "Rabbit & Steel", start: "12:53", end: "17:06"},{id: "just chatting", start: "17:07", end: "17:16"}], lines: 1080},
+			{id: 482, start: "2024-11-24T12:52Z", end: "2024-11-24T15:58Z", duration: 186, category: [{id: "Pokémon Crystal", start: "12:53", end: "15:58"}], lines: 1080},
+			{id: 483, start: "2024-11-25T12:54Z", end: "2024-11-25T15:29Z", duration: 155, category: [{id: "Pokémon Crystal", start: "12:52", end: "15:29"}], lines: 1080},
+			{id: 484, start: "2024-11-27T13:07Z", end: "2024-11-27T14:09Z", duration: 62, category: [{id: "Pettson o̱ Findus i trädgården", start: "13:08", end: "14:09"}], lines: 1080},
+			{id: 485, start: "2024-11-27T14:12Z", end: "2024-11-27T21:07Z", duration: 414, category: [{id: "Pettson o̱ Findus i trädgården", start: "14:13", end: "19:18"},{id: "art", start: "19:19", end: "21:07"}], lines: 1080},
+			{id: 486, start: "2024-11-28T12:52Z", end: "2024-11-28T13:48Z", duration: 56, category: [{id: "art", start: "12:53", end: "13:48"}], lines: 1080},
+			{id: 487, start: "2024-11-28T14:21Z", end: "2024-11-28T19:14Z", duration: 292, category: [{id: "art", start: "13:54", end: "14:22"},{id: "", start: "14:23", end: "14:29"},{id: "art", start: "14:30", end: "19:14"}], lines: 1080},
+			{id: 488, start: "2024-11-29T15:21Z", end: "2024-11-29T18:56Z", duration: 215, category: [{id: "Euro Truck Simulator 2", start: "13:02", end: "14:41"},{id: "art", start: "14:42", end: "15:18"},{id: "", start: "15:22", end: "15:30"},{id: "art", start: "15:31", end: "18:56"}], lines: 1080},
+			{id: 489, start: "2024-11-30T15:23Z", end: "2024-11-30T18:18Z", duration: 175, category: [{id: "Euro Truck Simulator 2", start: "12:53", end: "13:58"},{id: "art", start: "13:59", end: "14:57"},{id: "music", start: "14:58", end: "16:15"},{id: "art", start: "16:16", end: "18:18"}], lines: 1080},
+			{id: 490, start: "2024-12-01T12:51Z", end: "2024-12-01T13:19Z", duration: 28, category: [{id: "Pokémon Crystal", start: "12:51", end: "13:19"}], lines: 1080},
+			{id: 491, start: "2024-12-01T13:23Z", end: "2024-12-01T17:06Z", duration: 223, category: [{id: "Pokémon Crystal", start: "13:23", end: "17:06"}], lines: 1080},
+			{id: 492, start: "2024-12-02T12:53Z", end: "2024-12-02T18:52Z", duration: 359, category: [{id: "Pokémon Crystal", start: "12:51", end: "18:53"}], lines: 1080},
+			{id: 493, start: "2024-12-04T14:15Z", end: "2024-12-04T19:58Z", duration: 343, category: [{id: "Bygg bilar med Mulle Meck", start: "12:51", end: "16:09"},{id: "art", start: "16:10", end: "19:58"}], lines: 1080},
+			{id: 494, start: "2024-12-05T12:51Z", end: "2024-12-05T16:29Z", duration: 218, category: [{id: "Bygg båtar med Mulle Meck", start: "12:51", end: "16:29"}], lines: 1080},
+			{id: 495, start: "2024-12-06T12:50Z", end: "2024-12-06T16:55Z", duration: 244, category: [{id: "Psychonauts", start: "12:51", end: "16:55"}], lines: 1080},
+			{id: 496, start: "2024-12-07T12:50Z", end: "2024-12-07T19:03Z", duration: 372, category: [{id: "music", start: "12:51", end: "15:49"},{id: "Psychonauts", start: "15:50", end: "19:03"}], lines: 1080},
+			{id: 497, start: "2024-12-08T12:52Z", end: "2024-12-08T18:03Z", duration: 311, category: [{id: "Pokémon Crystal", start: "12:52", end: "18:03"}], lines: 1080},
+			{id: 498, start: "2024-12-09T13:51Z", end: "2024-12-09T15:50Z", duration: 118, category: [{id: "Pokémon Crystal", start: "13:52", end: "15:50"}], lines: 1080},
+			{id: 499, start: "2024-12-11T11:52Z", end: "2024-12-11T20:23Z", duration: 510, category: [{id: "just chatting", start: "11:53", end: "13:32"},{id: "Bygg flygplan med Mulle Meck", start: "13:33", end: "13:56"},{id: "art", start: "13:57", end: "20:23"}], lines: 1080},
+			{id: 500, start: "2024-12-12T14:58Z", end: "2024-12-12T19:08Z", duration: 250, category: [{id: "art", start: "12:51", end: "19:08"}], lines: 1080},
+			{id: 501, start: "2024-12-13T14:25Z", end: "2024-12-13T19:14Z", duration: 288, category: [{id: "Psychonauts", start: "12:52", end: "19:14"}], lines: 1080},
+			{id: 502, start: "2024-12-14T16:34Z", end: "2024-12-14T19:44Z", duration: 190, category: [{id: "Psychonauts", start: "14:04", end: "19:44"}], lines: 1080},
+			{id: 503, start: "2024-12-15T14:05Z", end: "2024-12-15T17:23Z", duration: 198, category: [{id: "Pokémon Crystal", start: "12:53", end: "15:17"},{id: "art", start: "15:18", end: "17:23"}], lines: 1080},
+			{id: 504, start: "2024-12-16T14:18Z", end: "2024-12-16T17:21Z", duration: 183, category: [{id: "Pokémon Crystal", start: "12:50", end: "17:21"}], lines: 1080},
+			{id: 505, start: "2024-12-18T13:15Z", end: "2024-12-18T18:11Z", duration: 296, category: [{id: "CODE Bunny", start: "12:53", end: "16:15"},{id: "art", start: "16:16", end: "18:11"}], lines: 1080},
+			{id: 506, start: "2024-12-19T13:51Z", end: "2024-12-19T19:16Z", duration: 325, category: [{id: "CODE Bunny", start: "12:51", end: "15:30"},{id: "art", start: "15:31", end: "19:16"}], lines: 1080},
+			{id: 507, start: "2024-12-20T13:50Z", end: "2024-12-20T22:56Z", duration: 546, category: [{id: "Psychonauts", start: "12:50", end: "13:48"},{id: "", start: "13:51", end: "14:08"},{id: "just chatting", start: "14:09", end: "15:38"},{id: "Euro Truck Simulator 2", start: "15:39", end: "22:56"}], lines: 1080},
+			{id: 508, start: "2024-12-21T12:52Z", end: "2024-12-21T17:47Z", duration: 295, category: [{id: "art", start: "12:52", end: "19:59"}], lines: 1080},
+			{id: 509, start: "2024-12-22T13:41Z", end: "2024-12-22T22:05Z", duration: 504, category: [{id: "Pokémon Crystal", start: "12:53", end: "17:17"},{id: "art", start: "17:18", end: "22:05"}], lines: 1080},
+			{id: 510, start: "2024-12-23T13:11Z", end: "2024-12-23T15:47Z", duration: 156, category: [{id: "Pokémon Crystal", start: "13:11", end: "15:48"},{id: "", start: "15:49", end: "15:56"},{id: "Pokémon Crystal", start: "15:57", end: "17:34"}], lines: 1080},
+			{id: 511, start: "2024-12-27T14:49Z", end: "2024-12-27T21:35Z", duration: 406, category: [{id: "just chatting", start: "13:00", end: "14:30"},{id: "game-development", start: "14:31", end: "14:49"},{id: "", start: "14:50", end: "14:57"},{id: "just chatting", start: "14:58", end: "15:27"},{id: "game-development", start: "15:28", end: "17:37"},{id: "art", start: "17:38", end: "21:35"}], lines: 1080},
+			{id: 512, start: "2024-12-28T13:45Z", end: "2024-12-28T18:09Z", duration: 263, category: [{id: "art", start: "12:54", end: "18:09"}], lines: 1080},
+			{id: 513, start: "2024-12-29T13:11Z", end: "2024-12-29T16:41Z", duration: 210, category: [{id: "Pokémon Crystal", start: "12:50", end: "13:01"},{id: "just chatting", start: "13:02", end: "13:29"},{id: "Pokémon Crystal", start: "13:30", end: "16:41"}], lines: 1080},
+			{id: 514, start: "2024-12-30T12:50Z", end: "2024-12-30T17:32Z", duration: 282, category: [{id: "Pokémon Crystal", start: "12:51", end: "17:32"}], lines: 1080},
+			{id: 515, start: "2025-01-01T12:54Z", end: "2025-01-01T17:34Z", duration: 279, category: [{id: "just chatting", start: "12:55", end: "13:47"},{id: "art", start: "13:48", end: "18:28"}], lines: 1080},
+			{id: 516, start: "2025-01-02T12:50Z", end: "2025-01-02T18:43Z", duration: 353, category: [{id: "just chatting", start: "12:51", end: "13:10"},{id: "art", start: "13:11", end: "18:43"}], lines: 1080},
+			{id: 517, start: "2025-01-03T12:52Z", end: "2025-01-03T16:53Z", duration: 241, category: [{id: "Ōkami HD", start: "12:52", end: "16:53"}], lines: 1080},
+			{id: 518, start: "2025-01-04T12:57Z", end: "2025-01-04T16:55Z", duration: 238, category: [{id: "Ōkami HD", start: "12:57", end: "16:55"}], lines: 1080},
+			{id: 519, start: "2025-01-05T12:51Z", end: "2025-01-05T16:30Z", duration: 219, category: [{id: "Pokémon Crystal", start: "12:52", end: "16:30"}], lines: 1080},
+			{id: 520, start: "2025-01-08T12:53Z", end: "2025-01-08T19:40Z", duration: 406, category: [{id: "just chatting", start: "12:54", end: "19:40"}], lines: 1080},
+			{id: 521, start: "2025-01-09T12:50Z", end: "2025-01-09T18:16Z", duration: 326, category: [{id: "just chatting", start: "12:51", end: "13:05"},{id: "art", start: "13:06", end: "18:16"}], lines: 1080},
+			{id: 522, start: "2025-01-10T12:54Z", end: "2025-01-10T16:36Z", duration: 222, category: [{id: "just chatting", start: "12:54", end: "16:36"}], lines: 1080},
+			{id: 523, start: "2025-01-11T12:53Z", end: "2025-01-11T17:31Z", duration: 278, category: [{id: "Pokémon Crystal", start: "12:53", end: "17:31"}], lines: 1080},
+			{id: 524, start: "2025-01-12T12:46Z", end: "2025-01-12T17:26Z", duration: 280, category: [{id: "Pokémon Crystal", start: "12:47", end: "15:40"},{id: "art", start: "15:41", end: "17:26"}], lines: 1080},
+			{id: 525, start: "2025-01-13T12:49Z", end: "2025-01-13T17:15Z", duration: 266, category: [{id: "just chatting", start: "12:50", end: "13:03"},{id: "Euro Truck Simulator 2", start: "13:04", end: "17:15"}], lines: 1080},
+			{id: 526, start: "2025-01-15T12:53Z", end: "2025-01-15T15:11Z", duration: 137, category: [{id: "kami", start: "12:54", end: "15:11"}], lines: 1080},
+			{id: 527, start: "2025-01-16T12:46Z", end: "2025-01-16T19:50Z", duration: 424, category: [{id: "kami", start: "12:46", end: "19:50"}], lines: 1080},
+			{id: 528, start: "2025-01-18T17:43Z", end: "2025-01-18T19:47Z", duration: 124, category: [{id: "Pokémon Emerald", start: "15:49", end: "17:41"},{id: "", start: "17:42", end: "17:53"},{id: "Pokémon Emerald", start: "17:54", end: "19:47"}], lines: 1080},
+			{id: 529, start: "2025-01-19T12:50Z", end: "2025-01-19T18:58Z", duration: 368, category: [{id: "Pokémon Emerald", start: "12:51", end: "18:58"}], lines: 1080},
+			{id: 530, start: "2025-01-20T12:54Z", end: "2025-01-20T18:32Z", duration: 338, category: [{id: "art", start: "12:55", end: "18:32"}], lines: 1080},
+			{id: 531, start: "2025-01-22T12:53Z", end: "2025-01-22T18:01Z", duration: 308, category: [{id: "Ōkami HD", start: "12:53", end: "14:04"},{id: "art", start: "14:05", end: "18:01"}], lines: 1080},
+			{id: 532, start: "2025-01-23T12:50Z", end: "2025-01-23T17:36Z", duration: 286, category: [{id: "art", start: "12:51", end: "17:36"}], lines: 1080},
+			{id: 533, start: "2025-01-25T12:54Z", end: "2025-01-25T19:03Z", duration: 368, category: [{id: "Pokémon Emerald", start: "12:55", end: "19:03"}], lines: 1080},
+			{id: 534, start: "2025-01-26T12:49Z", end: "2025-01-26T17:32Z", duration: 282, category: [{id: "Pokémon Emerald", start: "12:50", end: "17:32"}], lines: 1080},
+			{id: 535, start: "2025-01-27T12:54Z", end: "2025-01-27T20:32Z", duration: 458, category: [{id: "art", start: "12:55", end: "15:17"},{id: "music", start: "15:18", end: "15:41"},{id: "art", start: "15:42", end: "20:32"}], lines: 1080},
+			{id: 536, start: "2025-01-28T13:18Z", end: "2025-01-28T20:54Z", duration: 456, category: [{id: "art", start: "13:19", end: "20:54"}], lines: 1080},
+			{id: 537, start: "2025-01-29T12:54Z", end: "2025-01-29T21:14Z", duration: 500, category: [{id: "Super Smash Bros.", start: "12:54", end: "21:14"}], lines: 1080},
+			{id: 538, start: "2025-01-30T12:52Z", end: "2025-01-30T18:41Z", duration: 349, category: [{id: "Super Smash Bros. Melee", start: "12:52", end: "18:41"}], lines: 1080},
+			{id: 539, start: "2025-01-31T12:51Z", end: "2025-01-31T17:52Z", duration: 301, category: [{id: "art", start: "12:52", end: "17:52"}], lines: 1080},
+			{id: 540, start: "2025-02-01T12:52Z", end: "2025-02-01T20:56Z", duration: 484, category: [{id: "Pokémon Emerald", start: "12:53", end: "15:56"},{id: "art", start: "15:57", end: "20:56"}], lines: 1080},
+			{id: 541, start: "2025-02-02T12:52Z", end: "2025-02-02T17:22Z", duration: 270, category: [{id: "Pokémon Emerald", start: "12:52", end: "17:22"}], lines: 1080},
+			{id: 542, start: "2025-02-03T12:50Z", end: "2025-02-03T17:52Z", duration: 302, category: [{id: "art", start: "12:50", end: "17:52"}], lines: 1080},
+			{id: 543, start: "2025-02-04T12:53Z", end: "2025-02-04T21:49Z", duration: 535, category: [{id: "art", start: "12:54", end: "21:49"}], lines: 1080},
+			{id: 544, start: "2025-02-05T12:53Z", end: "2025-02-05T19:31Z", duration: 398, category: [{id: "Super Smash Bros. Melee", start: "12:53", end: "19:31"}], lines: 1080},
+			{id: 545, start: "2025-02-06T12:48Z", end: "2025-02-06T19:10Z", duration: 382, category: [{id: "Super Smash Bros. Melee", start: "12:48", end: "19:10"}], lines: 1080},
+			{id: 546, start: "2025-02-07T12:49Z", end: "2025-02-07T20:41Z", duration: 471, category: [{id: "Spyro the Dragon", start: "12:50", end: "17:59"},{id: "art", start: "18:00", end: "20:41"}], lines: 1080},
+			{id: 547, start: "2025-02-08T12:55Z", end: "2025-02-08T17:07Z", duration: 252, category: [{id: "Pokémon Emerald", start: "12:55", end: "17:07"}], lines: 1080},
+			{id: 548, start: "2025-02-09T12:51Z", end: "2025-02-09T17:52Z", duration: 301, category: [{id: "Pokémon Emerald", start: "12:51", end: "17:52"}], lines: 1080},
+			{id: 549, start: "2025-02-10T12:56Z", end: "2025-02-10T17:35Z", duration: 278, category: [{id: "art", start: "12:57", end: "14:51"},{id: "Euro Truck Simulator 2", start: "14:52", end: "17:35"}], lines: 1080},
+			{id: 550, start: "2025-02-12T12:51Z", end: "2025-02-12T19:36Z", duration: 405, category: [{id: "Super Smash Bros. Melee", start: "12:51", end: "19:36"}], lines: 1080},
+			{id: 551, start: "2025-02-13T15:13Z", end: "2025-02-13T19:46Z", duration: 273, category: [{id: "Super Smash Bros. Melee", start: "12:51", end: "19:46"}], lines: 1080},
+			{id: 552, start: "2025-02-15T12:52Z", end: "2025-02-15T17:51Z", duration: 299, category: [{id: "Pokémon Emerald", start: "12:52", end: "17:51"}], lines: 1080},
+			{id: 553, start: "2025-02-16T12:52Z", end: "2025-02-16T17:41Z", duration: 289, category: [{id: "Pokémon Emerald", start: "12:52", end: "17:41"}], lines: 1080},
+			{id: 554, start: "2025-02-17T12:48Z", end: "2025-02-17T17:30Z", duration: 282, category: [{id: "art", start: "12:48", end: "17:30"}], lines: 1080},
+			{id: 555, start: "2025-02-19T12:52Z", end: "2025-02-19T17:43Z", duration: 290, category: [{id: "Super Smash Bros. Melee", start: "12:53", end: "17:43"}], lines: 1080},
+			{id: 556, start: "2025-02-20T14:32Z", end: "2025-02-20T18:09Z", duration: 217, category: [{id: "Super Smash Bros. Melee", start: "12:50", end: "18:09"}], lines: 1080},
+			{id: 557, start: "2025-02-22T12:52Z", end: "2025-02-22T18:10Z", duration: 317, category: [{id: "Pokémon Emerald", start: "12:53", end: "15:01"},{id: "art", start: "15:02", end: "18:10"}], lines: 1080},
+			{id: 558, start: "2025-02-23T12:53Z", end: "2025-02-23T19:24Z", duration: 390, category: [{id: "Pokémon Emerald", start: "12:54", end: "15:01"},{id: "art", start: "15:02", end: "15:03"},{id: "Pokémon Emerald", start: "15:04", end: "15:24"},{id: "art", start: "15:25", end: "19:24"}], lines: 1080},
+			{id: 559, start: "2025-02-24T12:52Z", end: "2025-02-24T18:03Z", duration: 311, category: [{id: "just chatting", start: "12:53", end: "13:07"},{id: "art", start: "13:08", end: "14:38"},{id: "Euro Truck Simulator 2", start: "14:39", end: "16:34"},{id: "art", start: "16:35", end: "18:03"}], lines: 1080},
+			{id: 560, start: "2025-02-26T12:53Z", end: "2025-02-26T19:50Z", duration: 416, category: [{id: "Super Smash Bros. Melee", start: "12:54", end: "19:50"}], lines: 1080},
+			{id: 561, start: "2025-02-27T12:50Z", end: "2025-02-27T19:55Z", duration: 425, category: [{id: "Super Smash Bros. Melee", start: "12:51", end: "15:57"},{id: "art", start: "15:58", end: "19:55"}], lines: 1080},
+			{id: 562, start: "2025-03-01T12:56Z", end: "2025-03-01T18:48Z", duration: 352, category: [{id: "art", start: "12:56", end: "18:48"}], lines: 1080},
+			{id: 563, start: "2025-03-02T12:48Z", end: "2025-03-02T16:57Z", duration: 249, category: [{id: "art", start: "12:48", end: "16:57"}], lines: 1080},
+			{id: 564, start: "2025-03-03T12:55Z", end: "2025-03-03T17:50Z", duration: 294, category: [{id: "art", start: "12:56", end: "17:50"}], lines: 1080},
+			{id: 565, start: "2025-03-05T12:50Z", end: "2025-03-05T19:01Z", duration: 371, category: [{id: "Super Smash Bros. Melee", start: "12:51", end: "19:01"}], lines: 1080},
+			{id: 566, start: "2025-03-06T12:50Z", end: "2025-03-06T17:42Z", duration: 292, category: [{id: "Super Smash Bros. Melee", start: "12:50", end: "17:42"}], lines: 1080},
+			{id: 567, start: "2025-03-07T12:52Z", end: "2025-03-07T18:17Z", duration: 325, category: [{id: "Super Smash Bros. Melee", start: "12:53", end: "18:17"}], lines: 1080},
+			{id: 568, start: "2025-03-08T12:52Z", end: "2025-03-08T17:02Z", duration: 250, category: [{id: "Super Smash Bros. Melee", start: "12:53", end: "13:02"},{id: "", start: "13:03", end: "13:03"},{id: "Pokémon Emerald", start: "13:04", end: "15:20"},{id: "art", start: "15:21", end: "17:02"}], lines: 1080},
+			{id: 569, start: "2025-03-09T12:54Z", end: "2025-03-09T17:54Z", duration: 300, category: [{id: "Pokémon Emerald", start: "12:54", end: "17:54"}], lines: 1080},
+			{id: 570, start: "2025-03-11T12:53Z", end: "2025-03-11T17:52Z", duration: 299, category: [{id: "just chatting", start: "12:53", end: "13:30"},{id: "Euro Truck Simulator 2", start: "13:31", end: "14:22"},{id: "art", start: "14:23", end: "17:52"}], lines: 1080},
+			{id: 571, start: "2025-03-13T12:51Z", end: "2025-03-13T20:30Z", duration: 459, category: [{id: "Super Smash Bros. Melee", start: "12:51", end: "20:30"}], lines: 1080},
+			{id: 572, start: "2025-03-14T12:52Z", end: "2025-03-14T18:23Z", duration: 331, category: [{id: "Super Smash Bros. Brawl", start: "12:53", end: "18:23"}], lines: 1080},
+			{id: 573, start: "2025-03-15T12:55Z", end: "2025-03-15T17:40Z", duration: 285, category: [{id: "Pokémon Emerald", start: "12:55", end: "17:40"}], lines: 1080},
+			{id: 574, start: "2025-03-16T12:49Z", end: "2025-03-16T17:05Z", duration: 256, category: [{id: "Pokémon Emerald", start: "12:50", end: "17:05"}], lines: 1080},
+			{id: 575, start: "2025-03-18T12:51Z", end: "2025-03-18T17:46Z", duration: 295, category: [{id: "art", start: "12:52", end: "17:46"}], lines: 1080},
+			{id: 576, start: "2025-03-20T12:48Z", end: "2025-03-20T17:53Z", duration: 304, category: [{id: "Super Smash Bros. Brawl", start: "12:49", end: "17:53"}], lines: 1080},
+			{id: 577, start: "2025-03-22T12:53Z", end: "2025-03-22T18:09Z", duration: 316, category: [{id: "Pokémon Emerald", start: "12:53", end: "18:09"}], lines: 1080},
+			{id: 578, start: "2025-03-23T12:52Z", end: "2025-03-23T17:51Z", duration: 299, category: [{id: "art", start: "12:52", end: "17:51"}], lines: 1080},
+			{id: 579, start: "2025-03-27T12:33Z", end: "2025-03-27T17:07Z", duration: 274, category: [{id: "Super Smash Bros. Brawl", start: "12:33", end: "17:07"}], lines: 1080},
+			{id: 580, start: "2025-03-28T13:07Z", end: "2025-03-28T18:39Z", duration: 332, category: [{id: "Super Smash Bros. Brawl", start: "13:07", end: "18:39"}], lines: 1080},
+			{id: 581, start: "2025-03-29T12:52Z", end: "2025-03-29T17:07Z", duration: 255, category: [{id: "art", start: "12:52", end: "17:07"}], lines: 1080},
+			{id: 582, start: "2025-03-30T11:53Z", end: "2025-03-30T17:39Z", duration: 346, category: [{id: "art", start: "11:54", end: "17:39"}], lines: 1080},
+			{id: 583, start: "2025-04-01T11:50Z", end: "2025-04-01T17:31Z", duration: 340, category: [{id: "art", start: "11:51", end: "17:31"}], lines: 1080},
+			{id: 584, start: "2025-04-03T11:49Z", end: "2025-04-03T17:39Z", duration: 350, category: [{id: "art", start: "11:49", end: "17:39"}], lines: 1080},
+			{id: 585, start: "2025-04-04T11:50Z", end: "2025-04-04T18:04Z", duration: 373, category: [{id: "art", start: "11:51", end: "18:04"}], lines: 1080},
+			{id: 586, start: "2025-04-05T11:50Z", end: "2025-04-05T17:25Z", duration: 335, category: [{id: "art", start: "11:50", end: "17:25"}], lines: 1080},
+			{id: 587, start: "2025-04-06T11:54Z", end: "2025-04-06T17:58Z", duration: 364, category: [{id: "art", start: "11:55", end: "17:58"}], lines: 1080},
+			{id: 588, start: "2025-04-08T11:55Z", end: "2025-04-08T17:25Z", duration: 330, category: [{id: "art", start: "11:55", end: "17:25"}], lines: 1080},
+			{id: 589, start: "2025-04-10T11:53Z", end: "2025-04-10T17:21Z", duration: 327, category: [{id: "art", start: "11:54", end: "17:21"}], lines: 1080},
+			{id: 590, start: "2025-04-11T11:53Z", end: "2025-04-11T16:41Z", duration: 287, category: [{id: "art", start: "11:54", end: "16:41"}], lines: 1080},
+			{id: 591, start: "2025-04-12T11:48Z", end: "2025-04-12T17:45Z", duration: 356, category: [{id: "art", start: "11:49", end: "17:45"}], lines: 1080},
+			{id: 592, start: "2025-04-13T11:49Z", end: "2025-04-13T17:07Z", duration: 317, category: [{id: "art", start: "11:50", end: "17:07"}], lines: 1080},
+			{id: 593, start: "2025-04-15T11:57Z", end: "2025-04-15T19:03Z", duration: 426, category: [{id: "just chatting", start: "11:57", end: "12:15"},{id: "art", start: "12:16", end: "19:03"}], lines: 1080},
+			{id: 594, start: "2025-04-17T11:49Z", end: "2025-04-17T17:12Z", duration: 323, category: [{id: "Super Smash Bros. Brawl", start: "11:49", end: "17:12"}], lines: 1080},
+			{id: 595, start: "2025-04-18T11:57Z", end: "2025-04-18T17:11Z", duration: 314, category: [{id: "Super Smash Bros. Brawl", start: "11:58", end: "17:11"}], lines: 1080},
+			{id: 596, start: "2025-04-19T11:51Z", end: "2025-04-19T18:40Z", duration: 408, category: [{id: "art", start: "11:52", end: "18:40"}], lines: 1080},
+			{id: 597, start: "2025-04-20T11:51Z", end: "2025-04-20T15:54Z", duration: 243, category: [{id: "Zorro and Zedd", start: "11:51", end: "15:54"}], lines: 1080},
+			{id: 598, start: "2025-04-24T10:22Z", end: "2025-04-24T12:03Z", duration: 100, category: [{id: "Super Smash Bros. Brawl", start: "10:23", end: "12:03"}], lines: 1080},
+			{id: 599, start: "2025-04-25T11:50Z", end: "2025-04-25T16:48Z", duration: 298, category: [{id: "Super Smash Bros. Brawl", start: "11:50", end: "16:48"}], lines: 1080},
+			{id: 600, start: "2025-04-26T11:50Z", end: "2025-04-26T15:40Z", duration: 230, category: [{id: "Zorro and Zedd", start: "11:51", end: "15:40"}], lines: 1080},
+			{id: 601, start: "2025-04-27T12:26Z", end: "2025-04-27T16:48Z", duration: 262, category: [{id: "just chatting", start: "11:50", end: "16:48"}], lines: 1080},
+			{id: 602, start: "2025-04-29T11:51Z", end: "2025-04-29T17:51Z", duration: 360, category: [{id: "just chatting", start: "11:51", end: "13:35"},{id: "art", start: "13:36", end: "17:51"}], lines: 1080},
+			{id: 603, start: "2025-05-01T11:51Z", end: "2025-05-01T17:07Z", duration: 315, category: [{id: "just chatting", start: "11:52", end: "12:13"},{id: "Super Smash Bros. Brawl", start: "12:14", end: "17:07"}], lines: 1080},
+			{id: 604, start: "2025-05-02T11:51Z", end: "2025-05-02T16:53Z", duration: 302, category: [{id: "Super Smash Bros. Brawl", start: "11:51", end: "16:53"}], lines: 1080},
+			{id: 605, start: "2025-05-03T11:53Z", end: "2025-05-03T18:17Z", duration: 384, category: [{id: "Pokémon Colosseum", start: "11:53", end: "18:17"}], lines: 1080},
+			{id: 606, start: "2025-05-04T11:50Z", end: "2025-05-04T15:49Z", duration: 239, category: [{id: "Pokémon Colosseum", start: "11:50", end: "15:49"}], lines: 1080},
+			{id: 607, start: "2025-05-04T19:50Z", end: "2025-05-04T23:58Z", duration: 247, category: [{id: "Pokémon Colosseum", start: "19:51", end: "19:56"},{id: "", start: "19:57", end: "19:59"},{id: "Euro Truck Simulator 2", start: "20:00", end: "23:58"}], lines: 1080},
+			{id: 608, start: "2025-05-05T11:59Z", end: "2025-05-05T16:32Z", duration: 273, category: [{id: "Euro Truck Simulator 2", start: "11:59", end: "14:33"},{id: "art", start: "14:34", end: "16:32"}], lines: 1080},
+			{id: 609, start: "2025-05-06T14:05Z", end: "2025-05-06T15:49Z", duration: 103, category: [{id: "Euro Truck Simulator 2", start: "14:06", end: "15:49"}], lines: 1080},
+			{id: 610, start: "2025-05-08T11:55Z", end: "2025-05-08T14:45Z", duration: 170, category: [{id: "Super Smash Bros. Brawl", start: "11:55", end: "13:59"},{id: "art", start: "14:00", end: "14:45"}], lines: 1080},
+			{id: 611, start: "2025-05-09T11:52Z", end: "2025-05-09T16:00Z", duration: 248, category: [{id: "Super Smash Bros. Brawl", start: "11:52", end: "16:00"}], lines: 1080},
+			{id: 612, start: "2025-05-10T11:52Z", end: "2025-05-10T18:01Z", duration: 369, category: [{id: "Pokémon Colosseum", start: "11:52", end: "18:01"}], lines: 1080},
+			{id: 613, start: "2025-05-11T11:55Z", end: "2025-05-11T20:35Z", duration: 520, category: [{id: "Pokémon Colosseum", start: "11:55", end: "14:13"},{id: "Euro Truck Simulator 2", start: "14:14", end: "20:35"}], lines: 1080},
+			{id: 614, start: "2025-05-12T11:56Z", end: "2025-05-12T18:57Z", duration: 421, category: [{id: "art", start: "11:56", end: "13:34"},{id: "just chatting", start: "13:35", end: "16:43"},{id: "art", start: "16:44", end: "18:57"}], lines: 1080},
+			{id: 615, start: "2025-05-15T10:56Z", end: "2025-05-15T18:20Z", duration: 444, category: [{id: "Euro Truck Simulator 2", start: "09:56", end: "10:55"},{id: "", start: "10:57", end: "11:04"},{id: "Euro Truck Simulator 2", start: "11:05", end: "18:20"}], lines: 1080},
+			{id: 616, start: "2025-05-16T13:23Z", end: "2025-05-16T18:01Z", duration: 278, category: [{id: "just chatting", start: "13:23", end: "13:49"},{id: "Euro Truck Simulator 2", start: "13:50", end: "14:30"},{id: "art", start: "14:31", end: "18:01"}], lines: 1080},
+			{id: 617, start: "2025-05-17T12:48Z", end: "2025-05-17T18:32Z", duration: 344, category: [{id: "art", start: "12:48", end: "18:32"}], lines: 1080},
+			{id: 618, start: "2025-05-18T11:53Z", end: "2025-05-18T17:17Z", duration: 324, category: [{id: "art", start: "11:53", end: "17:17"}], lines: 1080},
+			{id: 619, start: "2025-05-19T11:57Z", end: "2025-05-19T17:54Z", duration: 357, category: [{id: "art", start: "11:57", end: "17:54"}], lines: 1080},
+			{id: 620, start: "2025-05-20T11:56Z", end: "2025-05-20T18:08Z", duration: 372, category: [{id: "art", start: "11:56", end: "18:08"}], lines: 1080},
+			{id: 621, start: "2025-05-21T11:51Z", end: "2025-05-21T20:04Z", duration: 493, category: [{id: "Euro Truck Simulator 2", start: "11:52", end: "20:04"}], lines: 1080},
+			{id: 622, start: "2025-05-23T13:52Z", end: "2025-05-23T18:14Z", duration: 262, category: [{id: "Euro Truck Simulator 2", start: "13:53", end: "18:14"}], lines: 1080},
+			{id: 623, start: "2025-05-24T11:55Z", end: "2025-05-24T17:18Z", duration: 323, category: [{id: "just chatting", start: "11:56", end: "16:21"},{id: "art", start: "16:22", end: "17:18"}], lines: 1080},
+			{id: 624, start: "2025-05-25T11:51Z", end: "2025-05-25T18:29Z", duration: 398, category: [{id: "art", start: "11:52", end: "18:29"}], lines: 1080},
+			{id: 625, start: "2025-05-26T11:52Z", end: "2025-05-26T17:33Z", duration: 340, category: [{id: "just chatting", start: "11:53", end: "12:02"},{id: "Super Smash Bros. Brawl", start: "12:03", end: "17:33"}], lines: 1080},
+			{id: 626, start: "2025-05-27T12:03Z", end: "2025-05-27T17:23Z", duration: 320, category: [{id: "Super Smash Bros. Brawl", start: "12:04", end: "17:23"}], lines: 1080},
+			{id: 627, start: "2025-05-28T12:48Z", end: "2025-05-28T17:51Z", duration: 303, category: [{id: "Super Smash Bros. Brawl", start: "12:20", end: "12:48"},{id: "", start: "12:49", end: "12:56"},{id: "Super Smash Bros. Brawl", start: "12:57", end: "17:51"}], lines: 1080},
+			{id: 628, start: "2025-05-29T11:54Z", end: "2025-05-29T17:58Z", duration: 364, category: [{id: "Super Smash Bros. Brawl", start: "11:54", end: "17:58"}], lines: 1080},
+			{id: 629, start: "2025-05-30T12:18Z", end: "2025-05-30T20:49Z", duration: 511, category: [{id: "Super Smash Bros. Brawl", start: "12:18", end: "15:32"},{id: "art", start: "15:33", end: "20:49"}], lines: 1080},
+			{id: 630, start: "2025-05-31T11:54Z", end: "2025-05-31T16:34Z", duration: 280, category: [{id: "Pokémon Colosseum", start: "11:54", end: "16:34"}], lines: 1080},
+			{id: 631, start: "2025-06-01T12:02Z", end: "2025-06-01T18:08Z", duration: 366, category: [{id: "Pokémon Colosseum", start: "12:03", end: "13:35"},{id: "art", start: "13:36", end: "18:08"}], lines: 1080},
+			{id: 632, start: "2025-06-02T11:54Z", end: "2025-06-02T16:23Z", duration: 268, category: [{id: "art", start: "11:55", end: "16:23"}], lines: 1080},
+			{id: 633, start: "2025-06-03T17:51Z", end: "2025-06-03T21:27Z", duration: 216, category: [{id: "Euro Truck Simulator 2", start: "17:52", end: "21:27"}], lines: 1080},
+			{id: 634, start: "2025-06-05T12:50Z", end: "2025-06-05T16:39Z", duration: 229, category: [{id: "Super Smash Bros. Brawl", start: "12:50", end: "16:39"}], lines: 1080},
+			{id: 635, start: "2025-06-06T11:57Z", end: "2025-06-06T17:42Z", duration: 345, category: [{id: "Super Smash Bros. Brawl", start: "11:58", end: "17:42"}], lines: 1080},
+			{id: 636, start: "2025-06-08T13:52Z", end: "2025-06-08T20:04Z", duration: 371, category: [{id: "Super Smash Bros. Brawl", start: "13:53", end: "20:04"}], lines: 1080},
+			{id: 637, start: "2025-06-09T11:57Z", end: "2025-06-09T19:32Z", duration: 455, category: [{id: "Super Smash Bros. Brawl", start: "11:58", end: "19:32"}], lines: 1080},
+			{id: 638, start: "2025-06-10T14:27Z", end: "2025-06-10T19:51Z", duration: 324, category: [{id: "Super Smash Bros. Brawl", start: "14:27", end: "19:51"}], lines: 1080},
+			{id: 639, start: "2025-06-12T12:11Z", end: "2025-06-12T17:43Z", duration: 332, category: [{id: "Super Smash Bros. Brawl", start: "12:11", end: "17:43"}], lines: 1080},
+			{id: 640, start: "2025-06-14T11:51Z", end: "2025-06-14T18:49Z", duration: 418, category: [{id: "Super Smash Bros. Brawl", start: "11:51", end: "18:49"}], lines: 1080},
+			{id: 641, start: "2025-06-16T11:57Z", end: "2025-06-16T17:52Z", duration: 355, category: [{id: "art", start: "11:58", end: "17:52"}], lines: 1080},
+			{id: 642, start: "2025-06-17T12:29Z", end: "2025-06-17T17:38Z", duration: 309, category: [{id: "Pokémon Colosseum", start: "12:29", end: "17:38"}], lines: 1080},
+			{id: 643, start: "2025-06-18T11:57Z", end: "2025-06-18T18:24Z", duration: 387, category: [{id: "Pokémon Colosseum", start: "11:51", end: "12:45"},{id: "Super Smash Bros. Brawl", start: "12:46", end: "13:12"},{id: "art", start: "13:13", end: "18:24"}], lines: 1080},
+			{id: 644, start: "2025-06-19T16:13Z", end: "2025-06-19T20:32Z", duration: 259, category: [{id: "art", start: "11:51", end: "21:06"}], lines: 1080},
+			{id: 645, start: "2025-06-20T11:59Z", end: "2025-06-20T18:03Z", duration: 364, category: [{id: "just chatting", start: "12:00", end: "13:02"},{id: "Euro Truck Simulator 2", start: "13:03", end: "18:03"}], lines: 1080},
+			{id: 646, start: "2025-06-21T12:05Z", end: "2025-06-21T20:51Z", duration: 525, category: [{id: "just chatting", start: "12:06", end: "15:13"},{id: "Pokémon Colosseum", start: "15:14", end: "20:51"}], lines: 1080},
+			{id: 647, start: "2025-06-22T11:55Z", end: "2025-06-22T17:59Z", duration: 364, category: [{id: "Pokémon Colosseum", start: "11:55", end: "17:59"}], lines: 1080},
+			{id: 648, start: "2025-06-25T12:04Z", end: "2025-06-25T19:45Z", duration: 461, category: [{id: "Pokémon Colosseum", start: "12:04", end: "19:45"}], lines: 1080},
+			{id: 649, start: "2025-06-27T13:01Z", end: "2025-06-27T19:32Z", duration: 390, category: [{id: "just chatting", start: "13:02", end: "13:10"},{id: "Euro Truck Simulator 2", start: "13:11", end: "19:32"}], lines: 1080},
+			{id: 650, start: "2025-06-28T11:54Z", end: "2025-06-28T17:35Z", duration: 341, category: [{id: "Pokémon Colosseum", start: "11:55", end: "17:35"}], lines: 1080},
+			{id: 651, start: "2025-06-29T11:51Z", end: "2025-06-29T20:17Z", duration: 506, category: [{id: "art", start: "11:52", end: "20:17"}], lines: 1080},
+			{id: 652, start: "2025-06-30T11:56Z", end: "2025-06-30T17:08Z", duration: 312, category: [{id: "Pokémon Colosseum", start: "11:56", end: "15:25"},{id: "art", start: "15:26", end: "17:08"}], lines: 1080},
+			{id: 653, start: "2025-07-02T13:51Z", end: "2025-07-02T20:40Z", duration: 409, category: [{id: "art", start: "13:51", end: "20:40"}], lines: 1080},
+			{id: 654, start: "2025-07-04T11:49Z", end: "2025-07-04T19:34Z", duration: 465, category: [{id: "art", start: "11:50", end: "19:34"}], lines: 1080},
+			{id: 655, start: "2025-07-05T12:48Z", end: "2025-07-05T19:44Z", duration: 416, category: [{id: "just chatting", start: "12:48", end: "13:40"},{id: "Pokémon Colosseum", start: "13:41", end: "19:44"}], lines: 1080},
+			{id: 656, start: "2025-07-06T11:50Z", end: "2025-07-06T18:08Z", duration: 378, category: [{id: "Pokémon Colosseum", start: "11:50", end: "18:08"}], lines: 1080},
+			{id: 657, start: "2025-07-07T11:53Z", end: "2025-07-07T22:47Z", duration: 654, category: [{id: "Pokémon Colosseum", start: "11:53", end: "22:47"}], lines: 1080},
+			{id: 658, start: "2025-07-08T11:55Z", end: "2025-07-08T18:31Z", duration: 395, category: [{id: "Pokémon Colosseum", start: "11:56", end: "12:02"},{id: "just chatting", start: "12:03", end: "12:14"},{id: "Under the Skin", start: "12:14", end: "15:32"},{id: "art", start: "15:33", end: "18:31"}], lines: 1080},
+			{id: 659, start: "2025-07-10T11:54Z", end: "2025-07-10T16:05Z", duration: 251, category: [{id: "art", start: "11:54", end: "16:05"}], lines: 1080},
+			{id: 660, start: "2025-07-10T17:55Z", end: "2025-07-10T22:22Z", duration: 267, category: [{id: "Euro Truck Simulator 2", start: "17:55", end: "22:22"}], lines: 1080},
+			{id: 661, start: "2025-07-11T11:51Z", end: "2025-07-11T16:04Z", duration: 253, category: [{id: "art", start: "11:52", end: "16:04"}], lines: 1080},
+			{id: 662, start: "2025-07-11T18:52Z", end: "2025-07-11T20:45Z", duration: 113, category: [{id: "Crash Bandicoot", start: "18:53", end: "20:46"}], lines: 1080},
+			{id: 663, start: "2025-07-12T11:55Z", end: "2025-07-12T16:38Z", duration: 283, category: [{id: "just chatting", start: "11:55", end: "12:05"},{id: "art", start: "12:06", end: "16:38"}], lines: 1080},
+			{id: 664, start: "2025-07-13T11:58Z", end: "2025-07-13T16:02Z", duration: 244, category: [{id: "art", start: "11:58", end: "16:02"}], lines: 1080},
+			{id: 665, start: "2025-07-13T17:52Z", end: "2025-07-13T21:58Z", duration: 246, category: [{id: "Euro Truck Simulator 2", start: "17:53", end: "21:58"}], lines: 1080},
+			{id: 666, start: "2025-07-14T12:02Z", end: "2025-07-14T18:15Z", duration: 373, category: [{id: "Euro Truck Simulator 2", start: "12:03", end: "18:15"}], lines: 1080},
+			{id: 667, start: "2025-07-15T11:58Z", end: "2025-07-15T16:22Z", duration: 263, category: [{id: "just chatting", start: "11:59", end: "16:22"}], lines: 1080},
+			{id: 668, start: "2025-07-15T17:51Z", end: "2025-07-15T23:51Z", duration: 360, category: [{id: "Euro Truck Simulator 2", start: "17:51", end: "23:51"}], lines: 1080},
+			{id: 669, start: "2025-07-16T11:54Z", end: "2025-07-16T14:34Z", duration: 160, category: [{id: "art", start: "11:54", end: "14:34"}], lines: 1080},
+			{id: 670, start: "2025-07-17T12:01Z", end: "2025-07-17T18:17Z", duration: 375, category: [{id: "just chatting", start: "12:02", end: "13:23"},{id: "Euro Truck Simulator 2", start: "13:24", end: "15:46"},{id: "", start: "15:47", end: "15:48"},{id: "just chatting", start: "15:49", end: "18:17"}], lines: 1080},
+			{id: 671, start: "2025-07-18T11:59Z", end: "2025-07-18T19:07Z", duration: 428, category: [{id: "just chatting", start: "11:59", end: "13:12"},{id: "Crash Bandicoot", start: "13:13", end: "17:22"},{id: "Crash Bandicoot: Warped", start: "17:23", end: "17:40"},{id: "just chatting", start: "17:41", end: "19:07"}], lines: 1080},
+			{id: 672, start: "2025-07-20T11:51Z", end: "2025-07-20T19:14Z", duration: 443, category: [{id: "art", start: "11:52", end: "19:14"}], lines: 1080},
+			{id: 673, start: "2025-07-21T11:48Z", end: "2025-07-21T17:17Z", duration: 329, category: [{id: "art", start: "11:49", end: "14:58"},{id: "Euro Truck Simulator 2", start: "14:59", end: "17:17"}], lines: 1080},
+			{id: 674, start: "2025-07-22T11:51Z", end: "2025-07-22T19:29Z", duration: 458, category: [{id: "Rollercoaster Tycoon", start: "11:52", end: "19:29"}], lines: 1080},
+			{id: 675, start: "2025-07-23T11:50Z", end: "2025-07-23T19:06Z", duration: 435, category: [{id: "Rollercoaster Tycoon", start: "11:51", end: "19:06"}], lines: 1080},
+			{id: 676, start: "2025-07-24T11:52Z", end: "2025-07-24T16:55Z", duration: 303, category: [{id: "TY the Tasmanian Tiger", start: "11:52", end: "16:55"}], lines: 1080},
+			{id: 677, start: "2025-07-25T11:49Z", end: "2025-07-25T17:56Z", duration: 367, category: [{id: "TY the Tasmanian Tiger", start: "11:50", end: "17:57"}], lines: 1080},
+			{id: 678, start: "2025-07-26T11:53Z", end: "2025-07-26T17:40Z", duration: 347, category: [{id: "Boom Street", start: "11:53", end: "17:40"}], lines: 1080},
+			{id: 679, start: "2025-07-27T11:52Z", end: "2025-07-27T16:11Z", duration: 259, category: [{id: "Boom Street", start: "11:53", end: "16:11"}], lines: 1080},
+			{id: 680, start: "2025-07-28T13:31Z", end: "2025-07-28T16:28Z", duration: 178, category: [{id: "art", start: "11:57", end: "12:38"},{id: "Boom Street", start: "12:39", end: "16:29"}], lines: 1080},
+			{id: 681, start: "2025-07-29T11:54Z", end: "2025-07-29T17:08Z", duration: 314, category: [{id: "Rollercoaster Tycoon", start: "11:55", end: "17:08"}], lines: 1080},
+			{id: 682, start: "2025-07-30T11:48Z", end: "2025-07-30T17:14Z", duration: 326, category: [{id: "Rollercoaster Tycoon", start: "11:49", end: "17:14"}], lines: 1080},
+			{id: 683, start: "2025-07-31T11:54Z", end: "2025-07-31T18:14Z", duration: 379, category: [{id: "TY the Tasmanian Tiger", start: "11:55", end: "16:03"},{id: "Boom Street", start: "16:04", end: "18:14"}], lines: 1080},
+			{id: 684, start: "2025-08-01T12:09Z", end: "2025-08-01T16:36Z", duration: 267, category: [{id: "TY the Tasmanian Tiger", start: "11:53", end: "13:31"},{id: "Boom Street", start: "13:32", end: "16:37"}], lines: 1080},
+			{id: 685, start: "2025-08-02T11:50Z", end: "2025-08-02T21:05Z", duration: 555, category: [{id: "special events", start: "11:51", end: "12:18"},{id: "Spyro the Dragon", start: "12:19", end: "14:42"},{id: "Spyro 2: Gateway to Glimmer", start: "14:43", end: "21:06"}], lines: 1080},
+			{id: 686, start: "2025-08-03T11:47Z", end: "2025-08-03T20:43Z", duration: 536, category: [{id: "Spyro 2: Gateway to Glimmer", start: "11:47", end: "13:34"},{id: "Spyro: Season of Ice", start: "13:35", end: "20:43"}], lines: 1080},
+			{id: 687, start: "2025-08-04T11:50Z", end: "2025-08-04T20:07Z", duration: 497, category: [{id: "Spyro: Season of Ice", start: "11:50", end: "13:31"},{id: "Spyro 2: Season of Flame", start: "13:32", end: "20:04"},{id: "Spyro Adventure", start: "20:04", end: "20:07"}], lines: 1080},
+			{id: 688, start: "2025-08-05T11:45Z", end: "2025-08-05T17:27Z", duration: 341, category: [{id: "Spyro Adventure", start: "11:46", end: "16:35"},{id: "Spyro Fusion", start: "16:36", end: "20:32"}], lines: 1080},
+			{id: 689, start: "2025-08-06T11:48Z", end: "2025-08-06T22:10Z", duration: 622, category: [{id: "Spyro: Enter the Dragonfly", start: "11:49", end: "17:14"},{id: "Spyro: A Hero's Tail", start: "17:15", end: "22:10"}], lines: 1080},
+			{id: 690, start: "2025-08-07T11:53Z", end: "2025-08-07T16:37Z", duration: 283, category: [{id: "Boom Street", start: "11:54", end: "16:37"}], lines: 1080},
+			{id: 691, start: "2025-08-08T11:52Z", end: "2025-08-08T16:55Z", duration: 303, category: [{id: "Boom Street", start: "11:53", end: "16:56"}], lines: 1080},
+			{id: 692, start: "2025-08-09T11:53Z", end: "2025-08-09T16:00Z", duration: 247, category: [{id: "Boom Street", start: "11:54", end: "16:00"}], lines: 1080},
+			{id: 693, start: "2025-08-10T11:53Z", end: "2025-08-10T16:35Z", duration: 281, category: [{id: "art", start: "11:54", end: "14:00"},{id: "Boom Street", start: "14:01", end: "16:35"}], lines: 1080},
+			{id: 694, start: "2025-08-10T18:45Z", end: "2025-08-10T20:36Z", duration: 111, category: [{id: "Crash Bandicoot", start: "18:46", end: "20:37"}], lines: 1080},
+			{id: 695, start: "2025-08-11T11:51Z", end: "2025-08-11T17:11Z", duration: 319, category: [{id: "Crash Bandicoot", start: "11:52", end: "12:00"},{id: "art", start: "12:01", end: "17:11"}], lines: 1080},
+			{id: 696, start: "2025-08-12T11:59Z", end: "2025-08-12T18:01Z", duration: 362, category: [{id: "art", start: "11:59", end: "12:05"},{id: "Rollercoaster Tycoon", start: "12:06", end: "15:30"},{id: "art", start: "15:31", end: "18:01"}], lines: 1080},
+			{id: 697, start: "2025-08-13T11:49Z", end: "2025-08-13T16:49Z", duration: 300, category: [{id: "Rollercoaster Tycoon", start: "11:50", end: "15:02"},{id: "art", start: "15:03", end: "16:49"}], lines: 1080},
+			{id: 698, start: "2025-08-14T11:49Z", end: "2025-08-14T19:05Z", duration: 436, category: [{id: "TY the Tasmanian Tiger", start: "11:49", end: "13:55"},{id: "Euro Truck Simulator 2", start: "13:56", end: "16:04"},{id: "art", start: "16:04", end: "19:32"}], lines: 1080},
+			{id: 699, start: "2025-08-15T11:52Z", end: "2025-08-15T15:58Z", duration: 246, category: [{id: "TY the Tasmanian Tiger", start: "11:53", end: "14:36"},{id: "art", start: "14:37", end: "17:42"}], lines: 1080},
+			{id: 700, start: "2025-08-16T11:56Z", end: "2025-08-16T16:58Z", duration: 302, category: [{id: "Boom Street", start: "11:57", end: "16:58"}], lines: 1080},
+			{id: 701, start: "2025-08-17T11:51Z", end: "2025-08-17T17:02Z", duration: 311, category: [{id: "Boom Street", start: "11:51", end: "17:02"}], lines: 1080},
+			{id: 702, start: "2025-08-17T18:42Z", end: "2025-08-17T20:30Z", duration: 108, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "18:42", end: "20:30"}], lines: 1080},
+			{id: 703, start: "2025-08-18T11:44Z", end: "2025-08-18T16:38Z", duration: 293, category: [{id: "Crash Bandicoot 2: Cortex Strikes Back", start: "11:45", end: "11:48"},{id: "art", start: "11:49", end: "16:38"}], lines: 1080},
+			{id: 704, start: "2025-08-19T11:51Z", end: "2025-08-19T16:02Z", duration: 251, category: [{id: "art", start: "11:51", end: "16:02"}], lines: 1080},
+			{id: 705, start: "2025-08-19T17:48Z", end: "2025-08-19T21:46Z", duration: 238, category: [{id: "Euro Truck Simulator 2", start: "17:48", end: "21:46"}], lines: 1080},
+			{id: 706, start: "2025-08-20T12:39Z", end: "2025-08-20T18:32Z", duration: 353, category: [{id: "just chatting", start: "12:40", end: "12:47"},{id: "Boom Street", start: "12:48", end: "18:33"}], lines: 1080},
+			{id: 707, start: "2025-08-21T11:53Z", end: "2025-08-21T16:47Z", duration: 294, category: [{id: "TY the Tasmanian Tiger 2: Bush Rescue", start: "11:53", end: "16:48"}], lines: 1080},
+			{id: 708, start: "2025-08-22T11:44Z", end: "2025-08-22T16:39Z", duration: 295, category: [{id: "TY the Tasmanian Tiger 2: Bush Rescue", start: "11:45", end: "16:39"}], lines: 1080},
+			{id: 709, start: "2025-08-23T11:52Z", end: "2025-08-23T15:57Z", duration: 245, category: [{id: "Boom Street", start: "11:52", end: "15:57"}], lines: 1080},
+			{id: 710, start: "2025-08-23T17:52Z", end: "2025-08-24T01:13Z", duration: 442, category: [{id: "Euro Truck Simulator 2", start: "17:52", end: "01:14"}], lines: 1080},
+			{id: 711, start: "2025-08-24T11:53Z", end: "2025-08-24T15:58Z", duration: 245, category: [{id: "Boom Street", start: "11:54", end: "15:58"}], lines: 1080},
+			{id: 712, start: "2025-08-24T18:50Z", end: "2025-08-24T20:24Z", duration: 94, category: [{id: "Crash Bandicoot: Warped", start: "18:51", end: "20:24"}], lines: 1080},
+			{id: 713, start: "2025-08-25T11:55Z", end: "2025-08-25T17:59Z", duration: 364, category: [{id: "Crash Bandicoot: Warped", start: "11:56", end: "12:01"},{id: "art", start: "12:02", end: "18:00"}], lines: 1080},
+			{id: 714, start: "2025-08-26T11:55Z", end: "2025-08-26T17:54Z", duration: 359, category: [{id: "Rollercoaster Tycoon", start: "11:56", end: "15:01"},{id: "art", start: "15:02", end: "17:55"}], lines: 1080},
+			{id: 715, start: "2025-08-27T11:59Z", end: "2025-08-27T17:29Z", duration: 330, category: [{id: "art", start: "11:59", end: "12:14"},{id: "Rollercoaster Tycoon", start: "12:15", end: "15:13"},{id: "art", start: "15:14", end: "17:30"}], lines: 1080},
+			{id: 716, start: "2025-08-28T11:52Z", end: "2025-08-28T17:01Z", duration: 309, category: [{id: "TY the Tasmanian Tiger 2: Bush Rescue", start: "11:53", end: "17:01"}], lines: 1080},
+			{id: 717, start: "2025-08-29T11:58Z", end: "2025-08-29T17:17Z", duration: 319, category: [{id: "TY the Tasmanian Tiger 2: Bush Rescue", start: "11:58", end: "13:15"},{id: "Boom Street", start: "13:16", end: "17:17"}], lines: 1080},
+			{id: 718, start: "2025-08-30T11:52Z", end: "2025-08-30T17:24Z", duration: 332, category: [{id: "Boom Street", start: "11:53", end: "17:25"}], lines: 1080},
+			{id: 719, start: "2025-08-31T11:50Z", end: "2025-08-31T17:45Z", duration: 355, category: [{id: "special events", start: "11:51", end: "14:07"},{id: "Boom Street", start: "14:08", end: "17:46"}], lines: 1080},
+			{id: 720, start: "2025-09-01T11:57Z", end: "2025-09-01T17:06Z", duration: 309, category: [{id: "art", start: "11:58", end: "17:07"}], lines: 1080},
+			{id: 721, start: "2025-09-02T11:57Z", end: "2025-09-02T16:51Z", duration: 294, category: [{id: "art", start: "11:57", end: "14:05"},{id: "Boom Street", start: "14:06", end: "16:52"}], lines: 1080},
+			{id: 722, start: "2025-09-03T11:52Z", end: "2025-09-03T16:54Z", duration: 302, category: [{id: "art", start: "11:53", end: "16:55"}], lines: 1080},
+			{id: 723, start: "2025-09-04T13:13Z", end: "2025-09-04T16:31Z", duration: 198, category: [{id: "art", start: "11:55", end: "16:31"}], lines: 1080},
+			{id: 724, start: "2025-09-05T11:58Z", end: "2025-09-05T17:57Z", duration: 359, category: [{id: "art", start: "11:58", end: "17:57"}], lines: 1080},
+			{id: 725, start: "2025-09-06T11:54Z", end: "2025-09-06T18:55Z", duration: 421, category: [{id: "art", start: "11:54", end: "18:56"}], lines: 1080}
+		]
+		
+		const currentFormat = [1, 0, 2];
+
+		const systemTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+		const systemRegion = getRegion();
+		initStartingValues();
+		
+		function initStartingValues() {
+			switch (systemRegion) {
+				case "AU":
+					currentFormat[1] = 1;
+					break;
+				case "CA":
+					currentFormat[0] = 0;
+					currentFormat[1] = 1;
+					break;
+				case "CL":
+					currentFormat[1] = 1;
+					break;
+				case "CN":
+					currentFormat[0] = 0;
+					break;
+				case "CO":
+					currentFormat[1] = 1;
+					break;
+				case "CY":
+					currentFormat[1] = 1;
+					break;
+				case "EC":
+					currentFormat[1] = 1;
+					break;
+				case "EG":
+					currentFormat[1] = 1;
+					break;
+				case "GR":
+					currentFormat[1] = 1;
+					break;
+				case "HK":
+					currentFormat[1] = 1;
+					break;
+				case "HU":
+					currentFormat[0] = 0;
+					break;
+				case "JP":
+					currentFormat[1] = 2;
+					break;
+				case "KR":
+					currentFormat[0] = 0;
+					currentFormat[1] = 1;
+					break;
+				case "LT":
+					currentFormat[0] = 0;
+					break;
+				case "MN":
+					currentFormat[0] = 0;
+					break;
+				case "MO":
+					currentFormat[1] = 1;
+					break;
+				case "MX":
+					currentFormat[1] = 1;
+					break;
+				case "PH":
+					currentFormat[0] = 3;
+					currentFormat[1] = 1;
+					break;
+				case "SE":
+					currentFormat[0] = 0;
+					break;
+				case "TW":
+					currentFormat[0] = 0;
+					currentFormat[1] = 1;
+					break;
+				case "US":
+					currentFormat[0] = 2;
+					currentFormat[1] = 1;
+					break;
+				case "VE":
+					currentFormat[1] = 1;
+					break;
+			}
+			updateButtonSelected();
+			
+			const userTimezoneAbbreviations = document.getElementById("userTimezoneAbbreviations");
+			const abbr = getUserTimezoneNormalAndSummer()
+			
+			userTimezoneAbbreviations.innerHTML = `${abbr[0]}${abbr[1] ? "<br>"+abbr[1] : ""}`
+		}
+		
+		function renderTable() {
+			const tableBody = document.getElementById("tableBody");
+			if (!tableBody) return;
+			tableBody.innerHTML = `
+			<tr>
+				<th style="width: 60px;"></th>
+				<th style="width: 180px;"></th>
+				<th style="width: 180px;"></th>
+				<th style="width: 80px;"></th>
+				<th></th>
+				<th style="width: 120px;"></th>
+			</tr>`;
+			
+			index = 0;
+			scheduleDatabase.forEach(item => {
+				const formattedStart = formatDateTime(item.start, currentFormat[0], currentFormat[1], currentFormat[2]);
+				const formattedEnd = formatDateTime(item.end, currentFormat[0], currentFormat[1], currentFormat[2]);
+
+				const categoriesFormatted = item.category.map(cat => {
+					const catStart = formatCategoryTime(cat.start, currentFormat[1], item.start, currentFormat[2]);
+					const catEnd = formatCategoryTime(cat.end, currentFormat[1], item.end, currentFormat[2]);
+					const catTime = currentFormat[1] === 0 ? `${catStart}–${catEnd}` : `${catStart} – ${catEnd}`.replace(/am( – [0-9:]+ am)/, "$1").replace(/pm( – [0-9:]+ pm)/, "$1");
+					return `[${catTime}] ${cat.id}`;
+				}).join(`<br>`);
+
+				const row = document.createElement("tr");
+				row.innerHTML = `
+					<td>${++index}</td>
+					<td>${formattedStart}</td>
+					<td>${formattedEnd}</td>
+					<td>${formatDuration(item.duration)}</td>
+					<td>${categoriesFormatted}</td>
+					<td>${item.lines}p</td>
+				`;
+				tableBody.appendChild(row);
+			});
+		}
+		
+		function setDateFormat(idx) {
+			currentFormat[0] = idx;
+			updateButtonSelected();
+			renderTable();
+		}
+		function setTimeFormat(idx) {
+			currentFormat[1] = idx;
+			updateButtonSelected();
+			renderTable();
+		}
+		function setZoneFormat(idx) {
+			currentFormat[2] = idx;
+			updateButtonSelected();
+			renderTable();
+		}
+		function updateButtonSelected() {
+			const dates = [document.getElementById("date0"),document.getElementById("date1"),document.getElementById("date2"),document.getElementById("date3")];
+			const times = [document.getElementById("time0"),document.getElementById("time1"),document.getElementById("time2")];
+			const zones = [document.getElementById("zone0"),document.getElementById("zone1"),document.getElementById("zone2")];
+			
+			for (let i = 0; i < dates.length; i++) {
+				if (dates[i]) {
+					if (i === currentFormat[0]) {
+						dates[i].classList.add('selected');
+					} else {
+						dates[i].classList.remove('selected');
+					}
+				}
+			}
+			for (let i = 0; i < times.length; i++) {
+				if (times[i]) {
+					if (i === currentFormat[1]) {
+						times[i].classList.add('selected');
+					} else {
+						times[i].classList.remove('selected');
+					}
+				}
+			}
+			for (let i = 0; i < zones.length; i++) {
+				if (zones[i]) {
+					if (i === currentFormat[2]) {
+						zones[i].classList.add('selected');
+					} else {
+						zones[i].classList.remove('selected');
+					}
+				}
+			}
+		}
+		function getRegion() {
+			try {
+				const localeObj = new Intl.Locale(window.navigator.language).maximize();
+				return localeObj.region;
+			} catch (e) {
+				return "GB";
+			}
+		}
+		function getTimezoneString(tzIndex) {
+			if (tzIndex === 0) return "UTC";
+			if (tzIndex === 1) return "Europe/Stockholm";
+			return systemTimezone;
+		}
+		function getTimezoneAbbreviation(tzIndex, date) {
+			if (tzIndex === 0) return "UTC";
+			if (tzIndex === 1) {
+				const isSummer = isSummertimeCET(date, "Europe/Stockholm");
+				return isSummer ? "CEST" : "CET";
+			}
+			return getUserTimezoneAbbreviation(date);
+		}
+
+		function isSummertimeCET(date) {
+			const year = date.getUTCFullYear();
+			
+			function getLastSundayOfUTCMonth(year, monthIndex) {
+        const lastDay = new Date(Date.UTC(year, monthIndex + 1, 0, 1, 0, 0));
+        const dayOfWeek = lastDay.getUTCDay();
+        lastDay.setUTCDate(lastDay.getUTCDate() - dayOfWeek);
+        return lastDay;
+			}
+			const summerStart = getLastSundayOfUTCMonth(year, 2);
+			const summerEnd = getLastSundayOfUTCMonth(year, 9);
+			
+			return date >= summerStart && date < summerEnd;
+		}
+		function formatDateTime(dateInput, dateIdx, timeIdx, tzIdx) {
+			const date = new Date(dateInput);
+			const timeZone = getTimezoneString(tzIdx);
+
+			const [timeLocale, timeOptions] = {
+				0: ['sv-SE',{ hour: '2-digit', minute: '2-digit', hour12: false }],
+				1: ['eb-GB',{ hour: 'numeric', minute: '2-digit', hour12: true }],
+				2: ['en-JP',{ hour: 'numeric', minute: '2-digit', hourCycle: 'h11', hour12: true }]
+			}[timeIdx];
+
+			const [dateLocale, dateOptions] = {
+				0: ['sv-SE',{ year: 'numeric', month: '2-digit', day: '2-digit' }],
+				1: ['en-GB',{ day: '2-digit', month: '2-digit', year: 'numeric' }],
+				2: ['en-US',{ month: 'numeric', day: 'numeric', year: 'numeric' }],
+				3: ['en-GB',{ day: 'numeric', month: 'short', year: 'numeric' }]
+			}[dateIdx];
+
+			const timeStr = new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(date);
+			const dateStr = new Intl.DateTimeFormat(dateLocale, { ...dateOptions, timeZone }).format(date);
+			const tzAbbr = getTimezoneAbbreviation(tzIdx, date);
+
+			return `${dateStr} ${timeStr} ${tzAbbr}`;
+		}
+		function formatCategoryTime(timeString, timeIdx, dateContext, tzIdx) {
+			const [hours, minutes] = timeString.split(":");
+			const dateObj = new Date(dateContext);
+			dateObj.setUTCHours(parseInt(hours, 10), parseInt(minutes, 10));
+
+			const timeZone = getTimezoneString(tzIdx);
+			const [timeLocale, timeOptions] = {
+				0: ['sv-SE',{ hour: '2-digit', minute: '2-digit', hour12: false }],
+				1: ['en-GB',{ hour: 'numeric', minute: '2-digit', hour12: true }],
+				2: ['en-JP',{ hour: 'numeric', minute: '2-digit', hourCycle: 'h11', hour12: true }],
+			}[timeIdx];
+
+			return new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone }).format(dateObj);
+		}
+		
+		function formatDuration(minutes) {
+			const h = Math.floor(minutes / 60);
+			const m = minutes % 60;
+			return `${h}h ${m}min`;
+		}
+		
+		
+		
+		function getUserTimezoneName(date) {
+			const longName = new Intl.DateTimeFormat('en-US', {
+				systemTimezone, timeZoneName: 'long'
+			}).formatToParts(date).find(p => p.type === 'timeZoneName')?.value;
+			return longName;
+		}
+		function getUserTimezoneAbbreviation(date) {
+			const name = getUserTimezoneName(date)
+			const abbrOverrides = [
+				{ prefix: /^GMT-12:00$/, abbr: "IDLW" },
+				{ prefix: /^GMT/, abbr: "case GMT" },
+				{ prefix: /^Western European Standard Time$/, abbr: "WET" },
+				{ prefix: /^Central European Standard Time$/, abbr: "CET" },
+				{ prefix: /^Eastern European Standard Time$/, abbr: "EET" },
+				{ prefix: /^Hawaii-Aleutian Standard Time$/, abbr: "HST" },
+				{ prefix: /^Hawaii-Aleutian Daylight Time$/, abbr: "HDT" },
+				{ prefix: /^Alaska Standard Time$/, abbr: "AKST" },
+				{ prefix: /^Alaska Daylight Time$/, abbr: "AKDT" },
+				{ prefix: /^Yukon Time$/, abbr: "YST" },
+				{ prefix: /^St. Pierre & Miquelon Standard Time$/, abbr: "PMST" },
+				{ prefix: /^St. Pierre & Miquelon Daylight Time$/, abbr: "PMDT" },
+				{ prefix: /^Mexican Pacific Standard Time$/, abbr: "PST" },
+				{ prefix: /^Mexican Pacific Daylight Time$/, abbr: "PDT" },
+				{ prefix: /^East Greenland Standard Time$/, abbr: "EGT" },
+				{ prefix: /^West Greenland Standard Time$/, abbr: "WGT" },
+				{ prefix: /^Greenland Standard Time$/, abbr: "GT" },
+				{ prefix: /^Australian Central Standard Time$/, abbr: "CST" },
+				{ prefix: /^Australian Central Daylight Time$/, abbr: "CDT" },
+				{ prefix: /^Australian Central Western Standard Time$/, abbr: "CWST" },
+				{ prefix: /^Australian Central Western Daylight Time$/, abbr: "CWDT" },
+				{ prefix: /^Australian Eastern Standard Time$/, abbr: "EST" },
+				{ prefix: /^Australian Eastern Daylight Time$/, abbr: "EDT" },
+				{ prefix: /^Australian Western Standard Time$/, abbr: "WST" },
+				{ prefix: /^Australian Western Daylight Time$/, abbr: "WDT" },
+				{ prefix: /^Guyana Time$/, abbr: "GYT" },
+				{ prefix: /^Macao Summer Time$/, abbr: "MDT" },
+				{ prefix: /^Central Indonesia Time$/, abbr: "WITA" },
+				{ prefix: /^Eastern Indonesia Time$/, abbr: "WIT" },
+				{ prefix: /^Western Indonesia Time$/, abbr: "WBT" },
+				{ prefix: /^Malaysia Time$/, abbr: "MYT" },
+				{ prefix: /^Singapore Standard Time$/, abbr: "SGT" },
+				{ prefix: /^Chatham Standard Time$/, abbr: "CHAST" },
+				{ prefix: /^Chatham Daylight Time$/, abbr: "CHADT" },
+				{ prefix: /^Chamorro Standard Time$/, abbr: "ChST" },
+				{ prefix: /^Venezuela Time$/, abbr: "VET" },
+				{ prefix: /^Brasilia Standard Time$/, abbr: "BRT" },
+				{ prefix: /^Paraguay Standard Time$/, abbr: "PYT" },
+				{ prefix: /^Argentina Standard Time$/, abbr: "ART" },
+				{ prefix: /^French Guiana Time$/, abbr: "GFT" },
+				{ prefix: /^Uruguay Standard Time$/, abbr: "UYT" },
+				{ prefix: /^Azores Standard Time$/, abbr: "AZOT" },
+				{ prefix: /^Azores Summer Time$/, abbr: "AZOST" },
+				{ prefix: /^Cape Verde Standard Time$/, abbr: "CVT" },
+				{ prefix: /^Coordinated Universal Time$/, abbr: "UTC" },
+				{ prefix: /^Türkiye Standard Time$/, abbr: "TRT" },
+				{ prefix: /^Moscow Standard Time$/, abbr: "MSK" },
+				{ prefix: /^Iran Standard Time$/, abbr: "IRST" },
+				{ prefix: /^Samara Standard Time$/, abbr: "SAMT" },
+				{ prefix: /^Azerbaijan Standard Time$/, abbr: "AZT" },
+				{ prefix: /^Armenia Standard Time$/, abbr: "AMT" },
+				{ prefix: /^Mauritius Standard Time$/, abbr: "MUT" },
+				{ prefix: /^Georgia Standard Time$/, abbr: "GET" },
+				{ prefix: /^Afghanistan Time$/, abbr: "AFT" },
+				{ prefix: /^Uzbekistan Standard Time$/, abbr: "UZT" },
+				{ prefix: /^West Kazakhstan Time$/, abbr: "WKZT" },
+				{ prefix: /^East Kazakhstan Time$/, abbr: "EKZT" },
+				{ prefix: /^Kazakhstan Time$/, abbr: "KZT" },
+				{ prefix: /^Pakistan Standard Time$/, abbr: "PKT" },
+				{ prefix: /^Yekaterinburg Standard Time$/, abbr: "YEKT" },
+				{ prefix: /^Nepal Time$/, abbr: "NPT" },
+				{ prefix: /^Kyrgyzstan Time$/, abbr: "KGT" },
+				{ prefix: /^Omsk Standard Time$/, abbr: "OMST" },
+				{ prefix: /^Myanmar Time$/, abbr: "MMT" },
+				{ prefix: /^Indochina Time$/, abbr: "ICT" },
+				{ prefix: /^Krasnoyarsk Standard Time$/, abbr: "KRAT" },
+				{ prefix: /^Khovd Standard Time$/, abbr: "HOVT" },
+				{ prefix: /^Irkutsk Standard Time$/, abbr: "IRKT" },
+				{ prefix: /^Taiwan Standard Time$/, abbr: "NST" },
+				{ prefix: /^Ulaanbaatar Standard Time$/, abbr: "ULAT" },
+				{ prefix: /^Yakutsk Standard Time$/, abbr: "YAKT" },
+				{ prefix: /^Papua New Guinea Time$/, abbr: "PGT" },
+				{ prefix: /^Vladivostok Standard Time$/, abbr: "VLAT" },
+				{ prefix: /^Magadan Standard Time$/, abbr: "MAGT" },
+				{ prefix: /^Norfolk Island Standard Time$/, abbr: "NFT" },
+				{ prefix: /^Norfolk Island Daylight Time$/, abbr: "NFDT" },
+				{ prefix: /^Solomon Islands Time$/, abbr: "SBT" },
+				{ prefix: /^Kamchatka Standard Time$/, abbr: "PETT" },
+				{ prefix: /^Fiji Standard Time$/, abbr: "FJT" },
+				{ prefix: /^Tonga Standard Time$/, abbr: "TOT" },
+				{ prefix: /^Samoa Standard Time$/, abbr: "WST" },
+				{ prefix: /^Line Islands Time$/, abbr: "LINT" },
+				{ prefix: /^Niue Time$/, abbr: "NUT" },
+				{ prefix: /^American Samoa Standard Time$/, abbr: "SST" },
+				{ prefix: /^Wake Island Time$/, abbr: "WAKT" }
+			];
+			const match = abbrOverrides.find(g => g.prefix.test(name));
+			if (match) {
+				if (match.abbr === "case GMT") {
+					return `UTC${name.replace(/^GMT(-|\+)0?/, "$1").replace(/:00$/, "")}`;
+				} else {
+					return match.abbr;
+				}
+			}
+			
+			return name.replace(/[^A-Z]+/g, "");
+		}
+		function getUserTimezoneNormalAndSummer() {
+			const year = new Date().getFullYear();
+			const jan = new Date(year, 0, 15);
+			const jul = new Date(year, 6, 15);
+			const offsetNormal = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+			
+			if (jan.getTimezoneOffset() == jul.getTimezoneOffset()) {
+				return [getUserTimezoneAbbreviation(jan), ""];
+			} else if (jan.getTimezoneOffset() > jul.getTimezoneOffset()) {
+				return [getUserTimezoneAbbreviation(jan), getUserTimezoneAbbreviation(jul)];
+			} else {
+				return [getUserTimezoneAbbreviation(jul), getUserTimezoneAbbreviation(jan)];
+			}
+		}
+		
+		renderTable();
+	</script>
+</body>
+</html>
