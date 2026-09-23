@@ -318,6 +318,10 @@
 					<label for="options-region">Game-region</label>
 					<select id="options-region"></select>
 				</div>
+				<div class="dialogue-option">
+					<label for="options-groups">Multigame-streams</label>
+					<select id="options-groups"></select>
+				</div>
 			</div>
 
 			<!-- View B: Timezone Form Controls (Region + Zone) -->
@@ -348,7 +352,9 @@
 		// Time: 24h: 00:00-23:59, 30h: 00:00-29:59, 12h: 12:00-11:59 pm, 12hJP: 0:00-11:59 pm, 12hCN: 12:00-11:59 LC/ZS/SW/ZW/XW/WS
 		// Timezone: UTC: UTC, EU: Europe/Stockholm, device: Device, other: Other
 		// Region: EU, US, AU, JP
-		const formatSetting = ["ymd-", "24h", "device", "EU", "tzAU"];
+		// ZoneRegion: tzAU, tzCA, tzEU, tzLA, tzUS
+		// Groupings: all: ignore different games, streams: (default) linebreak games with different times, games: duplicate every line for every game, none: treat each game as a separate stream
+		const formatSetting = ["ymd-", "24h", "device", "EU", "tzAU", "streams"];
 		
 		// Detect locale from device
 		const deviceLanguage = getDeviceLanguage();
@@ -368,10 +374,13 @@
 			const timeNames = ["00:00–24:00", "00:00–30:00", "12:00 am – 11:59 pm", "0:00 am – 11:59 pm", "0:00 dwn – 11:59 evn"];
 			const regionKeys = ["US", "EU", "AU", "JP"];
 			const regionNames = ["America", "Europe, Africa", "Australia, Oceania", "Japan"];
+			const groupKeys = ["all", "streams", "games", "none"];
+			const groupNames = ["Don't display multiple games per stream", "Display separate times for games within a stream", "Display all info separate per games within a stream", "Split separate games into separate streams"];
 
 			buildSelectOptions("options-date", dateKeys, formatSetting[0], dateNames);
 			buildSelectOptions("options-time", timeKeys, formatSetting[1], timeNames);
 			buildSelectOptions("options-region", regionKeys, formatSetting[3], regionNames);
+			buildSelectOptions("options-groups", groupKeys, formatSetting[5], groupNames);
 
 			document.getElementById("settings-dialogue").showModal();
 		}
@@ -438,6 +447,7 @@
 					formatSetting[0] = document.getElementById("options-date").value;
 					formatSetting[1] = document.getElementById("options-time").value;
 					formatSetting[3] = document.getElementById("options-region").value;
+					formatSetting[5] = document.getElementById("options-groups").value;
 				} else if (currentModalContext === "timezone") {
 					formatSetting[4] = document.getElementById("options-timeregion").value;
 					otherTimezone = document.getElementById("options-timezone").value;
@@ -522,65 +532,10 @@
 		}
 		
 		function renderTable() {
-			const tableBody = document.getElementById("tableBody");
+			let tableBody = document.getElementById("tableBody");
 			if (!tableBody) return;
-			tableBody.innerHTML = `
-							<th class="column-fit">#</th>
-							<th class="column-fit">date</th>
-							<th class="column-fit">time</th>
-							<th class="column-expand">category</th>
-							<th class="column-fit">length</th>
-							<th class="column-fit">video</th>
-						`;
-			const fragment = document.createDocumentFragment();
-			databaseVODs.forEach((entry, index) => {
-				const totalGames = entry.games.length;
-				const streamStart = new Date(entry.games[0]?.start);
-				
-				const entryDate = streamStart ? getLocaleDate(streamStart, formatSetting[0], getActiveTimezone()) : '-';
-				const videoQuality = `${entry.lines}p${entry.hertz}`;
-				
-				const rowClass = index % 2 === 0 ? "row-even" : "row-odd";
-				entry.games.forEach((game, gameIndex) => {
-					const tr = document.createElement('tr');
-					tr.classList.add(rowClass);
-					if (gameIndex === 0) {
-						tr.classList.add("upper");
-					}
-					if (gameIndex === totalGames - 1) {
-						tr.classList.add("lower");
-					}
-					const nextGame = entry.games[gameIndex + 1];
-					const gameStart = new Date(game.start);
-					const gameEnd = nextGame ? new Date(nextGame.start) : new Date(entry.end);
-					
-					const timeRangeString = getLocaleTimeRange(gameStart, gameEnd, streamStart, formatSetting[1], getActiveTimezone());
-					const gameTitleString = getGameTitleByMarket(game.id, formatSetting[3]);
-					
-					if (gameIndex === 0) {
-						let td_styling = ` class="column-fit"`;
-						if (totalGames > 1) {
-							td_styling = ` class="column-fit tall" rowspan="${totalGames}"`;
-						}
-						tr.innerHTML = `
-							<td${td_styling}>${index + 1}</td>
-							<td${td_styling}>${entryDate}</td>
-							<td class="column-fit">${timeRangeString}</td>
-							<td class="column-expand">${gameTitleString}</td>
-							<td${td_styling}>${formatDuration(entry.duration)}</td>
-							<td${td_styling}>${videoQuality}</td>
-						`;
-					} else {
-						tr.innerHTML = `
-							<td class="column-fit">${timeRangeString}</td>
-							<td class="column-expand">${gameTitleString}</td>
-						`;
-					}
-					
-					fragment.appendChild(tr);
-				});
-			});
-			tableBody.appendChild(fragment);
+			tableBody.innerHTML = ``;
+			tableBody = getTableFromDatabase(databaseVODs, formatSetting[5]);
 		}
 		
 		function setDateFormat(idx) {

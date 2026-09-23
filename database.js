@@ -214,7 +214,7 @@ const databaseVODs = [
 {games:[{id:"CRASHTitans",start:"2024-02-08T12:52Z"}],end:"2024-02-08T16:06Z",duration:193,hertz:25,lines:1080,bitrate:2880},
 {games:[{id:"3Dmodelling",start:"2024-02-09T12:50Z"}],end:"2024-02-09T16:31Z",duration:220,hertz:30,lines:1080,bitrate:2870},
 {games:[{id:"3Dmodelling",start:"2024-02-10T12:50Z"}],end:"2024-02-10T17:29Z",duration:278,hertz:30,lines:1080,bitrate:2870},
-{games:[{id:"TLOS2TENNDS",start:"2024-02-11T12:49Z"},{id:"TLOS2TENNDS",start:"2024-02-11T15:03Z"}],end:"2024-02-11T16:07Z",duration:197,hertz:30,lines:1080,bitrate:2870},
+{games:[{id:"TLOS1AMBNDS",start:"2024-02-11T12:49Z"},{id:"TLOS2TENNDS",start:"2024-02-11T15:03Z"}],end:"2024-02-11T16:07Z",duration:197,hertz:30,lines:1080,bitrate:2870},
 {games:[{id:"TLOS2TENNDS",start:"2024-02-12T12:50Z"}],end:"2024-02-12T16:08Z",duration:197,hertz:30,lines:1080,bitrate:2880},
 {games:[{id:"CRASHTitans",start:"2024-02-14T12:51Z"}],end:"2024-02-14T16:29Z",duration:217,hertz:25,lines:1080,bitrate:2860},
 {games:[{id:"CrashMindMutant",start:"2024-02-15T12:55Z"}],end:"2024-02-15T16:03Z",duration:187,hertz:25,lines:1080,bitrate:2890},
@@ -230,6 +230,87 @@ const databaseVODs = [
 {games:[{id:"TLOS2TENGBA",start:"2024-02-26T13:35Z"}],end:"2024-02-26T16:52Z",duration:196,hertz:30,lines:1080,bitrate:2870},
 {games:[{id:"CTR2Nitro",start:"2024-02-28T12:50Z"}],end:"2024-02-28T16:20Z",duration:209,hertz:25,lines:1080,bitrate:1770},
 {games:[{id:"CTR2Nitro",start:"2024-02-29T12:50Z"}],end:"2024-02-29T15:57Z",duration:186,hertz:25,lines:1080,bitrate:1310},
+{games:[{id:"IAmFish",start:"2024-03-01T12:51Z"}],end:"2024-03-01T16:07Z",duration:195,hertz:30,lines:1080,bitrate:2860},
+{games:[{id:"IAmFish",start:"2024-03-02T12:50Z"}],end:"2024-03-02T16:15Z",duration:204,hertz:30,lines:1080,bitrate:1800},
+{games:[{id:"IAmFish",start:"2024-03-03T12:51Z"}],end:"2024-03-03T16:09Z",duration:197,hertz:30,lines:1080,bitrate:2840},
+{games:[{id:"IAmFish",start:"2024-03-08T12:50Z"}],end:"2024-03-08T16:03Z",duration:192,hertz:30,lines:1080,bitrate:2230},
+{games:[{id:"IAmFish",start:"2024-03-09T12:49Z"}],end:"2024-03-09T16:23Z",duration:213,hertz:30,lines:1080,bitrate:2200},
+{games:[{id:"ZapperOWC",start:"2024-03-10T12:48Z"}],end:"2024-03-10T16:01Z",duration:192,hertz:25,lines:1080,bitrate:2230},
+{games:[{id:"TLOS2TENGBA",start:"2024-03-11T12:50Z"}],end:"2024-03-11T16:05Z",duration:194,hertz:30,lines:1080,bitrate:2250},
+{games:[{id:"CTR2Nitro",start:"2024-03-13T12:49Z"}],end:"2024-03-13T16:10Z",duration:200,hertz:25,lines:1080,bitrate:1750},
+{games:[{id:"CTR2Nitro",start:"2024-03-14T12:50Z"}],end:"2024-03-14T16:34Z",duration:223,hertz:25,lines:1080,bitrate:1180},
+{games:[{id:"IAmFish",start:"2024-03-15T12:50Z"}],end:"2024-03-15T17:05Z",duration:254,hertz:30,lines:1080,bitrate:2520},
+{games:[{id:"IAmFish",start:"2024-03-16T12:49Z"}],end:"2024-03-16T17:30Z",duration:280,hertz:30,lines:1080,bitrate:2490},
+{games:[{id:"SpyroRQ",start:"2024-03-17T12:48Z"},{id:"Spyro2005",start:"2024-03-17T14:04Z"},{id:"TLOS1AMBJME",start:"2024-03-17T15:15Z"}],end:"2024-03-17T16:05Z",duration:196,hertz:30,lines:1080,bitrate:1820},
+{games:[{id:"TLOS1AMBJME",start:"2024-03-18T12:49Z"}],end:"2024-03-18T16:09Z",duration:199,hertz:30,lines:1080,bitrate:1830},
+{games:[{id:"CTR2Nitro",start:"2024-03-20T12:51Z"}],end:"2024-03-20T16:14Z",duration:202,hertz:25,lines:1080,bitrate:2100},
+{games:[{id:"CTR2Nitro",start:"2024-03-21T12:51Z"}],end:"2024-03-21T16:23Z",duration:211,hertz:25,lines:1080,bitrate:2670},
+{games:[{id:"ZapperOWC",start:"2024-03-22T12:50Z"}],end:"2024-03-22T16:00Z",duration:189,hertz:25,lines:1080,bitrate:2410},
+{games:[{id:"ZapperOWC",start:"2024-03-23T12:49Z"},{id:"drawing",start:"2024-03-23T14:55Z"}],end:"2024-03-23T16:06Z",duration:196,hertz:25,lines:1080,bitrate:2460},
+{games:[{id:"TLOS3DOTD",start:"2024-03-24T12:50Z"},{id:"drawing",start:"2024-03-24T14:58Z"}],end:"2024-03-24T16:13Z",duration:202,hertz:30,lines:1080,bitrate:1810},
+{games:[{id:"3Dmodelling",start:"2024-03-25T12:52Z"}],end:"2024-03-25T16:06Z",duration:193,hertz:30,lines:1080,bitrate:1850},
+{games:[{id:"CrashBoomBang",start:"2024-03-27T12:50Z"}],end:"2024-03-27T16:04Z",duration:193,hertz:30,lines:1080,bitrate:2800},
+{games:[{id:"3Dmodelling",start:"2024-03-28T12:53Z"},{id:"drawing",start:"2024-03-28T15:29Z"}],end:"2024-03-28T16:29Z",duration:215,hertz:25,lines:1080,bitrate:580},
+{games:[{id:"NeopetsTDF",start:"2024-03-29T12:50Z"}],end:"2024-03-29T16:29Z",duration:218,hertz:25,lines:1080,bitrate:1850},
+{games:[{id:"NeopetsTDF",start:"2024-03-30T12:50Z"}],end:"2024-03-30T16:07Z",duration:196,hertz:30,lines:1080,bitrate:1400},
+{games:[{id:"Klonoa2LV",start:"2024-03-31T11:50Z"}],end:"2024-03-31T15:05Z",duration:194,hertz:30,lines:1080,bitrate:2530},
+{games:[{id:"Klonoa2LV",start:"2024-04-01T11:55Z"}],end:"2024-04-01T15:21Z",duration:205,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"CTR3TagTeam",start:"2024-04-03T11:49Z"}],end:"2024-04-03T15:11Z",duration:201,hertz:25,lines:1080,bitrate:2080},
+{games:[{id:"CTR3TagTeam",start:"2024-04-04T11:49Z"}],end:"2024-04-04T15:35Z",duration:225,hertz:25,lines:1080,bitrate:2130},
+{games:[{id:"NeopetsTDF",start:"2024-04-05T11:54Z"}],end:"2024-04-05T15:47Z",duration:232,hertz:30,lines:1080,bitrate:1570},
+{games:[{id:"NeopetsTDF",start:"2024-04-06T11:52Z"}],end:"2024-04-06T16:41Z",duration:288,hertz:30,lines:1080,bitrate:2010},
+{games:[{id:"Klonoa2LV",start:"2024-04-07T11:50Z"}],end:"2024-04-07T15:36Z",duration:225,hertz:30,lines:1080,bitrate:1230},
+{games:[{id:"Klonoa2LV",start:"2024-04-08T11:50Z"}],end:"2024-04-08T15:31Z",duration:220,hertz:30,lines:1080,bitrate:1410},
+{games:[{id:"CTR3TagTeam",start:"2024-04-10T11:50Z"}],end:"2024-04-10T14:57Z",duration:186,hertz:25,lines:1080,bitrate:1490},
+{games:[{id:"CTR3TagTeam",start:"2024-04-11T11:50Z"}],end:"2024-04-11T15:48Z",duration:237,hertz:25,lines:1080,bitrate:1590},
+{games:[{id:"NeopetsTDF",start:"2024-04-12T11:50Z"}],end:"2024-04-12T15:40Z",duration:229,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"NeopetsTDF",start:"2024-04-13T11:51Z"}],end:"2024-04-13T15:49Z",duration:237,hertz:30,lines:1080,bitrate:2020},
+{games:[{id:"CTR3TagTeam",start:"2024-04-17T11:48Z"}],end:"2024-04-17T15:43Z",duration:234,hertz:25,lines:1080,bitrate:1340},
+{games:[{id:"CTR3TagTeam",start:"2024-04-18T11:50Z"}],end:"2024-04-18T16:07Z",duration:256,hertz:25,lines:1080,bitrate:1480},
+{games:[{id:"NeopetsTDF",start:"2024-04-20T11:51Z"}],end:"2024-04-20T16:06Z",duration:254,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"Klonoa2LV",start:"2024-04-21T11:50Z"}],end:"2024-04-21T15:29Z",duration:218,hertz:30,lines:1080,bitrate:1090},
+{games:[{id:"drawing",start:"2024-04-22T11:50Z"},{id:"drawing",start:"2024-04-22T13:56Z"}],end:"2024-04-22T15:47Z",duration:236,hertz:30,lines:1080,bitrate:2440},
+{games:[{id:"Tombi2",start:"2024-04-24T11:52Z"}],end:"2024-04-24T15:54Z",duration:241,hertz:25,lines:1080,bitrate:2030},
+{games:[{id:"Tombi2",start:"2024-04-25T11:48Z"}],end:"2024-04-25T15:56Z",duration:247,hertz:25,lines:1080,bitrate:1880},
+{games:[{id:"NeopetsTDF",start:"2024-04-26T11:50Z"}],end:"2024-04-26T16:03Z",duration:252,hertz:30,lines:1080,bitrate:1960},
+{games:[{id:"NeopetsTDF",start:"2024-04-27T11:50Z"}],end:"2024-04-27T15:52Z",duration:241,hertz:30,lines:1080,bitrate:2630},
+{games:[{id:"KlonoaMM",start:"2024-04-28T11:52Z"}],end:"2024-04-28T15:21Z",duration:208,hertz:25,lines:1080,bitrate:1430},
+{games:[{id:"KlonoaMM",start:"2024-04-29T11:53Z"}],end:"2024-04-29T16:00Z",duration:246,hertz:25,lines:1080,bitrate:1710},
+{games:[{id:"Tombi2",start:"2024-05-01T11:49Z"}],end:"2024-05-01T15:37Z",duration:227,hertz:25,lines:1080,bitrate:1790},
+{games:[{id:"Tombi2",start:"2024-05-02T11:50Z"}],end:"2024-05-02T14:53Z",duration:182,hertz:25,lines:1080,bitrate:1090},
+{games:[{id:"Lunistice",start:"2024-05-03T11:50Z"}],end:"2024-05-03T15:13Z",duration:202,hertz:25,lines:1080,bitrate:1960},
+{games:[{id:"Lunistice",start:"2024-05-04T11:50Z"}],end:"2024-05-04T15:09Z",duration:198,hertz:30,lines:1080,bitrate:1910},
+{games:[{id:"Klonoa1EOD",start:"2024-05-05T11:51Z"}],end:"2024-05-05T15:45Z",duration:233,hertz:30,lines:1080,bitrate:1520},
+{games:[{id:"Klonoa1EOD",start:"2024-05-06T11:48Z"}],end:"2024-05-06T16:52Z",duration:303,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"Tombi2",start:"2024-05-08T11:52Z"}],end:"2024-05-08T14:47Z",duration:174,hertz:25,lines:1080,bitrate:1530},
+{games:[{id:"Tombi2",start:"2024-05-09T11:50Z"}],end:"2024-05-09T14:39Z",duration:168,hertz:25,lines:1080,bitrate:1980},
+{games:[{id:"karaoke",start:"2024-05-10T11:46Z"},{id:"Lunistice",start:"2024-05-10T13:08Z"}],end:"2024-05-10T16:40Z",duration:293,hertz:25,lines:1080,bitrate:2070},
+{games:[{id:"Lunistice",start:"2024-05-11T11:50Z"}],end:"2024-05-11T15:49Z",duration:238,hertz:30,lines:1080,bitrate:1870},
+{games:[{id:"Lunistice",start:"2024-05-12T11:50Z"}],end:"2024-05-12T15:58Z",duration:247,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"3Dmodelling",start:"2024-05-15T11:54Z"}],end:"2024-05-15T16:20Z",duration:265,hertz:30,lines:1080,bitrate:2040},
+{games:[{id:"drawing",start:"2024-05-16T11:50Z"}],end:"2024-05-16T16:27Z",duration:276,hertz:30,lines:1080,bitrate:1740},
+{games:[{id:"Lunistice",start:"2024-05-17T11:54Z"}],end:"2024-05-17T14:25Z",duration:150,hertz:30,lines:1080,bitrate:1650},
+{games:[{id:"Klonoa2DCP",start:"2024-05-18T11:51Z"}],end:"2024-05-18T14:45Z",duration:173,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"Klonoa2DCP",start:"2024-05-20T11:50Z"}],end:"2024-05-20T15:51Z",duration:240,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"GeneRally",start:"2024-05-22T11:52Z"},{id:"3Dmodelling",start:"2024-05-22T13:30Z"}],end:"2024-05-22T16:06Z",duration:253,hertz:30,lines:1080,bitrate:2010},
+{games:[{id:"3Dmodelling",start:"2024-05-23T11:50Z"}],end:"2024-05-23T16:21Z",duration:270,hertz:30,lines:1080,bitrate:1890},
+{games:[{id:"TIR",start:"2024-05-24T12:06Z"},{id:"3Dmodelling",start:"2024-05-24T13:28Z"}],end:"2024-05-24T16:07Z",duration:240,hertz:25,lines:1080,bitrate:1860},
+{games:[{id:"3Dmodelling",start:"2024-05-25T11:50Z"}],end:"2024-05-25T16:48Z",duration:297,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Klonoa2DCP",start:"2024-05-26T11:51Z"}],end:"2024-05-26T15:29Z",duration:217,hertz:30,lines:1080,bitrate:2010},
+{games:[{id:"Klonoa2DCP",start:"2024-05-27T11:50Z"},{id:"3Dmodelling",start:"2024-05-27T14:08Z"}],end:"2024-05-27T16:15Z",duration:264,hertz:30,lines:1080,bitrate:1580},
+{games:[{id:"KingsleysAdv",start:"2024-05-29T11:51Z"}],end:"2024-05-29T14:44Z",duration:172,hertz:25,lines:1080,bitrate:1990},
+{games:[{id:"Portal1",start:"2024-05-31T11:49Z"}],end:"2024-05-31T16:14Z",duration:264,hertz:30,lines:1080,bitrate:1630},
+{games:[{id:"Portal2",start:"2024-06-01T11:50Z"}],end:"2024-06-01T15:41Z",duration:230,hertz:30,lines:1080,bitrate:1500},
+{games:[{id:"KlonoaLSM",start:"2024-06-02T11:49Z"}],end:"2024-06-02T14:50Z",duration:180,hertz:30,lines:1080,bitrate:1110},
+{games:[{id:"KlonoaLSM",start:"2024-06-03T12:25Z"},{id:"3Dmodelling",start:"2024-06-03T12:34Z"}],end:"2024-06-03T17:26Z",duration:300,hertz:30,lines:1080,bitrate:1050},
+{games:[{id:"KingsleysAdv",start:"2024-06-05T11:50Z"}],end:"2024-06-05T15:27Z",duration:216,hertz:25,lines:1080,bitrate:1720},
+{games:[{id:"drawing",start:"2024-06-06T08:29Z"},{id:"KingsleysAdv",start:"2024-06-06T12:15Z"},{id:"drawing",start:"2024-06-06T13:07Z"},{id:"3Dmodelling",start:"2024-06-06T13:38Z"}],end:"2024-06-06T23:14Z",duration:884,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"drawing",start:"2024-06-07T09:00Z"},{id:"Portal2",start:"2024-06-07T11:54Z"},{id:"3Dmodelling",start:"2024-06-07T15:57Z"},{id:"drawing",start:"2024-06-07T16:06Z"},{id:"3Dmodelling",start:"2024-06-07T16:57Z"}],end:"2024-06-07T22:03Z",duration:782,hertz:30,lines:1080,bitrate:1960},
+{games:[{id:"Portal2",start:"2024-06-08T11:52Z"},{id:"3Dmodelling",start:"2024-06-08T16:52Z"}],end:"2024-06-08T22:32Z",duration:639,hertz:30,lines:1080,bitrate:2050},
+{games:[{id:"Rayman1",start:"2024-06-09T09:50Z"},{id:"3Dmodelling",start:"2024-06-09T15:13Z"}],end:"2024-06-09T21:30Z",duration:699,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"3Dmodelling",start:"2024-06-10T11:00Z"},{id:"Rayman1",start:"2024-06-10T11:55Z"},{id:"3Dmodelling",start:"2024-06-10T15:26Z"}],end:"2024-06-10T23:35Z",duration:754,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Croc1LOTG",start:"2024-06-12T12:16Z"}],end:"2024-06-12T16:14Z",duration:237,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"Croc1LOTG",start:"2024-06-13T11:53Z"}],end:"2024-06-13T16:39Z",duration:285,hertz:30,lines:1080,bitrate:2100},
 ];
 
 const databaseGames = {
@@ -309,6 +390,8 @@ const databaseGames = {
 'Pokemon3Clsseum': {'EU':"Pokémon Colosseum [NGC]", 'US':"Pokémon Colosseum [GCN]"},
 'Pokemon3Emerald': {'EU':"Pokémon Emerald [GBA]", 'JP':"Pocket Monsters Emerald [GBA]"},
 'PonPonsBirthday': {'EU':"Pon Pon's birthday"},
+'Portal1': {'EU':"Portal [Win]"},
+'Portal2': {'EU':"Portal 2 [Win]"},
 'Rabbit&Steel': {'EU':"Rabbit & Steel [Win]"},
 'Rayman1': {'EU':"Rayman [PS1]"},
 'Rayman2R': {'EU':"Rayman 2: Revolution [PS2]", 'JP':"Rayman: Revolution! [PS2]"},
@@ -326,6 +409,7 @@ const databaseGames = {
 'Spyro1': {'EU':"Spyro the Dragon [PS1]"},
 'Spyro1Reignited': {'EU':"Spyro the Dragon [Win]"},
 'Spyro1SOI': {'EU':"Spyro: Season of Ice [GBA]", 'JP':"Spyro Advance [GBA]"},
+'Spyro2005': {'EU':"Spyro the Dragon [JME]", 'US':"", 'AU':"", 'JP':""},
 'Spyro2GTG': {'EU':"Spyro 2: Gateway to Glimmer [PS1]", 'US':"Spyro 2: Ripto's Rage! [PS1]", 'JP':"Spyro & Sparx: Tondemo Tours [PS1]"},
 'Spyro2Reignited': {'EU':"Spyro 2: Ripto's Rage! [Win]"},
 'Spyro2SOF': {'EU':"Spyro 2: Season of Flame [GBA]"},
@@ -340,11 +424,14 @@ const databaseGames = {
 'TIR': {'EU':"Total Immersion Racing [PS2]"},
 'TLOS1AMB': {'EU':"The Legend of Spyro: A New Beginning [PS2]"},
 'TLOS1AMBGBA': {'EU':"The Legend of Spyro: A New Beginning [GBA]"},
+'TLOS1AMBJME': {'EU':"The Legend of Spyro: A New Beginning [JME]"},
 'TLOS1AMBNDS': {'EU':"The Legend of Spyro: A New Beginning [NDS]"},
 'TLOS2TEN': {'EU':"The Legend of Spyro: The Eternal Night [PS2]"},
 'TLOS2TENGBA': {'EU':"The Legend of Spyro: The Eternal Night [GBA]"},
+'TLOS2TENJME': {'EU':"The Legend of Spyro: The Eternal Night [JME]"},
 'TLOS2TENNDS': {'EU':"The Legend of Spyro: The Eternal Night [NDS]"},
 'TLOS3DOTD': {'EU':"The Legend of Spyro: Dawn of the Dragon [PS3]"},
+'TLOS3DOTDJME': {'EU':"The Legend of Spyro: Dawn of the Dragon [JME]"},
 'TLOS3DOTDNDS': {'EU':"The Legend of Spyro: Dawn of the Dragon [NDS]"},
 'Tombi1': {'EU':"Tombi! [PS1]", 'US':"Tomba! [PS1]", 'JP':"Ore! Tomba [PS1]"},
 'Tombi2': {'EU':"Tombi! 2 [PS1]", 'US':"Tomba! 2: The Evil Swine Return [PS1]", 'JP':"Tomba! The Wild Adventure [PS1]"},
@@ -369,4 +456,126 @@ function getGameTitleByMarket(gameId, market) {
 	} else {
 		return `<span style="font-weight:bold;color:red">${gameId}</span>`;
 	}
+}
+
+function getTableFromDatabase(datebase, mode) {
+	let globalIndex = 0;
+	const fragment = document.createDocumentFragment();
+	fragment.innerHTML = `
+					<th class="column-fit">#</th>
+					<th class="column-fit">date</th>
+					<th class="column-fit">time</th>
+					<th class="column-expand">category</th>
+					<th class="column-fit">length</th>
+					<th class="column-fit">video</th>
+				`;
+	datebase.forEach((entry, index) => {
+		const totalGames = entry.games.length;
+		const streamStart = new Date(entry.games[0]?.start);
+		const streamEnd = new Date(entry.end);
+		const streamDate = streamStart ? getLocaleDate(streamStart, formatSetting[0], getActiveTimezone()) : '-';
+		const streamQuality = `${entry.lines}p${entry.hertz}`;
+		
+		if (mode === "all") {
+			const rowClass = index % 2 === 0 ? "row-even" : "row-odd";
+			const tr = document.createElement('tr');
+			tr.classList.add(rowClass, "upper", "lower");
+			const timeRangeString = getLocaleTimeRange(streamStart, streamEnd, streamStart, formatSetting[1], getActiveTimezone());
+			let gameTitleString = "";
+			if (totalGames === 1) {
+				gameTitleString = getGameTitleByMarket(entry.games[0]?.id, formatSetting[3]);
+			} else {
+				gameTitleString = getGameTitleByMarket(entry.games[0]?.id, formatSetting[3]) + ` <i>+${totalGames-1} more</i>`;
+			}
+			tr.innerHTML = `
+					<td class="column-fit">${index + 1}</td>
+					<td class="column-fit">${streamDate}</td>
+					<td class="column-fit">${timeRangeString}</td>
+					<td class="column-expand">${gameTitleString}</td>
+					<td class="column-fit">${formatDuration(entry.duration)}</td>
+					<td class="column-fit">${streamQuality}</td>
+				`;
+			fragment.appendChild(tr);
+		} else if (mode === "streams" || mode === "games") {
+			const rowClass = index % 2 === 0 ? "row-even" : "row-odd";
+			entry.games.forEach((game, gameIndex) => {
+				const tr = document.createElement('tr');
+				tr.classList.add(rowClass);
+				if (gameIndex === 0) {
+					tr.classList.add("upper");
+				}
+				if (gameIndex === totalGames - 1) {
+					tr.classList.add("lower");
+				}
+				const nextGame = entry.games[gameIndex + 1];
+				const gameStart = new Date(game.start);
+				const gameEnd = nextGame ? new Date(nextGame.start) : new Date(entry.end);
+				const gameDuration = Math.round((gameEnd - gameStart) / (1000 * 60));
+				
+				const timeRangeString = getLocaleTimeRange(gameStart, gameEnd, streamStart, formatSetting[1], getActiveTimezone());
+				const gameTitleString = getGameTitleByMarket(game.id, formatSetting[3]);
+				
+				if (mode === "streams") {
+					if (gameIndex === 0) {
+						let td_styling = ` class="column-fit"`;
+						if (totalGames > 1) {
+							td_styling = ` class="column-fit tall" rowspan="${totalGames}"`;
+						}
+						tr.innerHTML = `
+							<td${td_styling}>${index + 1}</td>
+							<td${td_styling}>${streamDate}</td>
+							<td class="column-fit">${timeRangeString}</td>
+							<td class="column-expand">${gameTitleString}</td>
+							<td${td_styling}>${formatDuration(entry.duration)}</td>
+							<td${td_styling}>${streamQuality}</td>
+						`;
+					} else {
+						tr.innerHTML = `
+							<td class="column-fit">${timeRangeString}</td>
+							<td class="column-expand">${gameTitleString}</td>
+						`;
+					}
+				} else if (mode === "games") {
+					tr.innerHTML = `
+						<td class="column-fit">${index + 1}</td>
+						<td class="column-fit">${streamDate}</td>
+						<td class="column-fit">${timeRangeString}</td>
+						<td class="column-expand">${gameTitleString}</td>
+						<td class="column-fit">${formatDuration(gameDuration)}</td>
+						<td class="column-fit">${streamQuality}</td>
+					`;
+				}
+				
+				fragment.appendChild(tr);
+			});
+		} else if (mode === "none") {
+			entry.games.forEach((game, gameIndex) => {
+				const rowClass = globalIndex % 2 === 0 ? "row-even" : "row-odd";
+				const tr = document.createElement('tr');
+				tr.classList.add(rowClass, "upper", "lower");
+				const nextGame = entry.games[gameIndex + 1];
+				const gameStart = new Date(game.start);
+				const gameEnd = nextGame ? new Date(nextGame.start) : new Date(entry.end);
+				const gameDuration = Math.round((gameEnd - gameStart) / (1000 * 60));
+				
+				const gameDate = gameStart ? getLocaleDate(gameStart, formatSetting[0], getActiveTimezone()) : '-';
+				const timeRangeString = getLocaleTimeRange(gameStart, gameEnd, gameStart, formatSetting[1], getActiveTimezone());
+				const gameTitleString = getGameTitleByMarket(game.id, formatSetting[3]);
+				
+				tr.innerHTML = `
+					<td class="column-fit">${globalIndex + 1}</td>
+					<td class="column-fit">${gameDate}</td>
+					<td class="column-fit">${timeRangeString}</td>
+					<td class="column-expand">${gameTitleString}</td>
+					<td class="column-fit">${formatDuration(gameDuration)}</td>
+					<td class="column-fit">${streamQuality}</td>
+				`;
+				
+				fragment.appendChild(tr);
+				globalIndex++;
+			});
+		}
+	});
+	tableBody.appendChild(fragment);
+	return tableBody;
 }
