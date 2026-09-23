@@ -149,17 +149,8 @@
 		.column-expand {
 			width: auto;
 		}
-		.column-index {
-			width: 40px;
-		}
-		.column-datetime {
-			width: 180px;
-		}
-		.column-duration {
-			width: 80px;
-		}
-		.column-resolution {
-			width: 80px;
+		.column-right {
+			text-align: right;
 		}
 
 		/* SETTINGS */
@@ -578,11 +569,6 @@
 				case "other":
 					return otherTimezone;
 			}
-		}
-		function formatDuration(minutes) {
-			const h = Math.floor(minutes / 60);
-			const m = minutes % 60;
-			return `${h}h ${m}min`;
 		}
 		
 		renderTable();

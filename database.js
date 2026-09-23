@@ -461,14 +461,16 @@ function getGameTitleByMarket(gameId, market) {
 function getTableFromDatabase(datebase, mode) {
 	let globalIndex = 0;
 	const fragment = document.createDocumentFragment();
-	fragment.innerHTML = `
+	const trH = document.createElement('tr');
+	trH.innerHTML = `<tr>
 					<th class="column-fit">#</th>
 					<th class="column-fit">date</th>
 					<th class="column-fit">time</th>
 					<th class="column-expand">category</th>
-					<th class="column-fit">length</th>
+					<th class="column-fit"> length</th>
 					<th class="column-fit">video</th>
-				`;
+				</tr>`;
+	fragment.appendChild(trH);
 	datebase.forEach((entry, index) => {
 		const totalGames = entry.games.length;
 		const streamStart = new Date(entry.games[0]?.start);
@@ -492,7 +494,7 @@ function getTableFromDatabase(datebase, mode) {
 					<td class="column-fit">${streamDate}</td>
 					<td class="column-fit">${timeRangeString}</td>
 					<td class="column-expand">${gameTitleString}</td>
-					<td class="column-fit">${formatDuration(entry.duration)}</td>
+					<td class="column-fit column-right">${formatDuration(entry.duration)}</td>
 					<td class="column-fit">${streamQuality}</td>
 				`;
 			fragment.appendChild(tr);
@@ -518,15 +520,17 @@ function getTableFromDatabase(datebase, mode) {
 				if (mode === "streams") {
 					if (gameIndex === 0) {
 						let td_styling = ` class="column-fit"`;
+						let td_styling_right = ` class="column-fit column-right"`;
 						if (totalGames > 1) {
 							td_styling = ` class="column-fit tall" rowspan="${totalGames}"`;
+							td_styling_right = ` class="column-fit tall column-right" rowspan="${totalGames}"`;
 						}
 						tr.innerHTML = `
 							<td${td_styling}>${index + 1}</td>
 							<td${td_styling}>${streamDate}</td>
 							<td class="column-fit">${timeRangeString}</td>
 							<td class="column-expand">${gameTitleString}</td>
-							<td${td_styling}>${formatDuration(entry.duration)}</td>
+							<td${td_styling_right}>${formatDuration(entry.duration)}</td>
 							<td${td_styling}>${streamQuality}</td>
 						`;
 					} else {
@@ -541,7 +545,7 @@ function getTableFromDatabase(datebase, mode) {
 						<td class="column-fit">${streamDate}</td>
 						<td class="column-fit">${timeRangeString}</td>
 						<td class="column-expand">${gameTitleString}</td>
-						<td class="column-fit">${formatDuration(gameDuration)}</td>
+						<td class="column-fit column-right">${formatDuration(gameDuration)}</td>
 						<td class="column-fit">${streamQuality}</td>
 					`;
 				}
@@ -567,7 +571,7 @@ function getTableFromDatabase(datebase, mode) {
 					<td class="column-fit">${gameDate}</td>
 					<td class="column-fit">${timeRangeString}</td>
 					<td class="column-expand">${gameTitleString}</td>
-					<td class="column-fit">${formatDuration(gameDuration)}</td>
+					<td class="column-fit column-right">${formatDuration(gameDuration)}</td>
 					<td class="column-fit">${streamQuality}</td>
 				`;
 				
@@ -578,4 +582,10 @@ function getTableFromDatabase(datebase, mode) {
 	});
 	tableBody.appendChild(fragment);
 	return tableBody;
+}
+
+function formatDuration(minutes) {
+	const h = Math.floor(minutes / 60);
+	const m = minutes % 60;
+	return `${h>0?h+`h `:``}${m<10&&h>0?`0`+m:m}min`;
 }
