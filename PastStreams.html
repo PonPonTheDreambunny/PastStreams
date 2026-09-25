@@ -391,7 +391,7 @@
 			const regionKeys = ["US", "EU", "AU", "JP"];
 			const regionNames = ["America", "Europe, Africa", "Australia, Oceania", "Japan"];
 			const groupKeys = ["all", "streams", "games", "none"];
-			const groupNames = ["Don't display multiple games per stream", "Display separate times for games within a stream", "Display all info separate per games within a stream", "Split separate games into separate streams"];
+			const groupNames = ["Compact: One line per stream", "Expanded: Games separated per stream", "Detailed: Expanded details per game per stream", "Split: Games counts as individual streams"];
 
 			buildSelectOptions("options-date", dateKeys, formatSetting[0], dateNames);
 			buildSelectOptions("options-time", timeKeys, formatSetting[1], timeNames);
