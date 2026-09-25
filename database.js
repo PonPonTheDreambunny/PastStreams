@@ -625,7 +625,7 @@ function getTableFromDatabase(datebase, mode) {
 					<td class="column-fit">${streamDate}</td>
 					<td class="column-fit">${timeRangeString}</td>
 					<td class="column-expand">${gameTitleString}</td>
-					<td class="column-fit column-length"><span class="text-wide">${formatDurationWide(gameDuration)}</span><span class="text-narrow">${formatDurationNarrow(gameDuration)}</span></td>
+					<td class="column-fit column-length"><span class="text-wide">${formatDurationWide(streamDuration)}</span><span class="text-narrow">${formatDurationNarrow(streamDuration)}</span></td>
 					<td class="column-fit column-video"><span class="text-wide">${streamQualityWide}</span><span class="text-narrow">${streamQualityNarrow}</span></td>
 				`;
 			fragment.appendChild(tr);
