@@ -181,15 +181,17 @@ function getLocaleTime(date, referenceDate, format, zoneId) {
 			.replace("晚上", "evn")
 			.replace(/([a-z.]+)([0-9:]+)/, "$2 $1");
 	}
-	if (isDifferentDay(date, referenceDate, zoneId)) {
+	const daysOffset = getDaysBetween(referenceDate, date, zoneId);
+	if (daysOffset != 0) {
+		const sup = getSuperscriptOffset(daysOffset);
 		switch (format) {
 			case '24h':
-				output += "⁺¹";
+				output += sup;
 				break;
 			case '12h':
 			case '12hJP':
 			case '12hCN':
-				output = output.replace(/^([0-9:]+)/, "$1⁺¹");
+				output = output.replace(/^([0-9:]+)/, "$1"+sup);
 				break;
 			case '30h':
 				output = (parseInt(output.substr(0,2), 10) + 24) + output.substr(2,3);
@@ -224,13 +226,24 @@ function getLocaleTimeRange(dateA, dateB, referenceDate, format, zoneId) {
 		case '12h':
 		case '12hJP':
 			return `${timeA}${abbrA} – ${timeB}${abbrB}`
-				.replace(/([0-9]+:[0-9]+) am( – [0-9]+:[0-9]+ am)/, "$1$2")
-				.replace(/([0-9]+:[0-9]+) pm( – [0-9]+:[0-9]+ pm)/, "$1$2");
+				.replace(/([0-9]+:[0-9⁻⁺¹²]+) am( – [0-9]+:[0-9⁻⁺¹²]+ am)/, "$1$2")
+				.replace(/([0-9]+:[0-9⁻⁺¹²]+) pm( – [0-9]+:[0-9⁻⁺¹²]+ pm)/, "$1$2")
+				.replace(/([0-9⁻⁺¹²]+) – ([0-9]+)/, "$1–$2");
 		case '12hCN':
 			return `${timeA}${abbrA} – ${timeB}${abbrB}`;
 	}
 }
-function isDifferentDay(dateA, dateB, zoneId) {
-	const formatter = new Intl.DateTimeFormat('en-GB', { timeZone: zoneId, day: 'numeric' });
-	return (formatter.format(dateA) !== formatter.format(dateB));
+function getDaysSinceEpoch(date, zoneId) {
+  const formatter = new Intl.DateTimeFormat('en-GB', { timeZone: zoneId, year: 'numeric', month: 'numeric', day: 'numeric' });
+  const parts = formatter.formatToParts(date);
+  const map = Object.fromEntries(parts.map(p => [p.type, p.value]));
+  const localZeroTime = Date.UTC(map.year, map.month - 1, map.day);
+  return Math.floor(localZeroTime / 86400000);
+}
+function getDaysBetween(dateA, dateB, zoneId) {
+  return getDaysSinceEpoch(dateB, zoneId) - getDaysSinceEpoch(dateA, zoneId);
+}
+function getSuperscriptOffset(offset) {
+	const superscript = ["⁻²","⁻¹","⁺⁰","⁺¹","⁺²"];
+	return superscript[offset+2];
 }

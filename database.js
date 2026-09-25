@@ -143,17 +143,17 @@ const databaseVODs = [
 {games:[{id:"Spyro1Reignited",start:"2023-09-26T16:55Z"},{id:"Crash3NST",start:"2023-09-26T17:47Z"}],end:"2023-09-26T22:24Z",duration:328,hertz:30,lines:720,bitrate:2910},
 {games:[{id:"ReturnFire1",start:"2023-09-28T13:52Z"}],end:"2023-09-28T17:29Z",duration:216,hertz:25,lines:720,bitrate:3930},
 {games:[{id:"ReturnFire1",start:"2023-09-29T13:50Z"}],end:"2023-09-29T17:47Z",duration:236,hertz:25,lines:720,bitrate:3910},
-{games:[{id:"<!:art:!>",start:"2023-10-01T11:50Z"}],end:"2023-10-01T20:38Z",duration:527,hertz:15,lines:720,bitrate:3890},
+{games:[{id:"3Dmodelling",start:"2023-10-01T11:50Z"}],end:"2023-10-01T20:38Z",duration:527,hertz:15,lines:720,bitrate:3890},
 {games:[{id:"Crash2CSB",start:"2023-10-03T11:50Z"}],end:"2023-10-03T18:10Z",duration:379,hertz:25,lines:720,bitrate:3910},
 {games:[{id:"ReturnFire1",start:"2023-10-05T13:50Z"}],end:"2023-10-05T18:31Z",duration:280,hertz:25,lines:720,bitrate:3940},
 {games:[{id:"ReturnFire1",start:"2023-10-06T13:49Z"}],end:"2023-10-06T16:55Z",duration:185,hertz:25,lines:720,bitrate:3910},
-{games:[{id:"<!:art:!>",start:"2023-10-07T11:54Z"}],end:"2023-10-07T21:52Z",duration:597,hertz:15,lines:720,bitrate:3880},
-{games:[{id:"<!:art:!>",start:"2023-10-08T11:49Z"}],end:"2023-10-08T16:37Z",duration:287,hertz:15,lines:720,bitrate:3890},
+{games:[{id:"3Dmodelling",start:"2023-10-07T11:54Z"}],end:"2023-10-07T21:52Z",duration:597,hertz:15,lines:720,bitrate:3880},
+{games:[{id:"3Dmodelling",start:"2023-10-08T11:49Z"}],end:"2023-10-08T16:37Z",duration:287,hertz:15,lines:720,bitrate:3890},
 {games:[{id:"Crash2CSB",start:"2023-10-09T11:49Z"}],end:"2023-10-09T15:15Z",duration:205,hertz:25,lines:720,bitrate:3950},
 {games:[{id:"Crash2CSB",start:"2023-10-10T11:50Z"}],end:"2023-10-10T14:41Z",duration:170,hertz:25,lines:720,bitrate:3930},
 {games:[{id:"ReturnFire1",start:"2023-10-12T13:50Z"}],end:"2023-10-12T17:07Z",duration:196,hertz:25,lines:720,bitrate:3930},
 {games:[{id:"ReturnFire1",start:"2023-10-13T13:50Z"}],end:"2023-10-13T17:03Z",duration:192,hertz:25,lines:720,bitrate:3970},
-{games:[{id:"<!:art:!>",start:"2023-10-15T11:50Z"}],end:"2023-10-15T17:56Z",duration:365,hertz:15,lines:720,bitrate:3880},
+{games:[{id:"3Dmodelling",start:"2023-10-15T11:50Z"}],end:"2023-10-15T17:56Z",duration:365,hertz:15,lines:720,bitrate:3880},
 {games:[{id:"Crash3W",start:"2023-10-16T11:49Z"}],end:"2023-10-16T15:20Z",duration:210,hertz:25,lines:720,bitrate:3920},
 {games:[{id:"Crash3W",start:"2023-10-17T11:49Z"}],end:"2023-10-17T15:52Z",duration:242,hertz:25,lines:720,bitrate:3910},
 {games:[{id:"ReturnFire1",start:"2023-10-19T13:49Z"}],end:"2023-10-19T17:13Z",duration:203,hertz:25,lines:720,bitrate:3920},
@@ -311,6 +311,128 @@ const databaseVODs = [
 {games:[{id:"3Dmodelling",start:"2024-06-10T11:00Z"},{id:"Rayman1",start:"2024-06-10T11:55Z"},{id:"3Dmodelling",start:"2024-06-10T15:26Z"}],end:"2024-06-10T23:35Z",duration:754,hertz:30,lines:1080,bitrate:2100},
 {games:[{id:"Croc1LOTG",start:"2024-06-12T12:16Z"}],end:"2024-06-12T16:14Z",duration:237,hertz:30,lines:1080,bitrate:2030},
 {games:[{id:"Croc1LOTG",start:"2024-06-13T11:53Z"}],end:"2024-06-13T16:39Z",duration:285,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Croc1LOTG",start:"2024-06-14T11:56Z"}],end:"2024-06-14T15:41Z",duration:224,hertz:30,lines:1080,bitrate:1240},
+{games:[{id:"QuantConund",start:"2024-06-15T11:50Z"}],end:"2024-06-15T16:02Z",duration:251,hertz:30,lines:1080,bitrate:1810},
+{games:[{id:"Rayman1",start:"2024-06-16T11:53Z"}],end:"2024-06-16T15:49Z",duration:235,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"Rayman1",start:"2024-06-17T11:49Z"}],end:"2024-06-17T16:42Z",duration:292,hertz:30,lines:1080,bitrate:1640},
+{games:[{id:"Croc1LOTG",start:"2024-06-19T11:49Z"}],end:"2024-06-19T14:15Z",duration:145,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Croc1LOTG",start:"2024-06-20T11:49Z"}],end:"2024-06-20T15:45Z",duration:235,hertz:30,lines:1080,bitrate:1610},
+{games:[{id:"QuantConund",start:"2024-06-21T11:48Z"}],end:"2024-06-21T16:07Z",duration:258,hertz:30,lines:1080,bitrate:900},
+{games:[{id:"QuantConund",start:"2024-06-22T11:53Z"}],end:"2024-06-22T16:16Z",duration:262,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"Rayman1",start:"2024-06-23T11:50Z"}],end:"2024-06-23T16:01Z",duration:250,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"Rayman1",start:"2024-06-24T11:52Z"}],end:"2024-06-24T15:37Z",duration:224,hertz:30,lines:1080,bitrate:2050},
+{games:[{id:"Croc2",start:"2024-06-26T12:05Z"}],end:"2024-06-26T15:52Z",duration:226,hertz:30,lines:1080,bitrate:2000},
+{games:[{id:"Croc2",start:"2024-06-27T11:49Z"}],end:"2024-06-27T15:13Z",duration:203,hertz:30,lines:1080,bitrate:1640},
+{games:[{id:"QuantConund",start:"2024-06-28T11:54Z"}],end:"2024-06-28T15:20Z",duration:205,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"QuantConund",start:"2024-06-29T11:50Z"},{id:"Rayman1",start:"2024-06-29T12:48Z"},{id:"Wordle",start:"2024-06-29T13:49Z"}],end:"2024-06-29T18:12Z",duration:381,hertz:30,lines:1080,bitrate:1560},
+{games:[{id:"Rayman2R",start:"2024-06-30T11:52Z"}],end:"2024-06-30T16:12Z",duration:259,hertz:25,lines:1080,bitrate:1770},
+{games:[{id:"Rayman2R",start:"2024-07-01T11:49Z"}],end:"2024-07-01T16:26Z",duration:276,hertz:25,lines:1080,bitrate:2090},
+{games:[{id:"Croc2",start:"2024-07-03T11:51Z"}],end:"2024-07-03T15:42Z",duration:230,hertz:30,lines:1080,bitrate:1210},
+{games:[{id:"Croc2",start:"2024-07-04T11:50Z"}],end:"2024-07-04T16:16Z",duration:265,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"Celeste",start:"2024-07-05T11:51Z"}],end:"2024-07-05T15:32Z",duration:220,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Celeste",start:"2024-07-06T11:50Z"}],end:"2024-07-06T16:05Z",duration:254,hertz:30,lines:1080,bitrate:1780},
+{games:[{id:"Rayman2R",start:"2024-07-07T11:52Z"}],end:"2024-07-07T16:38Z",duration:285,hertz:30,lines:1080,bitrate:1990},
+{games:[{id:"Rayman2R",start:"2024-07-08T11:50Z"},{id:"MiniMetro",start:"2024-07-08T13:26Z"}],end:"2024-07-08T15:59Z",duration:248,hertz:25,lines:1080,bitrate:1950},
+{games:[{id:"Croc1",start:"2024-07-10T11:51Z"},{id:"MiniMetro",start:"2024-07-10T13:43Z"}],end:"2024-07-10T16:39Z",duration:287,hertz:30,lines:1080,bitrate:2040},
+{games:[{id:"MiniMetro",start:"2024-07-11T11:48Z"}],end:"2024-07-11T15:52Z",duration:243,hertz:30,lines:1080,bitrate:2040},
+{games:[{id:"Celeste",start:"2024-07-12T11:53Z"}],end:"2024-07-12T15:55Z",duration:241,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"Celeste",start:"2024-07-13T11:53Z"}],end:"2024-07-13T15:26Z",duration:212,hertz:30,lines:1080,bitrate:2050},
+{games:[{id:"Rayman3HH",start:"2024-07-14T12:21Z"}],end:"2024-07-14T15:18Z",duration:176,hertz:25,lines:1080,bitrate:2000},
+{games:[{id:"Rayman3HH",start:"2024-07-15T11:53Z"}],end:"2024-07-15T14:54Z",duration:180,hertz:25,lines:1080,bitrate:1900},
+{games:[{id:"MiniMetro",start:"2024-07-17T11:51Z"}],end:"2024-07-17T15:10Z",duration:198,hertz:30,lines:1080,bitrate:1770},
+{games:[{id:"MiniMetro",start:"2024-07-18T11:51Z"}],end:"2024-07-18T15:09Z",duration:197,hertz:30,lines:1080,bitrate:1300},
+{games:[{id:"Celeste",start:"2024-07-19T11:55Z"}],end:"2024-07-19T15:22Z",duration:206,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"Celeste",start:"2024-07-20T11:50Z"}],end:"2024-07-20T15:04Z",duration:193,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Celeste",start:"2024-07-21T11:51Z"}],end:"2024-07-21T15:41Z",duration:229,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"Celeste",start:"2024-07-22T11:52Z"}],end:"2024-07-22T15:31Z",duration:218,hertz:30,lines:1080,bitrate:2050},
+{games:[{id:"MiniMetro",start:"2024-07-24T11:50Z"}],end:"2024-07-24T14:57Z",duration:186,hertz:30,lines:1080,bitrate:1090},
+{games:[{id:"Celeste",start:"2024-07-25T11:50Z"}],end:"2024-07-25T17:56Z",duration:365,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"Rayman3HH",start:"2024-07-26T11:49Z"}],end:"2024-07-26T15:54Z",duration:244,hertz:25,lines:1080,bitrate:2040},
+{games:[{id:"Crash3W",start:"2024-07-27T11:48Z"},{id:"drawing",start:"2024-07-27T14:40Z"},{id:"karaoke",start:"2024-07-27T15:01Z"},{id:"Crash3W",start:"2024-07-27T15:15Z"},{id:"drawing",start:"2024-07-27T19:18Z"},{id:"Crash3W",start:"2024-07-27T19:34Z"}],end:"2024-07-27T20:14Z",duration:505,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"Crash4IAT",start:"2024-07-28T11:48Z"},{id:"karaoke",start:"2024-07-28T12:55Z"},{id:"drawing",start:"2024-07-28T13:17Z"},{id:"Crash4IAT",start:"2024-07-28T13:29Z"}],end:"2024-07-28T20:00Z",duration:491,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"Crash3W",start:"2024-07-29T11:51Z"}],end:"2024-07-29T19:57Z",duration:485,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"Crash4IAT",start:"2024-07-30T11:50Z"}],end:"2024-07-30T17:37Z",duration:346,hertz:30,lines:1080,bitrate:2020},
+{games:[{id:"Crash4IAT",start:"2024-07-31T11:52Z"},{id:"drawing",start:"2024-07-31T14:18Z"},{id:"Crash4IAT",start:"2024-07-31T14:36Z"},{id:"drawing",start:"2024-07-31T18:48Z"}],end:"2024-07-31T19:04Z",duration:431,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"drawing",start:"2024-08-02T11:51Z"}],end:"2024-08-02T16:06Z",duration:254,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"drawing",start:"2024-08-03T07:45Z"}],end:"2024-08-03T09:59Z",duration:133,hertz:30,lines:1080,bitrate:1960},
+{games:[{id:"drawing",start:"2024-08-03T11:50Z"}],end:"2024-08-03T17:35Z",duration:344,hertz:30,lines:1080,bitrate:1700},
+{games:[{id:"drawing",start:"2024-08-04T11:53Z"}],end:"2024-08-04T16:05Z",duration:251,hertz:30,lines:1080,bitrate:2020},
+{games:[{id:"drawing",start:"2024-08-05T11:54Z"}],end:"2024-08-05T19:42Z",duration:467,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"Crash4IAT",start:"2024-08-07T11:50Z"}],end:"2024-08-07T14:35Z",duration:164,hertz:30,lines:1080,bitrate:1900},
+{games:[{id:"Crash4IAT",start:"2024-08-08T11:51Z"}],end:"2024-08-08T15:45Z",duration:233,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"RaymanM",start:"2024-08-09T11:51Z"}],end:"2024-08-09T15:22Z",duration:210,hertz:25,lines:1080,bitrate:2030},
+{games:[{id:"RaymanM",start:"2024-08-10T11:51Z"}],end:"2024-08-10T15:26Z",duration:214,hertz:25,lines:1080,bitrate:1220},
+{games:[{id:"drawing",start:"2024-08-12T07:50Z"}],end:"2024-08-12T17:00Z",duration:549,hertz:30,lines:1080,bitrate:2000},
+{games:[{id:"Crash4IAT",start:"2024-08-14T11:50Z"}],end:"2024-08-14T16:05Z",duration:254,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"drawing",start:"2024-08-15T10:42Z"},{id:"Crash4IAT",start:"2024-08-15T11:47Z"},{id:"drawing",start:"2024-08-15T15:37Z"}],end:"2024-08-15T18:06Z",duration:443,hertz:30,lines:1080,bitrate:2010},
+{games:[{id:"RaymanM",start:"2024-08-16T11:51Z"},{id:"drawing",start:"2024-08-16T14:16Z"}],end:"2024-08-16T15:19Z",duration:207,hertz:30,lines:1080,bitrate:2020},
+{games:[{id:"drawing",start:"2024-08-18T11:52Z"}],end:"2024-08-18T15:38Z",duration:225,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"Crash4IAT",start:"2024-08-19T11:49Z"}],end:"2024-08-19T16:57Z",duration:307,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"drawing",start:"2024-08-20T12:50Z"}],end:"2024-08-20T18:22Z",duration:331,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Crash4IAT",start:"2024-08-21T11:53Z"}],end:"2024-08-21T15:18Z",duration:204,hertz:30,lines:1080,bitrate:2040},
+{games:[{id:"Crash4IAT",start:"2024-08-22T11:48Z"}],end:"2024-08-22T16:44Z",duration:295,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"RaymanOrigins",start:"2024-08-23T11:51Z"}],end:"2024-08-23T15:28Z",duration:216,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"RaymanOrigins",start:"2024-08-24T11:50Z"}],end:"2024-08-24T15:32Z",duration:221,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"drawing",start:"2024-08-25T11:49Z"}],end:"2024-08-25T16:33Z",duration:283,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"MiniMetro",start:"2024-08-26T11:52Z"}],end:"2024-08-26T15:34Z",duration:221,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"Crash4IAT",start:"2024-08-28T11:51Z"}],end:"2024-08-28T15:48Z",duration:236,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"Crash4IAT",start:"2024-08-29T11:52Z"}],end:"2024-08-29T16:02Z",duration:249,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"RaymanOrigins",start:"2024-08-30T11:53Z"}],end:"2024-08-30T15:41Z",duration:227,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"RaymanOrigins",start:"2024-08-31T11:51Z"}],end:"2024-08-31T15:35Z",duration:223,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"drawing",start:"2024-09-01T11:51Z"}],end:"2024-09-01T15:43Z",duration:231,hertz:30,lines:1080,bitrate:2030},
+{games:[{id:"MiniMetro",start:"2024-09-02T11:57Z"},{id:"game-dev",start:"2024-09-02T14:45Z"}],end:"2024-09-02T18:41Z",duration:403,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"Crash4IAT",start:"2024-09-04T11:51Z"}],end:"2024-09-04T16:23Z",duration:271,hertz:30,lines:1080,bitrate:1890},
+{games:[{id:"Crash4IAT",start:"2024-09-05T11:53Z"}],end:"2024-09-05T16:12Z",duration:258,hertz:30,lines:1080,bitrate:2110},
+{games:[{id:"RaymanOrigins",start:"2024-09-06T11:50Z"}],end:"2024-09-06T15:51Z",duration:240,hertz:30,lines:1080,bitrate:2060},
+{games:[{id:"Spyro1",start:"2024-09-07T12:53Z"},{id:"Spyro2GTG",start:"2024-09-07T17:55Z"}],end:"2024-09-07T23:26Z",duration:632,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Spyro2GTG",start:"2024-09-08T11:48Z"},{id:"Spyro3YOTD",start:"2024-09-08T13:33Z"}],end:"2024-09-08T22:43Z",duration:654,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"drawing",start:"2024-09-09T11:50Z"}],end:"2024-09-09T23:01Z",duration:670,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"drawing",start:"2024-09-10T13:51Z"}],end:"2024-09-10T20:09Z",duration:377,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"Crash4IAT",start:"2024-09-11T11:51Z"}],end:"2024-09-11T15:33Z",duration:221,hertz:30,lines:1080,bitrate:1950},
+{games:[{id:"Crash4IAT",start:"2024-09-12T11:52Z"}],end:"2024-09-12T16:23Z",duration:270,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"Crash4IAT",start:"2024-09-13T11:51Z"}],end:"2024-09-13T13:55Z",duration:123,hertz:30,lines:1080,bitrate:1220},
+{games:[{id:"RaymanOrigins",start:"2024-09-14T11:52Z"},{id:"drawing",start:"2024-09-14T15:41Z"}],end:"2024-09-14T16:54Z",duration:301,hertz:30,lines:1080,bitrate:1850},
+{games:[{id:"RaymanOrigins",start:"2024-09-15T11:48Z"},{id:"drawing",start:"2024-09-15T15:22Z"}],end:"2024-09-15T16:13Z",duration:264,hertz:30,lines:1080,bitrate:1630},
+{games:[{id:"drawing",start:"2024-09-16T11:53Z"}],end:"2024-09-16T16:14Z",duration:260,hertz:60,lines:1080,bitrate:2080},
+{games:[{id:"Celeste",start:"2024-09-18T11:52Z"}],end:"2024-09-18T15:57Z",duration:244,hertz:30,lines:1080,bitrate:1280},
+{games:[{id:"Celeste",start:"2024-09-19T11:54Z"}],end:"2024-09-19T15:56Z",duration:241,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"NSLuckysTale",start:"2024-09-20T11:50Z"}],end:"2024-09-20T16:04Z",duration:253,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"NSLuckysTale",start:"2024-09-21T11:50Z"}],end:"2024-09-21T16:31Z",duration:280,hertz:30,lines:1080,bitrate:2070},
+{games:[{id:"Pokemon1Blue",start:"2024-09-22T11:50Z"}],end:"2024-09-22T15:55Z",duration:244,hertz:30,lines:1080,bitrate:1670},
+{games:[{id:"Pokemon1Blue",start:"2024-09-23T11:55Z"}],end:"2024-09-23T16:31Z",duration:275,hertz:30,lines:1080,bitrate:1180},
+{games:[{id:"Celeste",start:"2024-09-25T11:53Z"},{id:"drawing",start:"2024-09-25T12:16Z"}],end:"2024-09-25T20:28Z",duration:514,hertz:30,lines:1080,bitrate:2090},
+{games:[{id:"drawing",start:"2024-09-26T11:56Z"},{id:"game-dev",start:"2024-09-26T12:23Z"}],end:"2024-09-26T18:14Z",duration:377,hertz:30,lines:1080,bitrate:1900},
+{games:[{id:"NSLuckysTale",start:"2024-09-27T11:47Z"}],end:"2024-09-27T14:01Z",duration:133,hertz:15,lines:1080,bitrate:2070},
+{games:[{id:"NSLuckysTale",start:"2024-09-28T11:52Z"}],end:"2024-09-28T12:50Z",duration:57,hertz:30,lines:1080,bitrate:1900},
+{games:[{id:"drawing",start:"2024-09-29T11:55Z"}],end:"2024-09-29T23:17Z",duration:681,hertz:30,lines:1080,bitrate:2100},
+{games:[{id:"drawing",start:"2024-09-30T11:56Z"}],end:"2024-09-30T21:04Z",duration:547,hertz:30,lines:1080,bitrate:2080},
+{games:[{id:"drawing",start:"2024-10-02T11:52Z"}],end:"2024-10-02T12:54Z",duration:61,hertz:30,lines:1080,bitrate:1580},
+{games:[{id:"drawing",start:"2024-10-02T16:59Z"}],end:"2024-10-02T20:26Z",duration:206,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"drawing",start:"2024-10-03T12:23Z"}],end:"2024-10-03T17:25Z",duration:301,hertz:30,lines:1080,bitrate:1320},
+{games:[{id:"NSLuckysTale",start:"2024-10-04T11:51Z"},{id:"drawing",start:"2024-10-04T15:00Z"}],end:"2024-10-04T18:39Z",duration:407,hertz:30,lines:1080,bitrate:1570},
+{games:[{id:"drawing",start:"2024-10-05T11:53Z"}],end:"2024-10-05T17:18Z",duration:324,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Spyro1Demo",start:"2024-10-06T11:49Z"},{id:"Spyro1Prototype",start:"2024-10-06T13:44Z"},{id:"RegUsersDemo04",start:"2024-10-06T15:35Z"},{id:"Demo1v5",start:"2024-10-06T15:42Z"},{id:"Spyro1Demo",start:"2024-10-06T15:51Z"}],end:"2024-10-06T16:02Z",duration:252,hertz:30,lines:1080,bitrate:1570},
+{games:[{id:"Spyro1Prototype",start:"2024-10-07T11:54Z"}],end:"2024-10-07T15:34Z",duration:219,hertz:30,lines:1080,bitrate:1860},
+{games:[{id:"Spyro1Prototype",start:"2024-10-09T12:31Z"}],end:"2024-10-09T14:21Z",duration:109,hertz:30,lines:1080,bitrate:1580},
+{games:[{id:"drawing",start:"2024-10-10T12:16Z"}],end:"2024-10-10T20:43Z",duration:506,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"drawing",start:"2024-10-11T11:57Z"}],end:"2024-10-11T16:19Z",duration:261,hertz:30,lines:1080,bitrate:1540},
+{games:[{id:"drawing",start:"2024-10-12T11:54Z"},{id:"Pokemon1Blue",start:"2024-10-12T13:30Z"}],end:"2024-10-12T16:44Z",duration:289,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"drawing",start:"2024-10-13T11:49Z"}],end:"2024-10-13T16:45Z",duration:295,hertz:30,lines:1080,bitrate:1570},
+{games:[{id:"Pokemon1Blue",start:"2024-10-14T11:52Z"}],end:"2024-10-14T16:46Z",duration:293,hertz:30,lines:1080,bitrate:1490},
+{games:[{id:"drawing",start:"2024-10-16T10:56Z"},{id:"Jak1TPL",start:"2024-10-16T12:21Z"}],end:"2024-10-16T18:36Z",duration:459,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Jak1TPL",start:"2024-10-17T11:50Z"}],end:"2024-10-17T16:42Z",duration:291,hertz:30,lines:1080,bitrate:1580},
+{games:[{id:"drawing",start:"2024-10-18T11:55Z"}],end:"2024-10-18T16:36Z",duration:280,hertz:30,lines:1080,bitrate:1090},
+{games:[{id:"drawing",start:"2024-10-19T11:56Z"}],end:"2024-10-19T17:13Z",duration:316,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"Pokemon1Blue",start:"2024-10-20T11:48Z"}],end:"2024-10-20T16:36Z",duration:287,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Pokemon1Blue",start:"2024-10-21T11:55Z"}],end:"2024-10-21T15:15Z",duration:199,hertz:30,lines:1080,bitrate:1560},
+{games:[{id:"Jak1TPL",start:"2024-10-23T11:52Z"}],end:"2024-10-23T14:57Z",duration:184,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Jak2R",start:"2024-10-24T11:51Z"}],end:"2024-10-24T16:30Z",duration:278,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"Rabbit&Steel",start:"2024-10-25T11:56Z"}],end:"2024-10-25T16:45Z",duration:288,hertz:30,lines:1080,bitrate:1590},
+{games:[{id:"Rabbit&Steel",start:"2024-10-26T11:52Z"}],end:"2024-10-26T16:55Z",duration:302,hertz:30,lines:1080,bitrate:1580},
+{games:[{id:"Pokemon1Blue",start:"2024-10-27T12:54Z"},{id:"drawing",start:"2024-10-27T14:18Z"}],end:"2024-10-27T20:35Z",duration:460,hertz:30,lines:1080,bitrate:1600},
+{games:[{id:"Pokemon1Blue",start:"2024-10-28T12:52Z"}],end:"2024-10-28T15:45Z",duration:172,hertz:30,lines:1080,bitrate:1570},
+{games:[{id:"ReturnFire2",start:"2024-10-30T12:49Z"},{id:"MSSolitaire",start:"2024-10-30T14:05Z"},{id:"MSHearts",start:"2024-10-30T14:11Z"},{id:"MSMinesweeper",start:"2024-10-30T14:26Z"},{id:"MSFreeCell",start:"2024-10-30T14:40Z"},{id:"Rabbit&Steel",start:"2024-10-30T15:04Z"}],end:"2024-10-30T17:32Z",duration:282,hertz:30,lines:1080,bitrate:1560},
+{games:[{id:"Greveholm1",start:"2024-10-31T12:51Z"}],end:"2024-10-31T16:21Z",duration:209,hertz:30,lines:1080,bitrate:1580},
 ];
 
 const databaseGames = {
@@ -334,11 +456,13 @@ const databaseGames = {
 'CrashMindMutant': {'EU':"Crash: Mind Over Mutant [PS2]"},
 'CRASHTitans': {'EU':"Crash of the Titans [PS2]"},
 'CrashTwinsanity': {'EU':"Crash Twinsanity [PS2]", 'JP':"Crash Bandicoot 5 Huh? The Ambition of Crash and Cortex?!? [PS2]"},
+'Croc1': {'EU':"Croc [GBC]"},
 'Croc1LOTG': {'EU':"Croc: Legend of the Gobbos [PS1]", 'JP':"Croc! Pau Pau Island [PS1]"},
 'Croc2': {'EU':"Croc 2 [PS1]"},
 'CTR1': {'EU':"Crash Team Racing [PS1]", 'JP':"Crash Bandicoot Racing [PS1]"},
 'CTR2Nitro': {'EU':"Crash Nitro Kart [PS2]"},
 'CTR3TagTeam': {'EU':"Crash Tag Team Racing [PS2[", 'JP':"Crash Bandicoot: Gacchanko World [PS2]"},
+'Demo1v5': {'EU':"Demo 1 (Version 5)"},
 'DigimonArena1': {'EU':"Digimon Rumble Arena [PS1]", 'JP':"Digimon Tamers Battle Evolution  [PS1]"},
 'DigimonArena2': {'EU':"Digimon Rumble Arena 2 [PS2]", 'JP':"Digimon Battle Chronicle [PS2]"},
 'DigimonArena3': {'EU':"Digimon All-Star Rumble [PS3]"},
@@ -392,6 +516,7 @@ const databaseGames = {
 'PonPonsBirthday': {'EU':"Pon Pon's birthday"},
 'Portal1': {'EU':"Portal [Win]"},
 'Portal2': {'EU':"Portal 2 [Win]"},
+'QuantConund': {'EU':"Quantum Conundrum [Win]"},
 'Rabbit&Steel': {'EU':"Rabbit & Steel [Win]"},
 'Rayman1': {'EU':"Rayman [PS1]"},
 'Rayman2R': {'EU':"Rayman 2: Revolution [PS2]", 'JP':"Rayman: Revolution! [PS2]"},
@@ -399,6 +524,7 @@ const databaseGames = {
 'RaymanM': {'EU':"Rayman M [PS2]", 'US':"Rayman Arena [PS2]", 'JP':"Rayman Arena [PS2]"},
 'RaymanOrigins': {'EU':"Rayman Origins [Win]"},
 'RCT1': {'EU':"RollerCoaster Tycoon [Win]"},
+'RegUsersDemo04': {'EU':"Registered Users Demo 04 [PS1]"},
 'ReturnFire1': {'EU':"Return Fire [PS1]"},
 'ReturnFire2': {'EU':"Return Fire 2 [Win98]"},
 'SeppuKuties': {'EU':"SeppuKuties [Flash]"},
@@ -407,6 +533,8 @@ const databaseGames = {
 'Smash3Brawl': {'EU':"Super Smash Bros. Brawl [Wii]", 'JP':"Dairantou Smash Bros. X [Wii]"},
 'Sporcle': {'EU':"Sporcle [Web]"},
 'Spyro1': {'EU':"Spyro the Dragon [PS1]"},
+'Spyro1Demo': {'EU':"Spyro the Dragon [PS1, demo]"},
+'Spyro1Prototype': {'EU':"Spyro the Dragon [PS1, prototype]"},
 'Spyro1Reignited': {'EU':"Spyro the Dragon [Win]"},
 'Spyro1SOI': {'EU':"Spyro: Season of Ice [GBA]", 'JP':"Spyro Advance [GBA]"},
 'Spyro2005': {'EU':"Spyro the Dragon [JME]", 'US':"", 'AU':"", 'JP':""},
@@ -463,26 +591,29 @@ function getTableFromDatabase(datebase, mode) {
 	const fragment = document.createDocumentFragment();
 	const trH = document.createElement('tr');
 	trH.innerHTML = `<tr>
-					<th class="column-fit">#</th>
+					<th class="column-fit column-index">#</th>
 					<th class="column-fit">date</th>
 					<th class="column-fit">time</th>
 					<th class="column-expand">category</th>
-					<th class="column-fit"> length</th>
-					<th class="column-fit">video</th>
+					<th class="column-fit column-length"><span class="text-wide">length</span><span class="text-narrow text-squish">h:mm</span></th>
+					<th class="column-fit column-video">video</th>
 				</tr>`;
 	fragment.appendChild(trH);
 	datebase.forEach((entry, index) => {
 		const totalGames = entry.games.length;
 		const streamStart = new Date(entry.games[0]?.start);
 		const streamEnd = new Date(entry.end);
+		const streamReference = formatSetting[1]==="30h"? new Date(streamStart) : new Date(new Date(streamStart).getTime() + (new Date(streamEnd).getTime() - new Date(streamStart).getTime()) / 4);
+		const streamDuration = Math.round((streamEnd - streamStart) / (1000 * 60));
 		const streamDate = streamStart ? getLocaleDate(streamStart, formatSetting[0], getActiveTimezone()) : '-';
-		const streamQuality = `${entry.lines}p${entry.hertz}`;
+		const streamQualityWide = `${entry.lines}p ${entry.hertz} Hz`;
+		const streamQualityNarrow = `${entry.lines}p${entry.hertz}`;
 		
 		if (mode === "all") {
 			const rowClass = index % 2 === 0 ? "row-even" : "row-odd";
 			const tr = document.createElement('tr');
 			tr.classList.add(rowClass, "upper", "lower");
-			const timeRangeString = getLocaleTimeRange(streamStart, streamEnd, streamStart, formatSetting[1], getActiveTimezone());
+			const timeRangeString = getLocaleTimeRange(streamStart, streamEnd, streamReference, formatSetting[1], getActiveTimezone());
 			let gameTitleString = "";
 			if (totalGames === 1) {
 				gameTitleString = getGameTitleByMarket(entry.games[0]?.id, formatSetting[3]);
@@ -490,12 +621,12 @@ function getTableFromDatabase(datebase, mode) {
 				gameTitleString = getGameTitleByMarket(entry.games[0]?.id, formatSetting[3]) + ` <i>+${totalGames-1} more</i>`;
 			}
 			tr.innerHTML = `
-					<td class="column-fit">${index + 1}</td>
+					<td class="column-fit column-index">${index + 1}</td>
 					<td class="column-fit">${streamDate}</td>
 					<td class="column-fit">${timeRangeString}</td>
 					<td class="column-expand">${gameTitleString}</td>
-					<td class="column-fit column-right">${formatDuration(entry.duration)}</td>
-					<td class="column-fit">${streamQuality}</td>
+					<td class="column-fit column-length"><span class="text-wide">${formatDurationWide(gameDuration)}</span><span class="text-narrow">${formatDurationNarrow(gameDuration)}</span></td>
+					<td class="column-fit column-video"><span class="text-wide">${streamQualityWide}</span><span class="text-narrow">${streamQualityNarrow}</span></td>
 				`;
 			fragment.appendChild(tr);
 		} else if (mode === "streams" || mode === "games") {
@@ -514,24 +645,22 @@ function getTableFromDatabase(datebase, mode) {
 				const gameEnd = nextGame ? new Date(nextGame.start) : new Date(entry.end);
 				const gameDuration = Math.round((gameEnd - gameStart) / (1000 * 60));
 				
-				const timeRangeString = getLocaleTimeRange(gameStart, gameEnd, streamStart, formatSetting[1], getActiveTimezone());
+				const timeRangeString = getLocaleTimeRange(gameStart, gameEnd, streamReference, formatSetting[1], getActiveTimezone());
 				const gameTitleString = getGameTitleByMarket(game.id, formatSetting[3]);
 				
 				if (mode === "streams") {
 					if (gameIndex === 0) {
-						let td_styling = ` class="column-fit"`;
-						let td_styling_right = ` class="column-fit column-right"`;
+						let td_styling = ` class="column-fit%1"`;
 						if (totalGames > 1) {
-							td_styling = ` class="column-fit tall" rowspan="${totalGames}"`;
-							td_styling_right = ` class="column-fit tall column-right" rowspan="${totalGames}"`;
+							td_styling = ` class="column-fit tall%1" rowspan="${totalGames}"`;
 						}
 						tr.innerHTML = `
-							<td${td_styling}>${index + 1}</td>
-							<td${td_styling}>${streamDate}</td>
+							<td${td_styling.replace("%1"," column-index")}>${index + 1}</td>
+							<td${td_styling.replace("%1","")}>${streamDate}</td>
 							<td class="column-fit">${timeRangeString}</td>
 							<td class="column-expand">${gameTitleString}</td>
-							<td${td_styling_right}>${formatDuration(entry.duration)}</td>
-							<td${td_styling}>${streamQuality}</td>
+							<td${td_styling.replace("%1"," column-length")}><span class="text-wide">${formatDurationWide(streamDuration)}</span><span class="text-narrow">${formatDurationNarrow(streamDuration)}</span></td>
+							<td${td_styling.replace("%1"," column-video")}><span class="text-wide">${streamQualityWide}</span><span class="text-narrow">${streamQualityNarrow}</span></td>
 						`;
 					} else {
 						tr.innerHTML = `
@@ -541,12 +670,12 @@ function getTableFromDatabase(datebase, mode) {
 					}
 				} else if (mode === "games") {
 					tr.innerHTML = `
-						<td class="column-fit">${index + 1}</td>
+						<td class="column-fit column-index">${index + 1}</td>
 						<td class="column-fit">${streamDate}</td>
 						<td class="column-fit">${timeRangeString}</td>
 						<td class="column-expand">${gameTitleString}</td>
-						<td class="column-fit column-right">${formatDuration(gameDuration)}</td>
-						<td class="column-fit">${streamQuality}</td>
+						<td class="column-fit column-length"><span class="text-wide">${formatDurationWide(gameDuration)}</span><span class="text-narrow">${formatDurationNarrow(gameDuration)}</span></td>
+						<td class="column-fit column-video"><span class="text-wide">${streamQualityWide}</span><span class="text-narrow">${streamQualityNarrow}</span></td>
 					`;
 				}
 				
@@ -567,12 +696,12 @@ function getTableFromDatabase(datebase, mode) {
 				const gameTitleString = getGameTitleByMarket(game.id, formatSetting[3]);
 				
 				tr.innerHTML = `
-					<td class="column-fit">${globalIndex + 1}</td>
+					<td class="column-fit column-index">${globalIndex + 1}</td>
 					<td class="column-fit">${gameDate}</td>
 					<td class="column-fit">${timeRangeString}</td>
 					<td class="column-expand">${gameTitleString}</td>
-					<td class="column-fit column-right">${formatDuration(gameDuration)}</td>
-					<td class="column-fit">${streamQuality}</td>
+					<td class="column-fit column-length"><span class="text-wide">${formatDurationWide(gameDuration)}</span><span class="text-narrow">${formatDurationNarrow(gameDuration)}</span></td>
+					<td class="column-fit column-video"><span class="text-wide">${streamQualityWide}</span><span class="text-narrow">${streamQualityNarrow}</span></td>
 				`;
 				
 				fragment.appendChild(tr);
@@ -584,8 +713,13 @@ function getTableFromDatabase(datebase, mode) {
 	return tableBody;
 }
 
-function formatDuration(minutes) {
+function formatDurationWide(minutes) {
 	const h = Math.floor(minutes / 60);
 	const m = minutes % 60;
-	return `${h>0?h+`h `:``}${m<10&&h>0?`0`+m:m}min`;
+	return `${h>0?h+` h `:``}${m<10&&h>0?`0`+m:m} min`;
+}
+function formatDurationNarrow(minutes) {
+	const h = Math.floor(minutes / 60);
+	const m = minutes % 60;
+	return `${h+`:`}${m<10&&h>0?`0`+m:m}`;
 }

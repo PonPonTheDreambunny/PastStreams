@@ -149,8 +149,25 @@
 		.column-expand {
 			width: auto;
 		}
-		.column-right {
+		.column-index {
+			display: inline;
+		}
+		.column-length {
 			text-align: right;
+		}
+		.column-video {
+			display: inline;
+		}
+		.text-wide {
+			display: block;
+		}
+		.text-narrow {
+			display: none;
+		}
+		.text-squish {
+			letter-spacing: -0.5px;
+			font-size: 12px;
+			transform: scaleY(1.2);
 		}
 
 		/* SETTINGS */
@@ -190,44 +207,52 @@
 			tr.lower td, tr.upper td.tall {
 				padding-bottom: 10px;
 			}
-			th, td {
-				padding: 0 10px;
+			.text-wide {
+				display: none;
+			}
+			.text-narrow {
+				display: block;
 			}
 		}
-		@media screen and (max-width: 840px){
-			tr.upper td {
-				padding-top: 8px;
-			}
-			tr.lower td, tr.upper td.tall {
-				padding-bottom: 8px;
+		@media screen and (max-width: 1024px){
+			.column-video {
+				display: none;
 			}
 			th, td {
 				padding: 0 8px;
-				font-size: 14px;
 			}
 		}
-		@media screen and (max-width: 768px){
+		@media screen and (max-width: 932px){
+			.column-index {
+				display: none;
+			}
+		}
+		@media screen and (max-width: 886px){
 			tr.upper td {
 				padding-top: 6px;
 			}
 			tr.lower td, tr.upper td.tall {
 				padding-bottom: 6px;
 			}
+		}
+		@media screen and (max-width: 804px){
 			th, td {
+				letter-spacing: -0.5px;
 				padding: 0 6px;
-				font-size: 12px;
+			}
+			.column-length {
+				display: none;
+			}
+		}
+		@media screen and (max-width: 768px){
+			th, td {
+				letter-spacing: -0.75px;
 			}
 		}
 		@media screen and (max-width: 680px){
-			tr.upper td {
-				padding-top: 4px;
-			}
-			tr.lower td, tr.upper td.tall {
-				padding-bottom: 4px;
-			}
 			th, td {
-				padding: 0 4px;
-				font-size: 10px;
+				padding: 0 2px;
+				letter-spacing: -0.5px;
 			}
 			#settings-dialogue {
 				padding: 48px 32px;
