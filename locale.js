@@ -171,7 +171,10 @@ function getLocaleTime(date, referenceDate, format, zoneId) {
 	}[format];
 	
 	let output = new Intl.DateTimeFormat(timeLocale, { ...timeOptions, timeZone: zoneId }).format(date).toLowerCase();
-	if (format === '12hCN') {
+	if (format === '12h' || format === '12hJP') {
+		output = output
+			.replace(/([0-9:]+) ([amp]+)/, "$1<span class=\"text-timeabbr\"> $2</span>");
+	} else if (format === '12hCN') {
 		output = output
 			.replace("凌晨", "dwn")
 			.replace(/清晨|早上/, "mrn")
@@ -204,8 +207,12 @@ function getLocaleTime(date, referenceDate, format, zoneId) {
 function getLocaleTimeRange(dateA, dateB, referenceDate, format, zoneId) {
 	let timeA = getLocaleTime(dateA, referenceDate, format, zoneId);
 	let timeB = getLocaleTime(dateB, referenceDate, format, zoneId);
-	let abbrA = " "+getTimezoneAbbreviation(dateA, zoneId);
-	let abbrB = " "+getTimezoneAbbreviation(dateB, zoneId);
+	let span = "<span class=\"text-timezone\"> ";
+	if (format === "12h" || format === "12hJP" || format === "12hCN") {
+		span = " <span class=\"text-timezone\">";
+	}
+	let abbrA = span+getTimezoneAbbreviation(dateA, zoneId)+"</span>";
+	let abbrB = span+getTimezoneAbbreviation(dateB, zoneId)+"</span>";
 	if (abbrA === abbrB) {
 		abbrA = "";
 	}

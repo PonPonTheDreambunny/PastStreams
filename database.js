@@ -461,8 +461,8 @@ const databaseGames = {
 'Croc2': {'EU':"Croc 2 [PS1]"},
 'CTR1': {'EU':"Crash Team Racing [PS1]", 'JP':"Crash Bandicoot Racing [PS1]"},
 'CTR2Nitro': {'EU':"Crash Nitro Kart [PS2]"},
-'CTR3TagTeam': {'EU':"Crash Tag Team Racing [PS2[", 'JP':"Crash Bandicoot: Gacchanko World [PS2]"},
-'Demo1v5': {'EU':"Demo 1 (Version 5)"},
+'CTR3TagTeam': {'EU':"Crash Tag Team Racing [PS2]", 'JP':"Crash Bandicoot: Gacchanko World [PS2]"},
+'Demo1v5': {'EU':"Demo 1 (version 5) [PS1]"},
 'DigimonArena1': {'EU':"Digimon Rumble Arena [PS1]", 'JP':"Digimon Tamers Battle Evolution  [PS1]"},
 'DigimonArena2': {'EU':"Digimon Rumble Arena 2 [PS2]", 'JP':"Digimon Battle Chronicle [PS2]"},
 'DigimonArena3': {'EU':"Digimon All-Star Rumble [PS3]"},
@@ -605,7 +605,7 @@ function getTableFromDatabase(datebase, mode) {
 		const streamEnd = new Date(entry.end);
 		const streamReference = formatSetting[1]==="30h"? new Date(streamStart) : new Date(new Date(streamStart).getTime() + (new Date(streamEnd).getTime() - new Date(streamStart).getTime()) / 4);
 		const streamDuration = Math.round((streamEnd - streamStart) / (1000 * 60));
-		const streamDate = streamStart ? getLocaleDate(streamStart, formatSetting[0], getActiveTimezone()) : '-';
+		const streamDate = streamReference ? getLocaleDate(streamReference, formatSetting[0], getActiveTimezone()) : '-';
 		const streamQualityWide = `${entry.lines}p ${entry.hertz} Hz`;
 		const streamQualityNarrow = `${entry.lines}p${entry.hertz}`;
 		

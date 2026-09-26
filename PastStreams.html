@@ -44,7 +44,7 @@
 			margin: 0;
 			background-color: var(--background);
 			color: var(--text);
-			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+			font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 			transition: filter 0.15s ease;
 		}
 		.filter_blur {
@@ -158,6 +158,12 @@
 		.column-video {
 			display: table-cell;
 		}
+		.text-timezone {
+			display: inline;
+		}
+		.text-timeabbr {
+			display: inline;
+		}
 		.text-wide {
 			display: block;
 		}
@@ -207,23 +213,32 @@
 			tr.lower td, tr.upper td.tall {
 				padding-bottom: 10px;
 			}
+		}
+		@media screen and (max-width: 1024px){
+			th, td {
+				padding: 0 8px;
+				word-spacing: -1px;
+			}
 			.text-wide {
 				display: none;
 			}
 			.text-narrow {
 				display: block;
 			}
-		}
-		@media screen and (max-width: 1024px){
-			.column-video {
-				display: none;
+			.text-timezone {
+				font-size: 10px;
+				font-weight: 600;
+				word-spacing: -2px;
 			}
-			th, td {
-				padding: 0 8px;
+			.text-timeabbr {
+				font-size: 10px;
+				font-weight: 600;
+				word-spacing: -2px;
+				text-transform: uppercase;
 			}
 		}
 		@media screen and (max-width: 932px){
-			.column-index {
+			.column-video {
 				display: none;
 			}
 		}
@@ -240,26 +255,30 @@
 				letter-spacing: -0.5px;
 				padding: 0 6px;
 			}
-			.column-length {
-				display: none;
-			}
 		}
 		@media screen and (max-width: 768px){
+			.column-index {
+				display: none;
+			}
 			th, td {
 				letter-spacing: -0.75px;
 			}
 		}
 		@media screen and (max-width: 680px){
+			.column-length {
+				display: none;
+			}
 			th, td {
-				padding: 0 2px;
+				padding: 0 4px;
 				letter-spacing: -0.5px;
 			}
 			#settings-dialogue {
 				padding: 48px 32px;
-        border-radius: 32px;
+        border-radius: 30px;
         border: none;
         max-width: none;
         width: calc(100vw - 112px);
+				box-shadow: 0 0 15px -5px;
 			}
 			#settings-formats {
 				margin-bottom: 48px;
@@ -268,15 +287,18 @@
 				margin-bottom: 24px;
 			}
 			.dialogue-option label {
+				font-size: 18px;
 				text-align: center;
 				font-weight: 600;
 				padding-bottom: 8px;
 			}
 			.dialogue-option select {
+				font-size: 16px;
 				padding: 12px 8px;
 				border-radius: 26px;
 			}
 			.settings-button.dialogue-button {
+				font-size: 16px;
 				padding: 12px 0;
 				max-width: 192px;
         width: calc(100vw - 112px);
@@ -293,6 +315,34 @@
 			}
 			.settings-button.dialogue-button.confirm {
 				order: -1;
+			}
+		}
+		@media screen and (max-width: 680px) and (max-height: 640px){
+			#settings-dialogue {
+				padding: 32px 32px;
+			}
+			#settings-formats {
+				margin-bottom: 24px;
+			}
+			.dialogue-option {
+				margin-bottom: 12px;
+			}
+			.dialogue-option label {
+				padding-bottom: 4px;
+			}
+			.dialogue-buttons {
+				gap: 8px;
+			}
+		}
+		@media screen and (max-width: 680px) and (max-height: 520px){
+			#settings-dialogue {
+				padding: 16px 32px;
+			}
+			#settings-formats {
+				margin-bottom: 8px;
+			}
+			.dialogue-option {
+				margin-bottom: 4px;
 			}
 		}
 	</style>
