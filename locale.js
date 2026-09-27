@@ -233,7 +233,7 @@ function getLocaleTimeRange(dateA, dateB, referenceDate, format, zoneId) {
 				.replace(/([0-9]+:[0-9⁻⁺¹²]+) am( – [0-9]+:[0-9⁻⁺¹²]+ am)/, "$1$2")
 				.replace(/([0-9]+:[0-9⁻⁺¹²]+) pm( – [0-9]+:[0-9⁻⁺¹²]+ pm)/, "$1$2")
 				.replace(/([0-9⁻⁺¹²]+) – ([0-9]+)/, "$1–$2")
-				.replace(/([0-9:]+) ([amp]+)/, "$1<span class=\"text-timeabbr\"> $2</span>");
+				.replace(/([0-9:]+) ([amp]+)/g, "$1<span class=\"text-timeabbr\"> $2</span>");
 		case '12hCN':
 			return `${timeA}${abbrA} – ${timeB}${abbrB}`;
 	}
