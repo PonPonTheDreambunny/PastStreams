@@ -509,8 +509,8 @@
 			const regionSelect = document.getElementById("options-timeregion");
 			regionSelect.innerHTML = ``;
 			
-			const regionKeys = ["tzAU", "tzCA", "tzEU", "tzLA", "tzUS"]
-			const regionNames = ["Australia", "Canada", "Europe", "South America", "United States"];
+			const regionKeys = ["tzAF", "tzAU", "tzCA", "tzEU", "tzLA", "tzUS"]
+			const regionNames = ["Africa", "Australia", "Canada", "Europe", "South America", "United States"];
 			
 			buildSelectOptions("options-timeregion", regionKeys, formatSetting[4], regionNames);
 			populateTimezonesByRegion();
@@ -520,6 +520,10 @@
 			let zoneKeys = ["Etc/UTC"];
 			let zoneNames = ["UTC"];
 			switch (document.getElementById("options-timeregion").value) {
+				case "tzAF":
+					zoneKeys = ["Africa/Abidjan","Africa/Lagos","Africa/Maputo","Africa/Nairobi","Africa/Algiers","Atlantic/Cape_Verde","Africa/Cairo","Etc/GMT+3","Africa/Tripoli","Africa/Casablanca","Africa/Johannesburg","Africa/Tunis"];
+					zoneNames = ["Greenwich Mean Time","Western Africa","Central Africa","Eastern Africa","Algeria","Cape Verde","Egypt","Ethiopia (traditional time)","Libya","Morocco","South Africa","Tunisia"];
+					break;
 				case "tzAU":
 					zoneKeys = ["Indian/Cocos","Indian/Christmas","Australia/Perth","Australia/Eucla","Australia/Darwin","Australia/Adelaide","Australia/Brisbane","Australia/Sydney","Australia/Lord_Howe","Pacific/Norfolk"];
 					zoneNames = ["Cocos","Christmas","Western","Central Western","Northern Territory","South Australia","Queensland","NSW, TAS, VIC, ACT, JBT","Lore Howe","Norfolk"];
