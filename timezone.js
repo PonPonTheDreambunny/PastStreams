@@ -35,6 +35,7 @@ function getTimezoneAbbreviation(date, zoneId) {
 	zoneName = getTimezoneName(date, zoneId);
 
 	const abbrOverrides = [
+		{ prefix: /^GMT-03:00$/, abbr: "ET" }, // Ethiopian traditional time
 		{ prefix: /^GMT/, abbr: "case GMT" },
 		{ prefix: /^Coordinated Universal Time$/, abbr: "UTC" }, // +0
 		{ prefix: /^Western European Standard Time$/, abbr: "WET" }, // EU +0
