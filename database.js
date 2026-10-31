@@ -1120,6 +1120,8 @@ const databaseVODs = [
 {games:[{id:"drawing",start:"2026-10-25T12:50Z"},{id:"Crash1",start:"2026-10-25T15:31Z"}],end:"2026-10-25T17:50Z",duration:299,hertz:30,lines:1080,bitrate:3600},
 {games:[{id:"SenranKagura3SV",start:"2026-10-27T12:50Z"}],end:"2026-10-27T17:03Z",duration:252,hertz:30,lines:1080,bitrate:3600},
 {games:[{id:"SenranKagura3SV",start:"2026-10-28T12:50Z"}],end:"2026-10-28T17:45Z",duration:294,hertz:30,lines:1080,bitrate:3600},
+{games:[{id:"Koa3FPoM",start:"2026-10-29T12:50Z"},{id:"Peak",start:"2026-10-29T15:20Z"}],end:"2026-10-29T17:09Z",duration:258,hertz:30,lines:1080,bitrate:3600},
+{games:[{id:"Spyro1",start:"2026-10-30T12:54Z"},{id:"Spyro3YOTD",start:"2026-10-30T14:51Z"},{id:"Spyro1",start:"2026-10-30T15:59Z"},{id:"Spyro2GTG",start:"2026-10-30T16:02Z"},{id:"Spyro1",start:"2026-10-30T16:28Z"},{id:"Spyro2GTG",start:"2026-10-30T17:13Z"},{id:"Spyro3YOTD",start:"2026-10-30T17:40Z"},{id:"Spyro1",start:"2026-10-30T19:03Z"},{id:"Spyro2GTG",start:"2026-10-30T19:30Z"},{id:"Spyro3YOTD",start:"2026-10-30T19:54Z"}],end:"2026-10-30T20:07Z",duration:432,hertz:30,lines:1080,bitrate:3600},
 ];
 
 const databaseGames = {
